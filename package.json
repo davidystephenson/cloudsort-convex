@@ -15,10 +15,14 @@
     "@convex-dev/auth": "^0.0.82",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "clink-robe": "^0.1.0",
+    "context-creator": "^0.1.23",
     "convex": "^1.24.0",
     "framer-motion": "^12.9.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.5.3",
+    "robes": "^0.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
