@@ -3,8 +3,10 @@ import { ConvexAuthProvider } from '@convex-dev/auth/react'
 import { ReactNode } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import Router from './route/Router'
-import { LayoutRobe, RobesProvider } from 'robes'
+import { RobesProvider } from 'robes'
+import { Container } from '@chakra-ui/react'
 import LayoutNavbar from './layout/LayoutNavbar'
+import authContext from './auth/authContext'
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL)
 
@@ -13,13 +15,12 @@ export default function App (): ReactNode {
     <BrowserRouter>
       <RobesProvider>
         <ConvexAuthProvider client={convex}>
-          <LayoutRobe
-            navbar={{
-              children: <LayoutNavbar />
-            }}
-          >
-            <Router />
-          </LayoutRobe>
+          <authContext.Provider>
+            <Container pt='10px'>
+              <LayoutNavbar />
+              <Router />
+            </Container>
+          </authContext.Provider>
         </ConvexAuthProvider>
       </RobesProvider>
     </BrowserRouter>

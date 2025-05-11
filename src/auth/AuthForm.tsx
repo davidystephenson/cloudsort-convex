@@ -1,17 +1,73 @@
-import { Stack, VStack } from '@chakra-ui/react'
-import { ReactNode, useState } from 'react'
-import Impressed from 'impressed'
-import UiInput from '../ui/UiInput'
+import { Stack } from '@chakra-ui/react'
+import { JSX, ReactNode, useState } from 'react'
+import { ImpressedRobe, InputRobe } from 'robes'
+import { useAuthActions } from '@convex-dev/auth/react'
 
-export default function AuthForm (): ReactNode {
+export default function AuthForm (props: {
+  flow: 'signIn' | 'signUp'
+  label: string
+}): JSX.Element {
+  const { signIn } = useAuthActions()
   const [email, setEmail] = useState('')
+  const [loading, setLoading] = useState(false)
   const [password, setPassword] = useState('')
+  const [error, setError] = useState<ReactNode>()
+
+  async function authenticate (): Promise<void> {
+    console.log('props.flow', props.flow)
+    setLoading(true)
+    try {
+      await signIn('password', {
+        email,
+        password,
+        flow: props.flow
+      })
+    } catch (error) {
+      if (!(error instanceof Error)) {
+        throw error
+      }
+      setError(error.message)
+    }
+    setLoading(false)
+  }
+
+  function handleSubmit (event: React.FormEvent<HTMLFormElement>): void {
+    event.preventDefault()
+    void authenticate()
+  }
+
+  function handleEmailChange (event: React.ChangeEvent<HTMLInputElement>): void {
+    setEmail(event.target.value)
+    setError(undefined)
+  }
+
+  function handlePasswordChange (event: React.ChangeEvent<HTMLInputElement>): void {
+    setPassword(event.target.value)
+    setError(undefined)
+  }
 
   return (
-    <Stack direction='column'>
-      <UiInput label='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
-      <UiInput label='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
-      <Impressed w='fit-content'>Login</Impressed>
-    </Stack>
+    <form onSubmit={handleSubmit}>
+      <Stack>
+        <InputRobe
+          label='Email'
+          value={email}
+          onChange={handleEmailChange}
+        />
+        <InputRobe
+          label='Password'
+          value={password}
+          onChange={handlePasswordChange}
+        />
+        <ImpressedRobe
+          error={error}
+          isLoading={loading}
+          type='submit'
+          w='fit-content'
+        >
+          {props.label}
+        </ImpressedRobe>
+      </Stack>
+    </form>
   )
 }

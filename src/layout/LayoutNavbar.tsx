@@ -1,12 +1,19 @@
-import { HStack } from '@chakra-ui/react'
+import { HStack, Heading } from '@chakra-ui/react'
+import { JSX } from 'react'
 import ClinkRobe from 'clink-robe'
-import { ReactNode } from 'react'
+import LayoutAuth from './LayoutAuth'
 
-export default function LayoutNavbar (): ReactNode {
+export default function NavbarRobe (): JSX.Element {
   return (
-    <HStack>
+    <HStack justifyContent='space-between'>
+      <ClinkRobe href='/lists'>
+        <Heading>Cloudsort</Heading>
+      </ClinkRobe>
       <ClinkRobe to='/'>Lists</ClinkRobe>
-      <ClinkRobe to='/login'>Login</ClinkRobe>
+      <HStack>
+        <ClinkRobe to='/login'>Login</ClinkRobe>
+        <LayoutAuth />
+      </HStack>
     </HStack>
   )
 }

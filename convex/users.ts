@@ -25,7 +25,10 @@ export async function guardCurrentUserId (props: {
 export const current = query({
   args: {},
   handler: async (ctx) => {
-    const userId = await guardCurrentUserId({ ctx })
+    const userId = await getCurrentUserId({ ctx })
+    if (userId == null) {
+      return null
+    }
     return await ctx.db.get(userId)
   }
 })
