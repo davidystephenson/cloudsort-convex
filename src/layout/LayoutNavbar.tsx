@@ -10,10 +10,7 @@ export default function NavbarRobe (): JSX.Element {
         <Heading>Cloudsort</Heading>
       </ClinkRobe>
       <ClinkRobe to='/'>Lists</ClinkRobe>
-      <HStack>
-        <ClinkRobe to='/login'>Login</ClinkRobe>
-        <LayoutAuth />
-      </HStack>
+      <LayoutAuth />
     </HStack>
   )
 }

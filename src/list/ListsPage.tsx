@@ -1,10 +1,10 @@
-import { Heading } from '@chakra-ui/react'
 import { ReactNode } from 'react'
+import AuthPage from '../auth/AuthPage'
 
 export default function ListsPage (): ReactNode {
   return (
-    <>
-      <Heading>Lists</Heading>
-    </>
+    <AuthPage title='Lists'>
+      Lists
+    </AuthPage>
   )
 }

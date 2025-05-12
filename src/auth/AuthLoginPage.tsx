@@ -1,15 +1,14 @@
 import { JSX } from 'react'
 import AuthForm from './AuthForm'
-import { Heading } from '@chakra-ui/react'
+import LayoutPage from '../layout/LayoutPage'
 
 export default function AuthLoginPage (): JSX.Element {
   return (
-    <>
-      <Heading size='lg'>Login</Heading>
+    <LayoutPage title='Login'>
       <AuthForm
         flow='signIn'
         label='Login'
       />
-    </>
+    </LayoutPage>
   )
 }

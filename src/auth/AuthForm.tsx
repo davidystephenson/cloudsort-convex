@@ -2,16 +2,31 @@ import { Stack } from '@chakra-ui/react'
 import { JSX, ReactNode, useState } from 'react'
 import { ImpressedRobe, InputRobe } from 'robes'
 import { useAuthActions } from '@convex-dev/auth/react'
+import authContext from './authContext'
 
 export default function AuthForm (props: {
   flow: 'signIn' | 'signUp'
   label: string
 }): JSX.Element {
+  const actions = useAuthActions()
+  const auth = authContext.use()
   const { signIn } = useAuthActions()
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [password, setPassword] = useState('')
   const [error, setError] = useState<ReactNode>()
+
+  function handleLogout (): void {
+    void actions.signOut()
+  }
+
+  if (auth.convex.isAuthenticated) {
+    return (
+      <ImpressedRobe onClick={handleLogout}>
+        Logout
+      </ImpressedRobe>
+    )
+  }
 
   async function authenticate (): Promise<void> {
     console.log('props.flow', props.flow)

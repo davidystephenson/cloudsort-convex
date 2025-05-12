@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import Router from './route/Router'
 import { RobesProvider } from 'robes'
-import { Container } from '@chakra-ui/react'
+import { Container, Stack } from '@chakra-ui/react'
 import LayoutNavbar from './layout/LayoutNavbar'
 import authContext from './auth/authContext'
 
@@ -17,8 +17,10 @@ export default function App (): ReactNode {
         <ConvexAuthProvider client={convex}>
           <authContext.Provider>
             <Container pt='10px'>
-              <LayoutNavbar />
-              <Router />
+              <Stack>
+                <LayoutNavbar />
+                <Router />
+              </Stack>
             </Container>
           </authContext.Provider>
         </ConvexAuthProvider>
