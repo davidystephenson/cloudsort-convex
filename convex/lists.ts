@@ -1,7 +1,7 @@
 import { getAuthUserId } from '@convex-dev/auth/server'
 import { mutation, MutationCtx, query, QueryCtx } from './_generated/server'
 import { Doc } from './_generated/dataModel'
-import { v } from 'convex/values'
+import { ConvexError, v } from 'convex/values'
 import { guardCurrentUserId } from './users'
 
 export async function getListByName (props: {
@@ -23,10 +23,13 @@ export async function getListByName (props: {
 export const create = mutation({
   args: { name: v.string() },
   handler: async (ctx, args) => {
+    if (args.name.length === 0) {
+      throw new ConvexError('List has no name')
+    }
     const userId = await guardCurrentUserId({ ctx })
     const existing = await getListByName({ ctx, name: args.name })
     if (existing != null) {
-      return 'List already exists'
+      throw new ConvexError('List already exists')
     }
     await ctx.db.insert('lists', {
       name: args.name,
