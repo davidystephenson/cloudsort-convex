@@ -40,6 +40,21 @@ export const create = mutation({
   }
 })
 
+export const _delete = mutation({
+  args: { id: v.id('lists') },
+  handler: async (ctx, args) => {
+    const userId = await guardCurrentUserId({ ctx })
+    const list = await ctx.db.get(args.id)
+    if (list == null) {
+      throw new ConvexError('List not found')
+    }
+    if (list.userId !== userId) {
+      throw new ConvexError('Unauthorized')
+    }
+    await ctx.db.delete(args.id)
+  }
+})
+
 export const getByUser = query({
   handler: async (ctx) => {
     const userId = await getAuthUserId(ctx)

@@ -3,6 +3,7 @@ import { JSX, ReactNode, useState } from 'react'
 import { ImpressedRobe, InputRobe } from 'robes'
 import { useAuthActions } from '@convex-dev/auth/react'
 import authContext from './authContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function AuthForm (props: {
   flow: 'signIn' | 'signUp'
@@ -10,6 +11,7 @@ export default function AuthForm (props: {
 }): JSX.Element {
   const actions = useAuthActions()
   const auth = authContext.use()
+  const navigate = useNavigate()
   const { signIn } = useAuthActions()
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
@@ -37,6 +39,7 @@ export default function AuthForm (props: {
         password,
         flow: props.flow
       })
+      await navigate('/')
     } catch (error) {
       if (!(error instanceof Error)) {
         throw error

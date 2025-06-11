@@ -5,7 +5,7 @@ import { useMutation } from 'convex/react'
 import { ConvexError } from 'convex/values'
 
 export default function CreateListForm (): JSX.Element {
-  const createListMutation = useMutation(api.lists.create)
+  const create = useMutation(api.lists.create)
   const [creating, setCreating] = useState(false)
   const [error, setError] = useState<ConvexError<string>>()
   const [name, setName] = useState('')
@@ -16,7 +16,7 @@ export default function CreateListForm (): JSX.Element {
   async function createList (): Promise<void> {
     setCreating(true)
     try {
-      await createListMutation({ name })
+      await create({ name })
     } catch (error) {
       if (!(error instanceof ConvexError)) {
         throw error
