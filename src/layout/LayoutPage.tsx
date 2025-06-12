@@ -1,24 +1,21 @@
 import { JSX, ReactNode } from 'react'
-import authContext from '../auth/authContext'
-import { HStack, Box, Heading } from '@chakra-ui/react'
-import { Reeling } from 'reeling'
+import { Heading } from '@chakra-ui/react'
+import authLoadingContext from '../auth/authLoadingContext'
+import LayoutLoading from './LayoutLoading'
 
 export default function LayoutPage (props: {
   title: ReactNode
-  children: ReactNode
-}): JSX.Element {
-  const auth = authContext.use()
-
-  if (auth.convex.isLoading) {
+} & (
+  { loading?: boolean, children: ReactNode } |
+  { loading: true }
+)): JSX.Element {
+  const authLoading = authLoadingContext.use()
+  const loading = props.loading === true || authLoading.loading
+  if (loading) {
     return (
-      <Heading size='lg'>
-        <HStack align='start'>
-          <Box>
-            {props.title}
-          </Box>
-          <Reeling size='35px' />
-        </HStack>
-      </Heading>
+      <LayoutLoading>
+        {props.title}
+      </LayoutLoading>
     )
   }
 
