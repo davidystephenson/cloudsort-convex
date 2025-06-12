@@ -14,6 +14,11 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as auth from "../auth.js";
+import type * as feature_convex_convexTypes from "../feature/convex/convexTypes.js";
+import type * as feature_list_gaurdCurrentUserId from "../feature/list/gaurdCurrentUserId.js";
+import type * as feature_list_guardCurrentUserId from "../feature/list/guardCurrentUserId.js";
+import type * as feature_list_guardCurrentUserList from "../feature/list/guardCurrentUserList.js";
+import type * as feature_list_guardUserList from "../feature/list/guardUserList.js";
 import type * as http from "../http.js";
 import type * as lists from "../lists.js";
 import type * as users from "../users.js";
@@ -28,6 +33,11 @@ import type * as users from "../users.js";
  */
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  "feature/convex/convexTypes": typeof feature_convex_convexTypes;
+  "feature/list/gaurdCurrentUserId": typeof feature_list_gaurdCurrentUserId;
+  "feature/list/guardCurrentUserId": typeof feature_list_guardCurrentUserId;
+  "feature/list/guardCurrentUserList": typeof feature_list_guardCurrentUserList;
+  "feature/list/guardUserList": typeof feature_list_guardUserList;
   http: typeof http;
   lists: typeof lists;
   users: typeof users;

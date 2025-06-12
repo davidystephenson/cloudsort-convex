@@ -2,7 +2,8 @@ import { getAuthUserId } from '@convex-dev/auth/server'
 import { mutation, MutationCtx, query, QueryCtx } from './_generated/server'
 import { Doc } from './_generated/dataModel'
 import { ConvexError, v } from 'convex/values'
-import { guardCurrentUserId } from './users'
+import guardCurrentUserId from './feature/list/guardCurrentUserId'
+import guardCurrentUserList from './feature/list/guardCurrentUserList'
 
 export async function getListByName (props: {
   ctx: QueryCtx | MutationCtx
@@ -34,24 +35,17 @@ export const create = mutation({
     await ctx.db.insert('lists', {
       name: args.name,
       createdAt: Date.now(),
-      updatedAt: Date.now(),
+      public: false,
       userId
     })
   }
 })
 
 export const _delete = mutation({
-  args: { id: v.id('lists') },
+  args: { listId: v.id('lists') },
   handler: async (ctx, args) => {
-    const userId = await guardCurrentUserId({ ctx })
-    const list = await ctx.db.get(args.id)
-    if (list == null) {
-      throw new ConvexError('List not found')
-    }
-    if (list.userId !== userId) {
-      throw new ConvexError('Unauthorized')
-    }
-    await ctx.db.delete(args.id)
+    await guardCurrentUserList({ ctx, listId: args.listId })
+    await ctx.db.delete(args.listId)
   }
 })
 
@@ -66,5 +60,35 @@ export const getByUser = query({
       .withIndex('user', (q) => q.eq('userId', userId))
       .collect()
     return userLists
+  }
+})
+
+export const getPublic = query({
+  handler: async (ctx) => {
+    const publicLists = await ctx.db
+      .query('lists')
+      .withIndex('public', (q) => q.eq('public', true))
+      .collect()
+    return publicLists
+  }
+})
+
+export const publish = mutation({
+  args: { listId: v.id('lists') },
+  handler: async (ctx, args) => {
+    await guardCurrentUserList({ ctx, listId: args.listId })
+    await ctx.db.patch(args.listId, {
+      public: true
+    })
+  }
+})
+
+export const unpublish = mutation({
+  args: { listId: v.id('lists') },
+  handler: async (ctx, args) => {
+    await guardCurrentUserList({ ctx, listId: args.listId })
+    await ctx.db.patch(args.listId, {
+      public: false
+    })
   }
 })

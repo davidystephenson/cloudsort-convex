@@ -1,17 +1,13 @@
-import { JSX, ReactNode } from 'react'
-import authContext from './authContext'
-import { ButtonClinkRobe } from 'clink-robe'
+import { ReactNode, JSX } from 'react'
+import AuthLoginButton from './AuthLoginButton'
+import authUserContext from './authUserContext'
 
 export default function AuthContent (props: {
   children: ReactNode
 }): JSX.Element {
-  const auth = authContext.use()
-  if (!auth.convex.isAuthenticated) {
-    return (
-      <ButtonClinkRobe to='/login'>
-        Login
-      </ButtonClinkRobe>
-    )
+  const authUser = authUserContext.useMaybe()
+  if (authUser == null) {
+    return <AuthLoginButton />
   }
   return <>{props.children}</>
 }

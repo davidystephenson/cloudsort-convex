@@ -1,25 +1,34 @@
 import { Doc } from '../../convex/_generated/dataModel'
 import contextCreator from 'context-creator'
-import { useMutation } from 'convex/react'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import { api } from '../../convex/_generated/api'
+import useListMutation from './useListMutation'
 
 const listContext = contextCreator({
   name: 'list',
   useValue: (props: {
     doc: Doc<'lists'>
   }) => {
-    const _delete = useMutation(api.lists._delete)
-    const deleteList = useCallback(async () => {
-      await _delete({ id: props.doc._id })
-    }, [_delete, props.doc._id])
+    const _delete = useListMutation({
+      listId: props.doc._id,
+      mutation: api.lists._delete
+    })
+    const publish = useListMutation({
+      listId: props.doc._id,
+      mutation: api.lists.publish
+    })
+    const unpublish = useListMutation({
+      listId: props.doc._id,
+      mutation: api.lists.unpublish
+    })
     const value = useMemo(() => {
       return {
         doc: props.doc,
-        delete: deleteList
+        delete: _delete,
+        publish,
+        unpublish
       }
-    }, [deleteList, props.doc])
-
+    }, [_delete, props.doc, publish, unpublish])
     return value
   }
 })

@@ -1,20 +1,22 @@
-import { useQuery } from 'convex/react'
-import { api } from '../../convex/_generated/api'
 import { JSX, useState } from 'react'
-import { Reeling } from 'reeling'
-import { LongRowmanceRobe } from 'robes'
+import { LongRowmanceRobe, ReelingRobe } from 'robes'
 import ListCells from './ListCells'
+import { Doc } from '../../convex/_generated/dataModel'
 
-export default function ListsTable (): JSX.Element {
+export default function ListsTable (props: {
+  docs?: Array<Doc<'lists'>>
+}): JSX.Element {
   const [query, setQuery] = useState<string>()
-  const listsQuery = useQuery(api.lists.getByUser)
-  if (listsQuery == null) {
-    return <Reeling />
+  if (props.docs == null) {
+    return <ReelingRobe size='20px' />
+  }
+  if (props.docs.length === 0) {
+    return <></>
   }
   function filter (props: { query?: string | undefined }): void {
     setQuery(props.query?.toLowerCase())
   }
-  const filtered = listsQuery.filter((list) => {
+  const filtered = props.docs.filter((list) => {
     if (query == null) {
       return true
     }

@@ -7,11 +7,12 @@ const schema = defineSchema({
   lists: defineTable({
     createdAt: v.number(),
     name: v.string(),
-    updatedAt: v.number(),
+    public: v.boolean(),
     userId: v.id('users')
   })
     .index('user', ['userId'])
     .index('name', ['name'])
+    .index('public', ['public'])
 })
 
 export default schema

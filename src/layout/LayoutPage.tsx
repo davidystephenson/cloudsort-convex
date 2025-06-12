@@ -1,6 +1,6 @@
 import { JSX, ReactNode } from 'react'
 import authContext from '../auth/authContext'
-import { HStack, Box, Heading, Stack } from '@chakra-ui/react'
+import { HStack, Box, Heading } from '@chakra-ui/react'
 import { Reeling } from 'reeling'
 
 export default function LayoutPage (props: {
