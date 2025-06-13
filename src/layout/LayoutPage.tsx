@@ -1,16 +1,16 @@
 import { JSX, ReactNode } from 'react'
 import { Heading } from '@chakra-ui/react'
-import authLoadingContext from '../auth/authLoadingContext'
 import LayoutLoading from './LayoutLoading'
+import useAuthLoading from '../auth/useAuthLoading'
 
 export default function LayoutPage (props: {
-  title: ReactNode
+  title?: ReactNode
 } & (
-  { loading?: boolean, children: ReactNode } |
+  { loading?: boolean, children?: ReactNode } |
   { loading: true }
 )): JSX.Element {
-  const authLoading = authLoadingContext.use()
-  const loading = props.loading === true || authLoading.loading
+  const authLoading = useAuthLoading()
+  const loading = props.loading === true || authLoading
   if (loading) {
     return (
       <LayoutLoading>

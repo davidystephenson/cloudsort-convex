@@ -2,15 +2,15 @@ import { Stack } from '@chakra-ui/react'
 import { JSX, ReactNode, useState } from 'react'
 import { ImpressedRobe, InputRobe } from 'robes'
 import { useAuthActions } from '@convex-dev/auth/react'
-import authContext from './authContext'
 import { useNavigate } from 'react-router-dom'
+import { useConvexAuth } from 'convex/react'
 
 export default function AuthForm (props: {
   flow: 'signIn' | 'signUp'
   label: string
 }): JSX.Element {
   const actions = useAuthActions()
-  const auth = authContext.use()
+  const auth = useConvexAuth()
   const navigate = useNavigate()
   const { signIn } = useAuthActions()
   const [email, setEmail] = useState('')
@@ -22,7 +22,7 @@ export default function AuthForm (props: {
     void actions.signOut()
   }
 
-  if (auth.convex.isAuthenticated) {
+  if (auth.isAuthenticated) {
     return (
       <ImpressedRobe onClick={handleLogout}>
         Logout
@@ -31,7 +31,6 @@ export default function AuthForm (props: {
   }
 
   async function authenticate (): Promise<void> {
-    console.log('props.flow', props.flow)
     setLoading(true)
     try {
       await signIn('password', {
