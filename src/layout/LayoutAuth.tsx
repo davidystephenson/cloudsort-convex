@@ -1,5 +1,5 @@
 import { JSX } from 'react'
-import { ButtonRobe, ReelingRobe } from 'robes'
+import { ButtonRobe } from 'robes'
 import ClinkRobe, { ButtonClinkRobe } from 'clink-robe'
 import { HStack } from '@chakra-ui/react'
 import LayoutProfile from './LayoutProfile'
@@ -14,7 +14,7 @@ export default function LayoutAuth (): JSX.Element {
   }
   if (auth.isAuthenticated) {
     if (authUser == null) {
-      return <ReelingRobe size='20px' />
+      return <ButtonRobe isLoading />
     }
     return <LayoutProfile />
   }
