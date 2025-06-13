@@ -11,7 +11,7 @@ export default function LayoutProfile (): JSX.Element {
   }
   return (
     <ProfileRobe onLogout={handleLogout}>
-      {authUser.doc.email}
+      {authUser.email}
     </ProfileRobe>
   )
 }

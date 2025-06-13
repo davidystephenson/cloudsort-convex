@@ -1,9 +1,8 @@
-import { getAuthUserId } from '@convex-dev/auth/server'
 import { mutation, MutationCtx, query, QueryCtx } from './_generated/server'
 import { Doc } from './_generated/dataModel'
 import { ConvexError, v } from 'convex/values'
-import guardCurrentUserId from './feature/list/guardCurrentUserId'
-import guardCurrentUserList from './feature/list/guardCurrentUserList'
+import guardAuthId from './feature/auth/guardAuthId'
+import guardCurrentUserList from './feature/list/guardAuthList'
 
 export async function getListByName (props: {
   ctx: QueryCtx | MutationCtx
@@ -27,7 +26,7 @@ export const create = mutation({
     if (args.name.length === 0) {
       throw new ConvexError('List has no name')
     }
-    const userId = await guardCurrentUserId({ ctx })
+    const userId = await guardAuthId({ ctx })
     const existing = await getListByName({ ctx, name: args.name })
     if (existing != null) {
       throw new ConvexError('List already exists')
@@ -51,10 +50,7 @@ export const _delete = mutation({
 
 export const getByUser = query({
   handler: async (ctx) => {
-    const userId = await getAuthUserId(ctx)
-    if (userId == null) {
-      throw new Error('Unauthorized')
-    }
+    const userId = await guardAuthId({ ctx })
     const userLists = await ctx.db
       .query('lists')
       .withIndex('user', (q) => q.eq('userId', userId))

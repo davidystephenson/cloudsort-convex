@@ -1,13 +1,14 @@
 import { query } from './_generated/server'
-import getCurrentUserId from './feature/list/guardCurrentUserId'
+import guardAuthId from './feature/auth/guardAuthId'
 
 export const current = query({
   args: {},
   handler: async (ctx) => {
-    const userId = await getCurrentUserId({ ctx })
-    if (userId == null) {
-      return null
+    const userId = await guardAuthId({ ctx })
+    const user = await ctx.db.get(userId)
+    if (user == null) {
+      throw new Error('User not found')
     }
-    return await ctx.db.get(userId)
+    return user
   }
 })

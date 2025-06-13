@@ -14,11 +14,12 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as auth from "../auth.js";
+import type * as feature_auth_getAuthId from "../feature/auth/getAuthId.js";
+import type * as feature_auth_guardAuthId from "../feature/auth/guardAuthId.js";
 import type * as feature_convex_convexTypes from "../feature/convex/convexTypes.js";
-import type * as feature_list_gaurdCurrentUserId from "../feature/list/gaurdCurrentUserId.js";
-import type * as feature_list_guardCurrentUserId from "../feature/list/guardCurrentUserId.js";
-import type * as feature_list_guardCurrentUserList from "../feature/list/guardCurrentUserList.js";
+import type * as feature_list_guardAuthList from "../feature/list/guardAuthList.js";
 import type * as feature_list_guardUserList from "../feature/list/guardUserList.js";
+import type * as getAuthLists from "../getAuthLists.js";
 import type * as http from "../http.js";
 import type * as lists from "../lists.js";
 import type * as users from "../users.js";
@@ -33,11 +34,12 @@ import type * as users from "../users.js";
  */
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  "feature/auth/getAuthId": typeof feature_auth_getAuthId;
+  "feature/auth/guardAuthId": typeof feature_auth_guardAuthId;
   "feature/convex/convexTypes": typeof feature_convex_convexTypes;
-  "feature/list/gaurdCurrentUserId": typeof feature_list_gaurdCurrentUserId;
-  "feature/list/guardCurrentUserId": typeof feature_list_guardCurrentUserId;
-  "feature/list/guardCurrentUserList": typeof feature_list_guardCurrentUserList;
+  "feature/list/guardAuthList": typeof feature_list_guardAuthList;
   "feature/list/guardUserList": typeof feature_list_guardUserList;
+  getAuthLists: typeof getAuthLists;
   http: typeof http;
   lists: typeof lists;
   users: typeof users;
