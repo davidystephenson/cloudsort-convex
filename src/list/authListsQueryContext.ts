@@ -1,11 +1,11 @@
 import contextCreator from 'context-creator'
-import { useArchedQuery } from '../arched/useArchedQuery'
 import { api } from '../../convex/_generated/api'
+import { useQuery } from 'convex/react'
 
 const authListsQueryContext = contextCreator({
   name: 'authListsQuery',
   useValue: () => {
-    const result = useArchedQuery({ query: api.getAuthLists.getAuthLists })
+    const result = useQuery(api.getAuthLists.q)
     return result
   }
 })

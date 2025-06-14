@@ -3,7 +3,7 @@ import guardUserList from './guardUserList'
 import { Doc, Id } from '../../_generated/dataModel'
 import guardAuthId from '../auth/guardAuthId'
 
-export default async function guardCurrentUserList (props: {
+export default async function guardAuthList (props: {
   ctx: Ctx
   listId: Id<'lists'>
 }): Promise<Doc<'lists'>> {

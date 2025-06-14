@@ -1,7 +1,7 @@
 import { query } from './_generated/server'
 import guardAuthId from './feature/auth/guardAuthId'
 
-export const getAuthLists = query({
+export const q = query({
   handler: async (ctx) => {
     const userId = await guardAuthId({ ctx })
     const userLists = await ctx.db

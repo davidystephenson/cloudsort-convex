@@ -1,15 +1,18 @@
-import { useQuery } from 'convex/react'
+import { OptionalRestArgsOrSkip, useQuery } from 'convex/react'
 import { ArchedResult } from './archedTypes'
-import { FunctionReference } from 'convex/server'
+import { DefaultFunctionArgs, FunctionReference } from 'convex/server'
 
-type EmptyObject = Record<string, never>
-
-export function useArchedQuery<Data> (props: {
-  query: FunctionReference<
-  'query', 'public', EmptyObject, Data
+export function useArchedQuery<
+  Data,
+  Args extends DefaultFunctionArgs,
+  Query extends FunctionReference<
+  'query', 'public', Args, Data
   >
+> (props: {
+  args: OptionalRestArgsOrSkip<Query>
+  query: Query
 }): ArchedResult<Data> {
-  const data = useQuery(props.query)
+  const data = useQuery(props.query, props.args)
   const loading = data === undefined
   if (loading) {
     return { data: undefined, loading }

@@ -2,7 +2,7 @@ import { mutation, MutationCtx, query, QueryCtx } from './_generated/server'
 import { Doc } from './_generated/dataModel'
 import { ConvexError, v } from 'convex/values'
 import guardAuthId from './feature/auth/guardAuthId'
-import guardCurrentUserList from './feature/list/guardAuthList'
+import guardAuthList from './feature/list/guardAuthList'
 
 export async function getListByName (props: {
   ctx: QueryCtx | MutationCtx
@@ -43,7 +43,7 @@ export const create = mutation({
 export const _delete = mutation({
   args: { listId: v.id('lists') },
   handler: async (ctx, args) => {
-    await guardCurrentUserList({ ctx, listId: args.listId })
+    await guardAuthList({ ctx, listId: args.listId })
     await ctx.db.delete(args.listId)
   }
 })
@@ -72,7 +72,7 @@ export const getPublic = query({
 export const publish = mutation({
   args: { listId: v.id('lists') },
   handler: async (ctx, args) => {
-    await guardCurrentUserList({ ctx, listId: args.listId })
+    await guardAuthList({ ctx, listId: args.listId })
     await ctx.db.patch(args.listId, {
       public: true
     })
@@ -82,7 +82,7 @@ export const publish = mutation({
 export const unpublish = mutation({
   args: { listId: v.id('lists') },
   handler: async (ctx, args) => {
-    await guardCurrentUserList({ ctx, listId: args.listId })
+    await guardAuthList({ ctx, listId: args.listId })
     await ctx.db.patch(args.listId, {
       public: false
     })
