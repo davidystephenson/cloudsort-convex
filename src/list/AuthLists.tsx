@@ -2,11 +2,12 @@ import { ReactNode } from 'react'
 import authListsQueryContext from './authListsQueryContext'
 import CreateListForm from './CreateListForm'
 import authUserContext from '../auth/authUserContext'
-import { Heading } from '@chakra-ui/react'
+import { Heading, HStack } from '@chakra-ui/react'
 import ListsTable from './ListsTable'
 import ListsLoading from './ListsLoading'
-import LayoutPage from '../layout/LayoutPage'
+import LayoutTitle from '../layout/LayoutPage'
 import publicListsQueryContext from './publicListsQueryContext'
+import { MdPublic } from 'react-icons/md'
 
 export default function AuthLists (): ReactNode {
   const authLists = authListsQueryContext.use()
@@ -17,12 +18,17 @@ export default function AuthLists (): ReactNode {
   }
   const filtered = publicLists.filter((list) => list.userId !== authUser._id)
   return (
-    <LayoutPage title='Lists'>
+    <LayoutTitle title='Lists'>
       <CreateListForm />
       <Heading size='md'>{authUser.email}</Heading>
       <ListsTable docs={authLists} />
-      <Heading size='md'>Public</Heading>
+      <Heading size='md'>
+        <HStack>
+          <span>Public</span>
+          <MdPublic />
+        </HStack>
+      </Heading>
       <ListsTable docs={filtered} />
-    </LayoutPage>
+    </LayoutTitle>
   )
 }

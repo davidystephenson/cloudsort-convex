@@ -4,6 +4,7 @@ import { JSX } from 'react'
 import listContext from './listContext'
 import ListMenu from './ListMenu'
 import ClinkRobe from 'clink-robe'
+import ListLabel from './ListLabel'
 
 export default function ListCells (props: {
   row: Doc<'lists'>
@@ -13,7 +14,7 @@ export default function ListCells (props: {
     <listContext.Provider doc={props.row}>
       <Td>
         <ClinkRobe to={path}>
-          {props.row.name}
+          <ListLabel />
         </ClinkRobe>
       </Td>
       <Td><ListMenu /></Td>

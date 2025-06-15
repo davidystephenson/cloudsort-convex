@@ -1,5 +1,5 @@
 import { JSX } from 'react'
-import LayoutPage from '../layout/LayoutPage'
+import LayoutTitle from '../layout/LayoutPage'
 import { useParams } from 'react-router-dom'
 import { api } from '../../convex/_generated/api'
 import ListNotFound from './ListNotFound'
@@ -17,7 +17,7 @@ export default function List (): JSX.Element {
     query: api.normalizeListId.q
   })
   if (listId.loading) {
-    return <LayoutPage loading />
+    return <LayoutTitle loading />
   }
   if (listId.data == null) {
     return <ListNotFound />

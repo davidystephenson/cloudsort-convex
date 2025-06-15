@@ -12,7 +12,6 @@ export function useArchedQuery<
   args: Query['_args']
   query: Query
 }): ArchedResult<Query['_returnType']> {
-  console.log('args', props.args)
   const data = useQuery(props.query, props.args as any)
   const loading = data === undefined
   if (loading) {

@@ -1,7 +1,7 @@
 import { JSX, ReactNode } from 'react'
-import { Heading } from '@chakra-ui/react'
-import LayoutLoading from './LayoutLoading'
+import { Box, Heading, HStack } from '@chakra-ui/react'
 import useAuthLoading from '../auth/useAuthLoading'
+import { ReelingRobe } from 'robes'
 
 export default function LayoutPage (props: {
   title?: ReactNode
@@ -13,9 +13,14 @@ export default function LayoutPage (props: {
   const loading = props.loading === true || authLoading
   if (loading) {
     return (
-      <LayoutLoading>
-        {props.title}
-      </LayoutLoading>
+      <Heading size='lg'>
+        <HStack align='start'>
+          <Box>
+            {props.title}
+          </Box>
+          <ReelingRobe size='35px' />
+        </HStack>
+      </Heading>
     )
   }
 

@@ -9,7 +9,7 @@ export const q = query({
   handler: async (ctx, args) => {
     const list = await ctx.db.get(args.listId)
     if (list == null) {
-      return undefined
+      return null
     }
     const authId = await getAuthId({ ctx })
     if (!list.public && list.userId !== authId) {

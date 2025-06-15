@@ -2,18 +2,23 @@ import { JSX } from 'react'
 import { listQueryContext } from './listQueryContext'
 import ListNotFound from './ListNotFound'
 import LayoutPage from '../layout/LayoutPage'
-import useAuthLoading from '../auth/useAuthLoading'
 import { listIdQueryContext } from './listIdQueryContext'
+import ListTitle from './ListTitle'
+import listContext from './listContext'
 
 export default function ListConsumer (): JSX.Element {
-  const authLoading = useAuthLoading()
   const listId = listIdQueryContext.use()
   const list = listQueryContext.useMaybe()
-  const loading = authLoading || listId.loading || !list.provided || list.value.loading
+  const loading = listId.loading || !list.provided || list.value.loading
   if (!loading && list.value.data == null) {
     return <ListNotFound />
   }
+  if (list.value == null || list.value.data == null) {
+    return <LayoutPage loading={loading} />
+  }
   return (
-    <LayoutPage loading={loading} title={list.value?.data?.name} />
+    <listContext.Provider doc={list.value.data}>
+      <ListTitle />
+    </listContext.Provider>
   )
 }
