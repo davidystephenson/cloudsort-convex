@@ -9,15 +9,15 @@ export default function queryContext<
   Data,
   Query extends FunctionReference<
   'query', 'public', Args, Data
-  >
+  >,
+  QueryArgs extends Query['_args']
 > (props: {
   query: Query
-}): ContextCreation<Data | undefined, Args> {
+}): ContextCreation<Query['_returnType'] | undefined, QueryArgs> {
   const context = contextCreator({
     name: 'publicListsQuery',
-    useValue: (contextProps: Query['_args']) => {
-      const result = useQuery(props.query, contextProps)
-      return result
+    useValue: (contextProps: QueryArgs) => {
+      return useQuery(props.query, contextProps as unknown as any)
     }
   })
 

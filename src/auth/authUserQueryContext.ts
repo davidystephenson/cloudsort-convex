@@ -5,7 +5,7 @@ import { api } from '../../convex/_generated/api'
 const authUserQueryContext = contextCreator({
   name: 'authUserQuery',
   useValue: () => {
-    const result = useArchedQuery({ query: api.users.current })
+    const result = useArchedQuery({ query: api.users.current, args: {} })
     return result
   }
 })

@@ -1,8 +1,6 @@
 import { JSX } from 'react'
 import authUserContext from '../auth/authUserContext'
-import publicListsQueryContext from './publicListsQueryContext'
 import LayoutPage from '../layout/LayoutPage'
-import ListsTable from './ListsTable'
 import authListsQueryContext from './authListsQueryContext'
 import AuthLists from './AuthLists'
 import { useConvexAuth } from 'convex/react'
@@ -13,7 +11,7 @@ export default function Lists (): JSX.Element {
   const auth = useConvexAuth()
   const authUser = authUserContext.useMaybe()
   const authUserQuery = authUserQueryContext.useMaybe()
-  const publicListsQuery = publicListsQueryContext.use()
+  // const publicListsQuery = publicListsQueryContext.use()
   if (auth.isLoading) {
     return <LayoutPage loading />
   }
@@ -22,9 +20,10 @@ export default function Lists (): JSX.Element {
   }
   if (authUser == null) {
     return (
-      <LayoutPage loading={publicListsQuery.loading} title='Public Lists'>
-        <ListsTable docs={publicListsQuery.data} />
-      </LayoutPage>
+      <>test</>
+      // <LayoutPage loading={publicListsQuery == null} title='Public Lists'>
+      //   <ListsTable docs={publicListsQuery} />
+      // </LayoutPage>
     )
   }
   return (
