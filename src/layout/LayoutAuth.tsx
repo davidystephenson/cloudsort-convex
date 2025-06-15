@@ -13,7 +13,7 @@ export default function LayoutAuth (): JSX.Element {
     return <ButtonRobe isLoading />
   }
   if (auth.isAuthenticated) {
-    if (authUser == null) {
+    if (!authUser.provided) {
       return <ButtonRobe isLoading />
     }
     return <LayoutProfile />
