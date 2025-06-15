@@ -9,7 +9,7 @@ import listContext from './listContext'
 export default function ListMenu (): JSX.Element {
   const authUser = authUserContext.useMaybe()
   const list = listContext.use()
-  if (authUser == null || list.doc.userId !== authUser._id) {
+  if (!authUser.provided || list.doc.userId !== authUser.value._id) {
     return <></>
   }
   return (

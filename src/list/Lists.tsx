@@ -15,7 +15,7 @@ export default function Lists (): JSX.Element {
   if (auth.isLoading) {
     return <LayoutPage loading />
   }
-  if (authUserQuery?.loading === true) {
+  if (authUserQuery.provided && authUserQuery.value.loading) {
     return <ListsLoading />
   }
   if (authUser == null) {
