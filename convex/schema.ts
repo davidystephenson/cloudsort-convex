@@ -4,6 +4,12 @@ import { v } from 'convex/values'
 
 const schema = defineSchema({
   ...authTables,
+  users: defineTable({
+    name: v.string(),
+    email: v.string()
+  })
+    .index('email', ['email'])
+    .index('name', ['name']),
   lists: defineTable({
     createdAt: v.number(),
     name: v.string(),

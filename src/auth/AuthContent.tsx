@@ -9,5 +9,8 @@ export default function AuthContent (props: {
   if (authUser == null) {
     return <AuthLoginButton />
   }
+  if (authUser.value != null) {
+    console.log(authUser.value.name)
+  }
   return <>{props.children}</>
 }

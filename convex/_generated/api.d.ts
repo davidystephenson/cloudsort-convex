@@ -21,6 +21,7 @@ import type * as feature_list_guardAuthList from "../feature/list/guardAuthList.
 import type * as feature_list_guardUserList from "../feature/list/guardUserList.js";
 import type * as getAuthLists from "../getAuthLists.js";
 import type * as getList from "../getList.js";
+import type * as getUserByName from "../getUserByName.js";
 import type * as http from "../http.js";
 import type * as lists from "../lists.js";
 import type * as normalizeListId from "../normalizeListId.js";
@@ -43,6 +44,7 @@ declare const fullApi: ApiFromModules<{
   "feature/list/guardUserList": typeof feature_list_guardUserList;
   getAuthLists: typeof getAuthLists;
   getList: typeof getList;
+  getUserByName: typeof getUserByName;
   http: typeof http;
   lists: typeof lists;
   normalizeListId: typeof normalizeListId;
