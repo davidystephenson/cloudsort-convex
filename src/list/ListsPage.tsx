@@ -6,7 +6,6 @@ export default function ListsPage (): ReactNode {
   return (
     <publicListsQueryContext.Provider>
       <Lists />
-      <>test</>
     </publicListsQueryContext.Provider>
   )
 }

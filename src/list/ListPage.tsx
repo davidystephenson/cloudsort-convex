@@ -1,12 +1,18 @@
 import { ReactNode } from 'react'
-import LayoutPage from '../layout/LayoutPage'
-import useAuthLoading from '../auth/useAuthLoading'
-import List from './List'
+import { useParams } from 'react-router-dom'
+import ListNotFound from './ListNotFound'
+import { listIdQueryContext } from './listIdQueryContext'
+import ListIdConsumer from './ListIdConsumer'
 
 export default function ListPage (): ReactNode {
-  const authLoading = useAuthLoading()
-  if (authLoading) {
-    return <LayoutPage loading />
+  const { listId: param } = useParams()
+  if (param == null) {
+    return <ListNotFound />
   }
-  return <List />
+
+  return (
+    <listIdQueryContext.Provider listId={param}>
+      <ListIdConsumer />
+    </listIdQueryContext.Provider>
+  )
 }
