@@ -10,7 +10,7 @@ export default function AuthContent (props: {
     return <AuthLoginButton />
   }
   if (authUser.value != null) {
-    console.log(authUser.value.name)
+    console.log(authUser.value.data.name)
   }
   return <>{props.children}</>
 }

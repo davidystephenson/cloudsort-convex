@@ -6,10 +6,9 @@ import LayoutAuth from './LayoutAuth'
 export default function NavbarRobe (): JSX.Element {
   return (
     <HStack justifyContent='space-between'>
-      <ClinkRobe href='/lists'>
+      <ClinkRobe href='/'>
         <Heading>Cloudsort</Heading>
       </ClinkRobe>
-      <ClinkRobe to='/'>Lists</ClinkRobe>
       <LayoutAuth />
     </HStack>
   )

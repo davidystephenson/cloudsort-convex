@@ -23,9 +23,11 @@ export default function Lists (): JSX.Element {
     return <ListsLoading />
   }
   if (!authUser.provided) {
-    const title = <HStack><span>Lists</span><MdPublic /></HStack>
     return (
-      <LayoutPage loading={publicListsQuery == null} title={title}>
+      <LayoutPage
+        loading={publicListsQuery == null}
+        title={<HStack><span>Lists</span><MdPublic /></HStack>}
+      >
         <ListsTable docs={publicListsQuery} />
       </LayoutPage>
     )

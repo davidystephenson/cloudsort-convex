@@ -2,23 +2,8 @@ import { Password } from '@convex-dev/auth/providers/Password'
 import { convexAuth } from '@convex-dev/auth/server'
 import { api } from './_generated/api'
 
-const Custom = Password({
-  profile (params) {
-    if (typeof params.email !== 'string') {
-      throw new Error('Missing email')
-    }
-    if (typeof params.name !== 'string') {
-      throw new Error('Missing name')
-    }
-    const profile = {
-      email: params.email,
-      name: params.name
-    }
-    return profile
-  }
-})
 const authHub = convexAuth({
-  providers: [Custom],
+  providers: [Password],
   callbacks: {
     async createOrUpdateUser (ctx, args) {
       if (args.existingUserId != null) {

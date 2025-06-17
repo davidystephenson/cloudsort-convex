@@ -1,11 +1,9 @@
 import { JSX, useState } from 'react'
 import { LongRowmanceRobe, ReelingRobe } from 'robes'
 import ListCells from './ListCells'
-import { Doc } from '../../convex/_generated/dataModel'
+import { ListTableProps } from './listTypes'
 
-export default function ListsTable (props: {
-  docs?: Array<Doc<'lists'>>
-}): JSX.Element {
+export default function ListsTable (props: ListTableProps): JSX.Element {
   const [query, setQuery] = useState<string>()
   if (props.docs == null) {
     return <ReelingRobe size='20px' />

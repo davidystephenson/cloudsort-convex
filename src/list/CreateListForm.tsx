@@ -3,6 +3,7 @@ import { FormRobe, ImpressedRobe, InputRobe } from 'robes'
 import { api } from '../../convex/_generated/api'
 import { useMutation } from 'convex/react'
 import { ConvexError } from 'convex/values'
+import { HStack } from '@chakra-ui/react'
 
 export default function CreateListForm (): JSX.Element {
   const create = useMutation(api.lists.create)
@@ -29,17 +30,27 @@ export default function CreateListForm (): JSX.Element {
     event.preventDefault()
     void createList()
   }
+  const button = name.length > 0 && (
+    <ImpressedRobe
+      disabled={disabled}
+      error={error?.data}
+      isLoading={creating}
+      type='submit'
+    >
+      Create List
+    </ImpressedRobe>
+  )
+
   return (
     <FormRobe onSubmit={handleSubmit}>
-      <InputRobe value={name} onChange={handleNameChange} />
-      <ImpressedRobe
-        disabled={disabled}
-        error={error?.data}
-        isLoading={creating}
-        type='submit'
-      >
-        Create
-      </ImpressedRobe>
+      <HStack>
+        <InputRobe
+          onChange={handleNameChange}
+          placeholder='Create list'
+          value={name}
+        />
+        {button}
+      </HStack>
     </FormRobe>
   )
 }

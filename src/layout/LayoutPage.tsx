@@ -4,6 +4,7 @@ import useAuthLoading from '../auth/useAuthLoading'
 import { ReelingRobe } from 'robes'
 
 export default function LayoutPage (props: {
+  menu?: ReactNode
   title?: ReactNode
 } & (
   { loading?: boolean, children?: ReactNode } |
@@ -26,9 +27,12 @@ export default function LayoutPage (props: {
 
   return (
     <>
-      <Heading size='lg'>
-        {props.title}
-      </Heading>
+      <HStack>
+        <Heading size='lg'>
+          {props.title}
+        </Heading>
+        {props.menu}
+      </HStack>
       {props.children}
     </>
   )
