@@ -1,4 +1,4 @@
-import { Id } from '../../_generated/dataModel'
+import { Id } from '../../convex/_generated/dataModel'
 import { Ctx } from '../convex/convexTypes'
 import getAuthId from './getAuthId'
 

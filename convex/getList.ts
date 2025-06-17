@@ -1,6 +1,6 @@
 import { v } from 'convex/values'
 import { query } from './_generated/server'
-import getAuthId from './feature/auth/getAuthId'
+import getAuthId from '../src/auth/getAuthId'
 
 export const q = query({
   args: {

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import authUserContext from '../auth/authUserContext'
+import authActionsContext from '../auth/authActionsContext'
 import AuthLoginButton from '../auth/AuthLoginButton'
 import { ButtonClinkRobe } from 'clink-robe'
 import { useParams } from 'react-router-dom'
@@ -7,7 +7,7 @@ import { Heading } from '@chakra-ui/react'
 
 export default function ListNotFound (): ReactNode {
   const params = useParams()
-  const authUser = authUserContext.useMaybe()
+  const authUser = authActionsContext.useMaybe()
   if (authUser == null) {
     return <AuthLoginButton />
   }

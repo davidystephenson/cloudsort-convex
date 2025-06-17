@@ -1,44 +1,7 @@
-import { mutation, MutationCtx, query, QueryCtx } from './_generated/server'
-import { Doc } from './_generated/dataModel'
-import { ConvexError, v } from 'convex/values'
-import guardAuthId from './feature/auth/guardAuthId'
-import guardAuthList from './feature/list/guardAuthList'
-
-export async function getListByName (props: {
-  ctx: QueryCtx | MutationCtx
-  name: string
-}): Promise<Doc<'lists'> | null> {
-  const list = await props
-    .ctx
-    .db
-    .query('lists')
-    .withIndex('name', (q) => q.eq('name', props.name))
-    .first()
-  if (list == null) {
-    return null
-  }
-  return list
-}
-
-export const create = mutation({
-  args: { name: v.string() },
-  handler: async (ctx, args) => {
-    if (args.name.length === 0) {
-      throw new ConvexError('List has no name')
-    }
-    const userId = await guardAuthId({ ctx })
-    const existing = await getListByName({ ctx, name: args.name })
-    if (existing != null) {
-      throw new ConvexError('List already exists')
-    }
-    await ctx.db.insert('lists', {
-      name: args.name,
-      createdAt: Date.now(),
-      public: false,
-      userId
-    })
-  }
-})
+import { mutation, query } from './_generated/server'
+import { v } from 'convex/values'
+import guardAuthId from '../src/auth/guardAuthId'
+import guardAuthList from '../src/list/guardAuthList'
 
 export const _delete = mutation({
   args: { listId: v.id('lists') },

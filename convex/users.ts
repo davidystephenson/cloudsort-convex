@@ -1,5 +1,5 @@
 import { query } from './_generated/server'
-import guardAuthId from './feature/auth/guardAuthId'
+import guardAuthId from '../src/auth/guardAuthId'
 
 export const current = query({
   args: {},

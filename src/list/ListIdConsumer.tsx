@@ -5,7 +5,7 @@ import { listIdQueryContext } from './listIdQueryContext'
 import ListNotFound from './ListNotFound'
 
 export default function ListIdConsumer (): ReactNode {
-  const query = listIdQueryContext.use()
+  const query = listIdQueryContext.query.use()
   if (query.loading) {
     return <ListConsumer />
   }

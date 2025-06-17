@@ -1,17 +1,17 @@
 import { JSX } from 'react'
 import { ProfileRobe } from 'robes'
 import { useAuthActions } from '@convex-dev/auth/react'
-import authUserContext from '../auth/authUserContext'
+import authContext from '../auth/authContext'
 
 export default function LayoutProfile (): JSX.Element {
   const actions = useAuthActions()
-  const authUser = authUserContext.use()
+  const auth = authContext.data.use()
   function handleLogout (): void {
     void actions.signOut()
   }
   return (
     <ProfileRobe onLogout={handleLogout}>
-      {authUser.data.email}
+      {auth.email}
     </ProfileRobe>
   )
 }

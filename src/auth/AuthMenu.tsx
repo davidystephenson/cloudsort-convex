@@ -1,11 +1,11 @@
 import { JSX } from 'react'
 import { MenuRobe } from 'robes'
 import RenameAuthItem from './RenameAuthItem'
-import authUserContext from './authUserContext'
+import authActionsContext from './authActionsContext'
 
 export default function AuthMenu (): JSX.Element {
-  const authUser = authUserContext.use()
-  if (authUser.renaming) {
+  const authUser = authActionsContext.use()
+  if (authUser.rename.active) {
     return <></>
   }
   return (

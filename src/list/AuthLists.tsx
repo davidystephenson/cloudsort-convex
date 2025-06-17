@@ -1,34 +1,35 @@
 import { ReactNode } from 'react'
 import authListsQueryContext from './authListsQueryContext'
 import CreateListForm from './CreateListForm'
-import authUserContext from '../auth/authUserContext'
 import { Heading, HStack } from '@chakra-ui/react'
 import ListsLoading from './ListsLoading'
 import LayoutTitle from '../layout/LayoutPage'
 import publicListsQueryContext from './publicListsQueryContext'
-import { MdPublic } from 'react-icons/md'
-import ListsSection from './ListsSection'
 import userContext from '../user/userContext'
 import AuthMenu from '../auth/AuthMenu'
 import AuthListsTitle from './AuthListsTitle'
 import ListsTable from './ListsTable'
+import AuthListsMenu from './AuthListsMenu'
+import PublicLists from './PublicLists'
+import authContext from '../auth/authContext'
 
 export default function AuthLists (): ReactNode {
   const authLists = authListsQueryContext.use()
-  const authUser = authUserContext.use()
-  const publicLists = publicListsQueryContext.use()
-  if (authLists === undefined || publicLists === undefined) {
+  const auth = authContext.data.use()
+  const publicLists = publicListsQueryContext.query.use()
+  if (authLists === undefined || publicLists.loading) {
     return <ListsLoading />
   }
-  const publicTitle = <HStack><span>Public</span><MdPublic /></HStack>
-  const filtered = publicLists.filter((list) => list.userId !== authUser.data._id)
   return (
-    <userContext.Provider doc={authUser.data}>
+    <userContext.Provider doc={auth}>
       <LayoutTitle title={<AuthListsTitle />} menu={<AuthMenu />}>
-        <CreateListForm />
-        <Heading size='md'>Lists</Heading>
-        <ListsTable docs={authLists} />
-        <ListsSection title={publicTitle} docs={filtered} />
+        <HStack width='100%' height='32px'>
+          <Heading size='md'>Lists</Heading>
+          <AuthListsMenu />
+          <CreateListForm />
+        </HStack>
+        <ListsTable columns={['Name', '']} docs={authLists} />
+        <PublicLists />
       </LayoutTitle>
     </userContext.Provider>
   )

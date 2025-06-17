@@ -1,6 +1,6 @@
 import { Ctx } from '../convex/convexTypes'
 import guardUserList from './guardUserList'
-import { Doc, Id } from '../../_generated/dataModel'
+import { Doc, Id } from '../../convex/_generated/dataModel'
 import guardAuthId from '../auth/guardAuthId'
 
 export default async function guardAuthList (props: {

@@ -7,8 +7,8 @@ import ListTitle from './ListTitle'
 import listContext from './listContext'
 
 export default function ListConsumer (): JSX.Element {
-  const listId = listIdQueryContext.use()
-  const list = listQueryContext.useMaybe()
+  const listId = listIdQueryContext.query.use()
+  const list = listQueryContext.query.useMaybe()
   const loading = listId.loading || !list.provided || list.value.loading
   if (!loading && list.value.data == null) {
     return <ListNotFound />

@@ -1,9 +1,11 @@
 import { FormEvent, JSX, useState } from 'react'
-import { ButtonRobe, FormRobe, ImpressedRobe, InputRobe } from 'robes'
-import authUserContext from './authUserContext'
+import { FormRobe, ImpressedRobe, InputRobe, RedIconButtonRobe } from 'robes'
+import authActionsContext from './authActionsContext'
+import { ButtonGroup } from '@chakra-ui/react'
+import { MdClose } from 'react-icons/md'
 
 export default function AuthRenameForm (): JSX.Element {
-  const authUser = authUserContext.use()
+  const authUser = authActionsContext.use()
   const [name, setName] = useState('')
   const named = name.length > 0
   function handleSubmit (event: FormEvent): void {
@@ -13,9 +15,10 @@ export default function AuthRenameForm (): JSX.Element {
   const submit = named && (
     <ImpressedRobe
       error={authUser.rename.errorMessage}
-      minW='unset'
+      type='submit'
+      size='xs'
     >
-      Rename User
+      Change username
     </ImpressedRobe>
   )
   function handleChange (event: React.ChangeEvent<HTMLInputElement>): void {
@@ -32,18 +35,20 @@ export default function AuthRenameForm (): JSX.Element {
     >
       <InputRobe
         width='100%'
-        placeholder='Rename user'
+        placeholder='Change username'
         value={name}
         onChange={handleChange}
       />
-      {submit}
-      <ButtonRobe
-        minW='unset'
-        colorScheme='red'
-        onClick={handleCancel}
-      >
-        Cancel
-      </ButtonRobe>
+      <ButtonGroup isAttached>
+        {submit}
+        <RedIconButtonRobe
+          aria-label='Cancel'
+          icon={<MdClose />}
+          onClick={handleCancel}
+          size='xs'
+          variant='solid'
+        />
+      </ButtonGroup>
     </FormRobe>
   )
 }

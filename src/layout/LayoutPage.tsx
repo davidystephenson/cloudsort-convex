@@ -27,7 +27,7 @@ export default function LayoutPage (props: {
 
   return (
     <>
-      <HStack>
+      <HStack height='36px'>
         <Heading size='lg'>
           {props.title}
         </Heading>

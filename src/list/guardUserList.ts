@@ -1,4 +1,4 @@
-import { Doc, Id } from '../../_generated/dataModel'
+import { Doc, Id } from '../../convex/_generated/dataModel'
 import { ConvexError } from 'convex/values'
 import { Ctx } from '../convex/convexTypes'
 

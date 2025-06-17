@@ -1,9 +1,12 @@
-import { JSX, useState } from 'react'
+import { JSX, ReactNode, useState } from 'react'
 import { LongRowmanceRobe, ReelingRobe } from 'robes'
-import ListCells from './ListCells'
-import { ListTableProps } from './listTypes'
+import AuthListCells from './AuthListCells'
+import { Doc } from '../../convex/_generated/dataModel'
 
-export default function ListsTable (props: ListTableProps): JSX.Element {
+export default function ListsTable (props: {
+  columns: ReactNode[]
+  docs?: Array<Doc<'lists'>>
+}): JSX.Element {
   const [query, setQuery] = useState<string>()
   if (props.docs == null) {
     return <ReelingRobe size='20px' />
@@ -23,8 +26,8 @@ export default function ListsTable (props: ListTableProps): JSX.Element {
   })
   return (
     <LongRowmanceRobe
-      columns={['Name', '']}
-      Cells={ListCells}
+      columns={props.columns}
+      Cells={AuthListCells}
       data={filtered}
       filter={filter}
     />

@@ -1,13 +1,9 @@
-import contextCreator from 'context-creator'
 import { api } from '../../convex/_generated/api'
-import { useQuery } from 'convex/react'
+import queryContext from '../arched/queryContext'
 
-const publicListsQueryContext = contextCreator({
+const publicListsQueryContext = queryContext({
   name: 'publicListsQuery',
-  useValue: () => {
-    const result = useQuery(api.lists.getPublic)
-    return result
-  }
+  query: api.lists.getPublic
 })
 
 export default publicListsQueryContext

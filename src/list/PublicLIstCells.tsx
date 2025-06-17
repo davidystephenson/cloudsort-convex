@@ -6,7 +6,7 @@ import ListMenu from './ListMenu'
 import ClinkRobe from 'clink-robe'
 import ListLabel from './ListLabel'
 
-export default function ListCells (props: {
+export default function PublicListCells (props: {
   row: Doc<'lists'>
 }): JSX.Element {
   const path = `/list/${props.row._id}`
@@ -17,6 +17,7 @@ export default function ListCells (props: {
           <ListLabel />
         </ClinkRobe>
       </Td>
+      <Td>{props.row.userName}</Td>
       <Td><ListMenu /></Td>
     </listContext.Provider>
   )

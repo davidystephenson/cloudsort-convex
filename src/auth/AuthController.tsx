@@ -1,6 +1,6 @@
 import { JSX, ReactNode } from 'react'
-import AuthUser from './AuthUser'
-import authUserQueryContext from './authUserQueryContext'
+import AuthConsumer from './AuthConsumer'
+import authContext from './authContext'
 import { useConvexAuth } from 'convex/react'
 
 export default function AuthController (props: {
@@ -12,10 +12,10 @@ export default function AuthController (props: {
     return <>{props.children}</>
   }
   return (
-    <authUserQueryContext.Provider>
-      <AuthUser>
+    <authContext.Provider>
+      <AuthConsumer>
         {props.children}
-      </AuthUser>
-    </authUserQueryContext.Provider>
+      </AuthConsumer>
+    </authContext.Provider>
   )
 }

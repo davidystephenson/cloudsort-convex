@@ -14,7 +14,8 @@ const schema = defineSchema({
     createdAt: v.number(),
     name: v.string(),
     public: v.boolean(),
-    userId: v.id('users')
+    userId: v.id('users'),
+    userName: v.string()
   })
     .index('user', ['userId'])
     .index('name', ['name'])
