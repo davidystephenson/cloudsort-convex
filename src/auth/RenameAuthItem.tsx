@@ -1,12 +1,12 @@
 import { JSX } from 'react'
 import { MenuItem } from '@chakra-ui/react'
 import { MdEdit } from 'react-icons/md'
-import authActionsContext from './authActionsContext'
+import renameAuthContext from './renameAuthContext'
 
 export default function RenameAuthItem (): JSX.Element {
-  const authUser = authActionsContext.use()
+  const rename = renameAuthContext.use()
   function handleClick (): void {
-    authUser.rename.activate()
+    rename.activate()
   }
   return (
     <MenuItem icon={<MdEdit />} onClick={handleClick}>

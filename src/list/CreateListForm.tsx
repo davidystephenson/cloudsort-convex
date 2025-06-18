@@ -42,6 +42,7 @@ export default function CreateListForm (): JSX.Element {
         size='xs'
         value={name}
         width='100%'
+        autoFocus
       />
       <ButtonGroup isAttached>
         {button}

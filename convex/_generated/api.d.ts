@@ -22,8 +22,8 @@ import type * as getUserByName from "../getUserByName.js";
 import type * as http from "../http.js";
 import type * as lists from "../lists.js";
 import type * as normalizeListId from "../normalizeListId.js";
+import type * as renameAuth from "../renameAuth.js";
 import type * as renameList from "../renameList.js";
-import type * as renameUser from "../renameUser.js";
 import type * as users from "../users.js";
 
 /**
@@ -44,8 +44,8 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   lists: typeof lists;
   normalizeListId: typeof normalizeListId;
+  renameAuth: typeof renameAuth;
   renameList: typeof renameList;
-  renameUser: typeof renameUser;
   users: typeof users;
 }>;
 export declare const api: FilterApi<
