@@ -1,24 +1,15 @@
 import { JSX, useState } from 'react'
-import { InlineFormRobe } from 'robes'
 import createListContext from './createListContext'
+import ArchedInlineFormRobe from '../arched-robes/ArchedFormRobe'
 
 export default function CreateListForm (): JSX.Element {
-  const createList = createListContext.use()
   const [name, setName] = useState('')
-  if (!createList.active) {
-    return <></>
-  }
-  function handleCancel (): void {
-    createList.deactivate()
-  }
-  function handleSubmit (): void {
-    void createList.act({ name })
-  }
   return (
-    <InlineFormRobe
+    <ArchedInlineFormRobe
+      args={{ name }}
+      context={createListContext}
+      form={{ width: '100%', stack: { width: '100%' } }}
       label='Create list'
-      onCancel={handleCancel}
-      onSubmit={handleSubmit}
       onValueChange={setName}
       value={name}
     />

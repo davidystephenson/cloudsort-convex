@@ -1,24 +1,15 @@
 import { JSX, useState } from 'react'
-import { InlineFormRobe } from 'robes'
 import renameAuthContext from './renameAuthContext'
+import ArchedInlineFormRobe from '../arched-robes/ArchedFormRobe'
 
 export default function AuthRenameForm (): JSX.Element {
-  const rename = renameAuthContext.use()
   const [name, setName] = useState('')
-  if (!rename.active) {
-    return <></>
-  }
-  function handleCancel (): void {
-    rename.deactivate()
-  }
-  function handleSubmit (): void {
-    void rename.act({ name })
-  }
   return (
-    <InlineFormRobe
+    <ArchedInlineFormRobe
+      args={{ name }}
+      context={renameAuthContext}
+      form={{ stack: { width: '300px' } }}
       label='Rename user'
-      onCancel={handleCancel}
-      onSubmit={handleSubmit}
       onValueChange={setName}
       value={name}
     />

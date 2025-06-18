@@ -1,23 +1,19 @@
 import { JSX } from 'react'
-import { InlineFormRobe } from 'robes'
+import { FormRobeProps, InlineFormRobe } from 'robes'
 import { ContextCreation } from 'context-creator'
-import { DefaultFunctionArgs, FunctionReference } from 'convex/server'
 import { Action } from '../action/actionTypes'
 
-export default function ArchedFormRobe <
-  Data,
-  Args extends DefaultFunctionArgs,
-  Mutation extends FunctionReference<
-  'mutation', 'public', Args, Data
-  >,
+export default function ArchedInlineFormRobe <
+  Args, ReturnType
 > (props: {
-  context: ContextCreation<Action<Mutation['_args'], Mutation['_returnType']>, {}>
+  args: Args
+  context: ContextCreation<Action<Args, ReturnType>, {}>
+  form?: FormRobeProps
   label: string
   onValueChange: (value: string) => void
   value: string
-} & Mutation['_args']): JSX.Element {
-  const { context, label, value, onValueChange, ...rest } = props
-  const action = context.use()
+}): JSX.Element {
+  const action = props.context.use()
   if (!action.active) {
     return <></>
   }
@@ -25,15 +21,16 @@ export default function ArchedFormRobe <
     action.deactivate()
   }
   function handleSubmit (): void {
-    void action.act(rest as unknown as Mutation['_args'])
+    void action.act(props.args)
   }
   return (
     <InlineFormRobe
-      label={label}
+      form={props.form}
+      label={props.label}
       onCancel={handleCancel}
       onSubmit={handleSubmit}
-      onValueChange={onValueChange}
-      value={value}
+      onValueChange={props.onValueChange}
+      value={props.value}
     />
   )
 }
