@@ -2,7 +2,7 @@ import { v } from 'convex/values'
 import { query } from './_generated/server'
 import getAuthId from '../src/auth/getAuthId'
 
-export const q = query({
+const getList = query({
   args: {
     listId: v.id('lists')
   },
@@ -18,3 +18,4 @@ export const q = query({
     return list
   }
 })
+export default getList

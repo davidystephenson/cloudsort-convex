@@ -1,7 +1,7 @@
 import { query } from './_generated/server'
 import { v } from 'convex/values'
 
-export const q = query({
+const getUserByName = query({
   args: {
     name: v.string()
   },
@@ -14,3 +14,4 @@ export const q = query({
     return user
   }
 })
+export default getUserByName

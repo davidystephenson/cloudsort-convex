@@ -1,11 +1,11 @@
 import { ReactNode } from 'react'
 import ListConsumer from './ListConsumer'
 import { listQueryContext } from './listQueryContext'
-import { listIdQueryContext } from './listIdQueryContext'
+import { listIdContext } from './listIdQueryContext'
 import ListNotFound from './ListNotFound'
 
 export default function ListIdConsumer (): ReactNode {
-  const query = listIdQueryContext.query.use()
+  const query = listIdContext.query.use()
   if (query.loading) {
     return <ListConsumer />
   }

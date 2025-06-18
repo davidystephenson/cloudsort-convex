@@ -5,7 +5,7 @@ import { useQuery } from 'convex/react'
 const authListsQueryContext = contextCreator({
   name: 'authListsQuery',
   useValue: () => {
-    const result = useQuery(api.getAuthLists.q)
+    const result = useQuery(api.getAuthLists.default)
     return result
   }
 })

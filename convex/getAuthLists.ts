@@ -1,7 +1,7 @@
 import { query } from './_generated/server'
 import guardAuthId from '../src/auth/guardAuthId'
 
-export const q = query({
+const getAuthLists = query({
   handler: async (ctx) => {
     const userId = await guardAuthId({ ctx })
     const userLists = await ctx.db
@@ -11,3 +11,4 @@ export const q = query({
     return userLists
   }
 })
+export default getAuthLists

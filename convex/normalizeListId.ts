@@ -1,7 +1,7 @@
 import { query } from './_generated/server'
 import { v } from 'convex/values'
 
-export const q = query({
+const normalizeListId = query({
   args: {
     listId: v.string()
   },
@@ -17,3 +17,4 @@ export const q = query({
     return listId
   }
 })
+export default normalizeListId

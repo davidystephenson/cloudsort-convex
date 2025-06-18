@@ -3,5 +3,5 @@ import queryContext from '../arched/queryContext'
 
 export const listQueryContext = queryContext({
   name: 'list',
-  query: api.getList.q
+  query: api.getList.default
 })

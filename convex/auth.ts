@@ -15,7 +15,7 @@ const authHub = convexAuth({
       if (typeof args.profile.name !== 'string') {
         throw new Error('Invalid name')
       }
-      const existingUser = await ctx.runQuery(api.getUserByName.q, {
+      const existingUser = await ctx.runQuery(api.getUserByName.default, {
         name: args.profile.name
       })
       if (existingUser != null) {
