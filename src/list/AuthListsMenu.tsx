@@ -2,15 +2,15 @@ import { MenuItem } from '@chakra-ui/react'
 import { JSX } from 'react'
 import { MdAdd } from 'react-icons/md'
 import { MenuRobe } from 'robes'
-import authActionsContext from '../auth/authActionsContext'
+import createListContext from './createListContext'
 
 export default function AuthListsMenu (): JSX.Element {
-  const authUser = authActionsContext.use()
-  if (authUser.createList.active) {
+  const createList = createListContext.use()
+  if (createList.active) {
     return <></>
   }
   function handleCreateList (): void {
-    authUser.createList.activate()
+    createList.activate()
   }
   return (
     <MenuRobe>

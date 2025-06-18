@@ -5,6 +5,9 @@ import renameAuthContext from './renameAuthContext'
 export default function AuthRenameForm (): JSX.Element {
   const rename = renameAuthContext.use()
   const [name, setName] = useState('')
+  if (!rename.active) {
+    return <></>
+  }
   function handleCancel (): void {
     rename.deactivate()
   }
@@ -13,10 +16,11 @@ export default function AuthRenameForm (): JSX.Element {
   }
   return (
     <InlineFormRobe
-      value={name}
+      label='Rename user'
       onCancel={handleCancel}
       onSubmit={handleSubmit}
       onValueChange={setName}
+      value={name}
     />
   )
 }
