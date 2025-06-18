@@ -1,6 +1,6 @@
 import { FormEvent, JSX, useState } from 'react'
 import { FormRobe, ImpressedRobe, InputRobe, RedIconButtonRobe } from 'robes'
-import { ButtonGroup } from '@chakra-ui/react'
+import { ButtonGroup, InputGroup, InputRightElement } from '@chakra-ui/react'
 import { MdClose } from 'react-icons/md'
 import renameAuthContext from './renameAuthContext'
 
@@ -15,8 +15,9 @@ export default function AuthRenameForm (): JSX.Element {
   const submit = named && (
     <ImpressedRobe
       error={rename.errorMessage}
-      type='submit'
       size='xs'
+      type='submit'
+      variant='ghost'
     >
       Change username
     </ImpressedRobe>
@@ -30,26 +31,30 @@ export default function AuthRenameForm (): JSX.Element {
   }
   return (
     <FormRobe
-      stack={{ alignItems: 'center', direction: 'row', width: '100%' }}
+      stack={{ alignItems: 'center', direction: 'row', width: '300px' }}
       onSubmit={handleSubmit}
     >
-      <InputRobe
-        width='100%'
-        placeholder='Change username'
-        value={name}
-        onChange={handleChange}
-        autoFocus
-      />
-      <ButtonGroup isAttached>
-        {submit}
-        <RedIconButtonRobe
-          aria-label='Cancel'
-          icon={<MdClose />}
-          onClick={handleCancel}
-          size='xs'
-          variant='solid'
+      <InputGroup width='100%'>
+        <InputRobe
+          width='100%'
+          placeholder='Change username'
+          value={name}
+          onChange={handleChange}
+          autoFocus
         />
-      </ButtonGroup>
+        <InputRightElement w='fit-content'>
+          <ButtonGroup isAttached mb='10px'>
+            {submit}
+            <RedIconButtonRobe
+              aria-label='Cancel'
+              icon={<MdClose />}
+              onClick={handleCancel}
+              size='xs'
+              variant='ghost'
+            />
+          </ButtonGroup>
+        </InputRightElement>
+      </InputGroup>
     </FormRobe>
   )
 }
