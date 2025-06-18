@@ -4,7 +4,7 @@ import AuthLists from './AuthLists'
 import { useConvexAuth } from 'convex/react'
 import authContext from '../auth/authContext'
 import ListsLoading from './ListsLoading'
-import publicListsQueryContext from './publicListsQueryContext'
+import publicListsContext from './publicListsContext'
 import LayoutPage from '../layout/LayoutPage'
 import { HStack } from '@chakra-ui/react'
 import { MdPublic } from 'react-icons/md'
@@ -14,7 +14,7 @@ export default function Lists (): JSX.Element {
   const auth = useConvexAuth()
   const authData = authContext.data.useMaybe()
   const authQuery = authContext.query.useMaybe()
-  const publicListsQuery = publicListsQueryContext.query.use()
+  const publicListsQuery = publicListsContext.query.use()
   if (auth.isLoading) {
     return <LayoutPage loading />
   }
@@ -24,7 +24,7 @@ export default function Lists (): JSX.Element {
   if (!authData.provided) {
     return (
       <LayoutPage
-        loading={publicListsQuery == null}
+        loading={publicListsQuery.loading}
         title={<HStack><span>Lists</span><MdPublic /></HStack>}
       >
         <PublicLists />

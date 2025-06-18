@@ -1,11 +1,11 @@
 import { ReactNode } from 'react'
-import publicListsQueryContext from './publicListsQueryContext'
+import publicListsContext from './publicListsContext'
 import Lists from './Lists'
 
 export default function ListsPage (): ReactNode {
   return (
-    <publicListsQueryContext.Provider>
+    <publicListsContext.Provider>
       <Lists />
-    </publicListsQueryContext.Provider>
+    </publicListsContext.Provider>
   )
 }

@@ -4,7 +4,7 @@ import CreateListForm from './CreateListForm'
 import { Heading, HStack } from '@chakra-ui/react'
 import ListsLoading from './ListsLoading'
 import LayoutTitle from '../layout/LayoutPage'
-import publicListsQueryContext from './publicListsQueryContext'
+import publicListsContext from './publicListsContext'
 import userContext from '../user/userContext'
 import AuthMenu from '../auth/AuthMenu'
 import AuthListsTitle from './AuthListsTitle'
@@ -16,7 +16,7 @@ import authContext from '../auth/authContext'
 export default function AuthLists (): ReactNode {
   const authLists = authListsQueryContext.use()
   const auth = authContext.data.use()
-  const publicLists = publicListsQueryContext.query.use()
+  const publicLists = publicListsContext.query.use()
   if (authLists === undefined || publicLists.loading) {
     return <ListsLoading />
   }

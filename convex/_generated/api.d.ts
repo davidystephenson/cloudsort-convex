@@ -17,6 +17,7 @@ import type * as auth from "../auth.js";
 import type * as createList from "../createList.js";
 import type * as getAuthLists from "../getAuthLists.js";
 import type * as getList from "../getList.js";
+import type * as getPublicLists from "../getPublicLists.js";
 import type * as getUserByName from "../getUserByName.js";
 import type * as http from "../http.js";
 import type * as lists from "../lists.js";
@@ -38,6 +39,7 @@ declare const fullApi: ApiFromModules<{
   createList: typeof createList;
   getAuthLists: typeof getAuthLists;
   getList: typeof getList;
+  getPublicLists: typeof getPublicLists;
   getUserByName: typeof getUserByName;
   http: typeof http;
   lists: typeof lists;
