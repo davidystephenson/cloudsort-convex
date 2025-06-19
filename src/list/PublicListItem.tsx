@@ -7,8 +7,8 @@ import unpublishListContext from './unpublishListContext'
 
 export default function PublicListItem (): JSX.Element {
   const list = listContext.use()
-  const args = { listId: list.doc._id }
-  if (list.doc.public) {
+  const args = { listId: list._id }
+  if (list.public) {
     return (
       <unpublishListContext.Provider args={args}>
         <UnpublishListItem />

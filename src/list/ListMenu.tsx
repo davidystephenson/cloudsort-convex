@@ -9,10 +9,10 @@ import deleteListContext from './deleteListContext'
 export default function ListMenu (): JSX.Element {
   const auth = authContext.data.useMaybe()
   const list = listContext.use()
-  if (!auth.provided || list.doc.userId !== auth.value._id) {
+  if (!auth.provided || list.userId !== auth.value._id) {
     return <></>
   }
-  const args = { listId: list.doc._id }
+  const args = { listId: list._id }
   return (
     <MenuRobe>
       <PublicListItem />
