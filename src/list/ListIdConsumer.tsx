@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import ListConsumer from './ListConsumer'
 import { listQueryContext } from './listQueryContext'
-import { listIdContext } from './listIdQueryContext'
+import { listIdContext } from './listIdContext'
 import ListNotFound from './ListNotFound'
 
 export default function ListIdConsumer (): ReactNode {

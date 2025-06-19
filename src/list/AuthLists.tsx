@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import authListsQueryContext from './authListsQueryContext'
+import authListsContext from './authListsContext'
 import CreateListForm from './CreateListForm'
 import { Heading, HStack } from '@chakra-ui/react'
 import ListsLoading from './ListsLoading'
@@ -14,21 +14,21 @@ import PublicLists from './PublicLists'
 import authContext from '../auth/authContext'
 
 export default function AuthLists (): ReactNode {
-  const authLists = authListsQueryContext.use()
-  const auth = authContext.data.use()
+  const auth = authContext.query.use()
+  const authLists = authListsContext.query.use()
   const publicLists = publicListsContext.query.use()
-  if (authLists === undefined || publicLists.loading) {
+  if (auth.loading || authLists.loading || publicLists.loading) {
     return <ListsLoading />
   }
   return (
-    <userContext.Provider doc={auth}>
+    <userContext.Provider doc={auth.data}>
       <LayoutTitle title={<AuthListsTitle />} menu={<AuthMenu />}>
         <HStack width='100%' height='32px'>
           <Heading size='md'>Lists</Heading>
           <AuthListsMenu />
           <CreateListForm />
         </HStack>
-        <ListsTable columns={['Name', '']} docs={authLists} />
+        <ListsTable columns={['Name', '']} docs={authLists.data} />
         <PublicLists />
       </LayoutTitle>
     </userContext.Provider>

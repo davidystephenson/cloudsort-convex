@@ -2,7 +2,7 @@ import { JSX } from 'react'
 import { listQueryContext } from './listQueryContext'
 import ListNotFound from './ListNotFound'
 import LayoutPage from '../layout/LayoutPage'
-import { listIdContext } from './listIdQueryContext'
+import { listIdContext } from './listIdContext'
 import ListTitle from './ListTitle'
 import listContext from './listContext'
 

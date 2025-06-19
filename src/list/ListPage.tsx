@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { useParams } from 'react-router-dom'
 import ListNotFound from './ListNotFound'
-import { listIdContext } from './listIdQueryContext'
+import { listIdContext } from './listIdContext'
 import ListIdConsumer from './ListIdConsumer'
 
 export default function ListPage (): ReactNode {

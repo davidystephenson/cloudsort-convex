@@ -1,5 +1,5 @@
 import { JSX } from 'react'
-import authListsQueryContext from './authListsQueryContext'
+import authListsContext from './authListsContext'
 import AuthLists from './AuthLists'
 import { useConvexAuth } from 'convex/react'
 import authContext from '../auth/authContext'
@@ -32,8 +32,8 @@ export default function Lists (): JSX.Element {
     )
   }
   return (
-    <authListsQueryContext.Provider>
+    <authListsContext.Provider>
       <AuthLists />
-    </authListsQueryContext.Provider>
+    </authListsContext.Provider>
   )
 }
