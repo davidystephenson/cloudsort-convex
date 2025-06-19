@@ -4,6 +4,7 @@ import DeleteListItem from './DeleteListItem'
 import listContext from './listContext'
 import PublicListItem from './PublicListItem'
 import authContext from '../auth/authContext'
+import deleteListContext from './deleteListContext'
 
 export default function ListMenu (): JSX.Element {
   const auth = authContext.data.useMaybe()
@@ -11,10 +12,13 @@ export default function ListMenu (): JSX.Element {
   if (!auth.provided || list.doc.userId !== auth.value._id) {
     return <></>
   }
+  const args = { listId: list.doc._id }
   return (
     <MenuRobe>
       <PublicListItem />
-      <DeleteListItem />
+      <deleteListContext.Provider args={args}>
+        <DeleteListItem />
+      </deleteListContext.Provider>
     </MenuRobe>
   )
 }

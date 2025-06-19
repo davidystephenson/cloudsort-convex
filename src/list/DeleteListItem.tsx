@@ -1,11 +1,11 @@
 import { JSX } from 'react'
-import listContext from './listContext'
 import { DeleteMenuItemRobe } from 'robes'
+import deleteListContext from './deleteListContext'
 
 export default function DeleteListItem (): JSX.Element {
-  const list = listContext.use()
+  const deleteList = deleteListContext.use()
   function handleClick (): void {
-    void list.delete()
+    void deleteList.act()
   }
   return (
     <DeleteMenuItemRobe onClick={handleClick}>

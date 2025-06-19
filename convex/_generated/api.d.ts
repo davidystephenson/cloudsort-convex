@@ -15,16 +15,18 @@ import type {
 } from "convex/server";
 import type * as auth from "../auth.js";
 import type * as createList from "../createList.js";
+import type * as deleteList from "../deleteList.js";
+import type * as getAuth from "../getAuth.js";
 import type * as getAuthLists from "../getAuthLists.js";
 import type * as getList from "../getList.js";
 import type * as getPublicLists from "../getPublicLists.js";
 import type * as getUserByName from "../getUserByName.js";
 import type * as http from "../http.js";
-import type * as lists from "../lists.js";
 import type * as normalizeListId from "../normalizeListId.js";
+import type * as publishList from "../publishList.js";
 import type * as renameAuth from "../renameAuth.js";
 import type * as renameList from "../renameList.js";
-import type * as users from "../users.js";
+import type * as unpublishList from "../unpublishList.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -37,16 +39,18 @@ import type * as users from "../users.js";
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   createList: typeof createList;
+  deleteList: typeof deleteList;
+  getAuth: typeof getAuth;
   getAuthLists: typeof getAuthLists;
   getList: typeof getList;
   getPublicLists: typeof getPublicLists;
   getUserByName: typeof getUserByName;
   http: typeof http;
-  lists: typeof lists;
   normalizeListId: typeof normalizeListId;
+  publishList: typeof publishList;
   renameAuth: typeof renameAuth;
   renameList: typeof renameList;
-  users: typeof users;
+  unpublishList: typeof unpublishList;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

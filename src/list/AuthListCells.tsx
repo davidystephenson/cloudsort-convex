@@ -1,10 +1,10 @@
 import { Td } from '@chakra-ui/react'
 import { Doc } from '../../convex/_generated/dataModel'
 import { JSX } from 'react'
-import listContext from './listContext'
 import ListMenu from './ListMenu'
 import ClinkRobe from 'clink-robe'
 import ListLabel from './ListLabel'
+import listContext from './listContext'
 
 export default function AuthListCells (props: {
   row: Doc<'lists'>

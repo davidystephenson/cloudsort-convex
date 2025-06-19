@@ -3,7 +3,7 @@ import queryContext from '../arched/queryContext'
 
 const authContext = queryContext({
   name: 'auth',
-  query: api.users.current
+  query: api.getAuth.default
 })
 
 export default authContext

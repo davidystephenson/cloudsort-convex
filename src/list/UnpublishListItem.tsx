@@ -1,12 +1,12 @@
 import { JSX } from 'react'
-import listContext from './listContext'
 import { MenuItem } from '@chakra-ui/react'
 import { MdPublicOff } from 'react-icons/md'
+import unpublishListContext from './unpublishListContext'
 
 export default function UnpublishListItem (): JSX.Element {
-  const list = listContext.use()
+  const unpublishList = unpublishListContext.use()
   function unpublish (): void {
-    void list.unpublish()
+    void unpublishList.act()
   }
   return (
     <MenuItem icon={<MdPublicOff />} onClick={unpublish}>
