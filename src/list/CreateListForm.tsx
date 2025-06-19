@@ -1,15 +1,15 @@
 import { JSX, useState } from 'react'
 import createListContext from './createListContext'
-import ArchedInlineFormRobe from '../arched-robes/ArchedFormRobe'
+import { InlineActorFormRobe } from 'robes'
 
 export default function CreateListForm (): JSX.Element {
+  const createList = createListContext.use()
   const [name, setName] = useState('')
   return (
-    <ArchedInlineFormRobe
-      args={{ name }}
-      context={createListContext}
+    <InlineActorFormRobe
+      actor={createList}
+      input={{ name }}
       form={{ width: '100%', stack: { width: '100%' } }}
-      label='Create list'
       onValueChange={setName}
       value={name}
     />

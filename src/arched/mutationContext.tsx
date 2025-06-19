@@ -1,7 +1,7 @@
 import contextCreator, { ContextCreation } from 'context-creator'
 import useArchedMutation from './useArchedMutation'
-import { Action } from '../action/actionTypes'
 import { DefaultFunctionArgs, FunctionReference } from 'convex/server'
+import { Actor } from 'use-actor'
 
 export default function mutationContext <
   Args extends DefaultFunctionArgs,
@@ -12,11 +12,11 @@ export default function mutationContext <
 > (props: {
   mutation: Mutation
   name: string
-}): ContextCreation<Action<Mutation['_args'], Mutation['_returnType']>, {}> {
+}): ContextCreation<Actor<Mutation['_args'], Mutation['_returnType']>, {}> {
   const context = contextCreator({
     name: props.name,
     useValue: () => {
-      const mutation = useArchedMutation({ mutation: props.mutation })
+      const mutation = useArchedMutation({ label: props.name, mutation: props.mutation })
       return mutation
     }
   })

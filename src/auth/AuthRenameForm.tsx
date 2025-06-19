@@ -1,15 +1,15 @@
 import { JSX, useState } from 'react'
 import renameAuthContext from './renameAuthContext'
-import ArchedInlineFormRobe from '../arched-robes/ArchedFormRobe'
+import { InlineActorFormRobe } from 'robes'
 
 export default function AuthRenameForm (): JSX.Element {
+  const rename = renameAuthContext.use()
   const [name, setName] = useState('')
   return (
-    <ArchedInlineFormRobe
-      args={{ name }}
-      context={renameAuthContext}
+    <InlineActorFormRobe
+      actor={rename}
+      input={{ name }}
       form={{ stack: { width: '300px' } }}
-      label='Rename user'
       onValueChange={setName}
       value={name}
     />

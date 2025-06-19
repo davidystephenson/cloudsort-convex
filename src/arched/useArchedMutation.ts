@@ -1,7 +1,6 @@
 import { useMutation } from 'convex/react'
-import useAction from '../action/useAction'
-import { Action } from '../action/actionTypes'
 import { DefaultFunctionArgs, FunctionReference } from 'convex/server'
+import { Actor, useActor } from 'use-actor'
 
 export default function useArchedMutation <
   Data,
@@ -10,11 +9,13 @@ export default function useArchedMutation <
   'mutation', 'public', Args, Data
   >,
 > (props: {
+  label: string
   mutation: Mutation
-}): Action<Mutation['_args'], Mutation['_returnType']> {
+}): Actor<Mutation['_args'], Mutation['_returnType']> {
   const mutation = useMutation(props.mutation)
-  const action = useAction({
-    action: mutation as unknown as (args: Mutation['_args']) => Promise<Mutation['_returnType']>
+  const action = useActor({
+    action: mutation as unknown as (args: Mutation['_args']) => Promise<Mutation['_returnType']>,
+    label: props.label
   })
   return action
 }

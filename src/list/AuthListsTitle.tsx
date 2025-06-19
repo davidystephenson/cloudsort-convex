@@ -9,9 +9,5 @@ export default function AuthListsTitle (): JSX.Element {
   if (rename.active) {
     return <AuthRenameForm />
   }
-  return (
-    <>
-      {auth.name}
-    </>
-  )
+  return <>{auth.name}</>
 }
