@@ -12,6 +12,7 @@ import ListsTable from './ListsTable'
 import AuthListsMenu from './AuthListsMenu'
 import PublicLists from './PublicLists'
 import authContext from '../auth/authContext'
+import AuthListCells from './AuthListCells'
 
 export default function AuthLists (): ReactNode {
   const auth = authContext.query.use()
@@ -28,7 +29,11 @@ export default function AuthLists (): ReactNode {
           <AuthListsMenu />
           <CreateListForm />
         </HStack>
-        <ListsTable columns={['Name', '']} docs={authLists.data} />
+        <ListsTable
+          cells={AuthListCells}
+          columns={['Name', '']}
+          docs={authLists.data}
+        />
         <PublicLists />
       </LayoutTitle>
     </userContext.Provider>

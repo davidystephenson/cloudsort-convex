@@ -1,9 +1,9 @@
-import { JSX, ReactNode, useState } from 'react'
+import { ComponentType, JSX, ReactNode, useState } from 'react'
 import { LongRowmanceRobe, ReelingRobe } from 'robes'
-import AuthListCells from './AuthListCells'
 import { Doc } from '../../convex/_generated/dataModel'
 
 export default function ListsTable (props: {
+  cells: ComponentType<{ index: number, row: Doc<'lists'> }>
   columns: ReactNode[]
   docs?: Array<Doc<'lists'>>
 }): JSX.Element {
@@ -27,7 +27,7 @@ export default function ListsTable (props: {
   return (
     <LongRowmanceRobe
       columns={props.columns}
-      Cells={AuthListCells}
+      Cells={props.cells}
       data={filtered}
       filter={filter}
     />
