@@ -6,13 +6,12 @@ import ListsLoading from './ListsLoading'
 import LayoutTitle from '../layout/LayoutPage'
 import publicListsContext from './publicListsContext'
 import userContext from '../user/userContext'
-import AuthMenu from '../auth/AuthMenu'
+import UserMenu from '../user/UserMenu'
 import AuthListsTitle from './AuthListsTitle'
-import ListsTable from './ListsTable'
 import AuthListsMenu from './AuthListsMenu'
 import PublicLists from './PublicLists'
 import authContext from '../auth/authContext'
-import AuthListCells from './AuthListCells'
+import UserListsTable from './UserListsTable'
 
 export default function AuthLists (): ReactNode {
   const auth = authContext.query.use()
@@ -21,20 +20,17 @@ export default function AuthLists (): ReactNode {
   if (auth.loading || authLists.loading || publicLists.loading) {
     return <ListsLoading />
   }
+  const filtered = publicLists.data.filter((list) => list.userId !== auth.data._id)
   return (
     <userContext.Provider doc={auth.data}>
-      <LayoutTitle title={<AuthListsTitle />} menu={<AuthMenu />}>
+      <LayoutTitle title={<AuthListsTitle />} menu={<UserMenu />}>
         <HStack width='100%' height='32px'>
           <Heading size='md'>Lists</Heading>
           <AuthListsMenu />
           <CreateListForm />
         </HStack>
-        <ListsTable
-          cells={AuthListCells}
-          columns={['Name', '']}
-          docs={authLists.data}
-        />
-        <PublicLists />
+        <UserListsTable docs={authLists.data} />
+        <PublicLists docs={filtered} />
       </LayoutTitle>
     </userContext.Provider>
   )

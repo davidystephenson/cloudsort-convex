@@ -1,24 +1,20 @@
 import { JSX } from 'react'
-import { MenuRobe } from 'robes'
-import DeleteListItem from './DeleteListItem'
+import { MenuRobe, LinkMenuItemRobe } from 'robes'
 import listContext from './listContext'
-import PublicListItem from './PublicListItem'
-import authContext from '../auth/authContext'
-import deleteListContext from './deleteListContext'
+import PrivateListItems from './PrivateListItems'
 
 export default function ListMenu (): JSX.Element {
-  const auth = authContext.data.useMaybe()
   const list = listContext.use()
-  if (!auth.provided || list.userId !== auth.value._id) {
-    return <></>
+  const url = `${window.location.origin}/list/${list._id}`
+  function handleLink (): void {
+    void window.navigator.clipboard.writeText(url)
   }
-  const args = { listId: list._id }
   return (
     <MenuRobe>
-      <PublicListItem />
-      <deleteListContext.Provider args={args}>
-        <DeleteListItem />
-      </deleteListContext.Provider>
+      <LinkMenuItemRobe onClick={handleLink}>
+        Copy List Link
+      </LinkMenuItemRobe>
+      <PrivateListItems />
     </MenuRobe>
   )
 }

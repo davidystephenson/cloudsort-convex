@@ -6,7 +6,7 @@ import ClinkRobe from 'clink-robe'
 import ListLabel from './ListLabel'
 import listContext from './listContext'
 
-export default function AuthListCells (props: {
+export default function UserListCells (props: {
   row: Doc<'lists'>
 }): JSX.Element {
   const path = `/list/${props.row._id}`

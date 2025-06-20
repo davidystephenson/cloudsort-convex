@@ -1,10 +1,11 @@
-import { Heading } from '@chakra-ui/react'
+import { Heading, HStack } from '@chakra-ui/react'
 import { ReactNode } from 'react'
 import publicListsContext from '../list/publicListsContext'
 import LayoutLoading from '../layout/LayoutLoading'
 import { useParams } from 'react-router-dom'
 import LayoutNotFound from '../layout/LayoutNotFound'
-import PublicListsTable from '../list/PublicListsTable'
+import UserPageMenu from './UserPageMenu'
+import UserListsTable from '../list/UserListsTable'
 
 export default function UserLists (): ReactNode {
   const params = useParams()
@@ -19,10 +20,11 @@ export default function UserLists (): ReactNode {
   const first = filtered[0]
   return (
     <>
-      <Heading size='md'>
-        {first.userName}
-      </Heading>
-      <PublicListsTable docs={filtered} />
+      <HStack>
+        <Heading size='lg'>{first.userName}</Heading>
+        <UserPageMenu />
+      </HStack>
+      <UserListsTable docs={filtered} />
     </>
   )
 }

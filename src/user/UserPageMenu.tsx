@@ -1,12 +1,11 @@
 import { ReactNode } from 'react'
-import { useParams } from 'react-router-dom'
 import authContext from '../auth/authContext'
 import LayoutReeling from '../layout/LayoutReeling'
-import AuthMenu from '../auth/AuthMenu'
+import UserMenu from './UserMenu'
+import userContext from './userContext'
 
 export default function UserPageMenu (): ReactNode {
   const auth = authContext.query.useMaybe()
-  const params = useParams()
 
   if (!auth.provided) {
     return <></>
@@ -14,8 +13,9 @@ export default function UserPageMenu (): ReactNode {
   if (auth.value.loading) {
     return <LayoutReeling />
   }
-  if (auth.value.data._id !== params.userId) {
-    return <></>
-  }
-  return <AuthMenu />
+  return (
+    <userContext.Provider doc={auth.value.data}>
+      <UserMenu />
+    </userContext.Provider>
+  )
 }
