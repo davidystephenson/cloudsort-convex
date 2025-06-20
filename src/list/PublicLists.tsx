@@ -1,18 +1,13 @@
 import { Heading, HStack } from '@chakra-ui/react'
 import { JSX } from 'react'
 import { MdPublic } from 'react-icons/md'
-import ListsTable from './ListsTable'
-import publicListsContext from './publicListsContext'
-import authContext from '../auth/authContext'
-import PublicListCells from './PublicLIstCells'
+import { Doc } from '../../convex/_generated/dataModel'
+import PublicListsTable from './PublicListsTable'
 
-export default function PublicLists (): JSX.Element {
-  const auth = authContext.data.useMaybe()
-  const publicLists = publicListsContext.data.use()
-  const filtered = auth.provided
-    ? publicLists.filter((list) => list.userId !== auth.value._id)
-    : publicLists
-  if (filtered.length === 0) {
+export default function PublicLists (props: {
+  docs?: Array<Doc<'lists'>>
+}): JSX.Element {
+  if (props.docs == null || props.docs.length === 0) {
     return <></>
   }
   return (
@@ -20,11 +15,7 @@ export default function PublicLists (): JSX.Element {
       <Heading size='md'>
         <HStack><span>Public</span><MdPublic /></HStack>
       </Heading>
-      <ListsTable
-        cells={PublicListCells}
-        columns={['List', 'User', '']}
-        docs={filtered}
-      />
+      <PublicListsTable docs={props.docs} />
     </>
   )
 }

@@ -14,7 +14,7 @@ export default function Lists (): JSX.Element {
   const auth = useConvexAuth()
   const authData = authContext.data.useMaybe()
   const authQuery = authContext.query.useMaybe()
-  const publicListsQuery = publicListsContext.query.use()
+  const publicLists = publicListsContext.query.use()
   if (auth.isLoading) {
     return <LayoutPage loading />
   }
@@ -24,10 +24,10 @@ export default function Lists (): JSX.Element {
   if (!authData.provided) {
     return (
       <LayoutPage
-        loading={publicListsQuery.loading}
+        loading={publicLists.loading}
         title={<HStack><span>Lists</span><MdPublic /></HStack>}
       >
-        <PublicLists />
+        <PublicLists docs={publicLists.data} />
       </LayoutPage>
     )
   }

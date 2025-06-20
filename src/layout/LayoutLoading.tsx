@@ -1,9 +1,9 @@
 import { Box, Heading, HStack } from '@chakra-ui/react'
 import { JSX, ReactNode } from 'react'
-import { Reeling } from 'reeling'
+import LayoutReeling from './LayoutReeling'
 
 export default function LayoutLoading (props: {
-  children: ReactNode
+  children?: ReactNode
 }): JSX.Element {
   return (
     <Heading size='lg'>
@@ -11,7 +11,7 @@ export default function LayoutLoading (props: {
         <Box>
           {props.children}
         </Box>
-        <Reeling size='35px' />
+        <LayoutReeling />
       </HStack>
     </Heading>
   )
