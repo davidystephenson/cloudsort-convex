@@ -1,14 +1,18 @@
 import { JSX } from 'react'
-import { UserBase } from '../list/listTypes'
 import { Td } from '@chakra-ui/react'
+import UserMenu from './UserMenu'
+import { RelatedUser } from './userTypes'
 import userContext from './userContext'
 
 export default function UserCells (props: {
-  row: UserBase
+  row: RelatedUser
 }): JSX.Element {
   return (
-    <userContext.Provider doc={props.row}>
+    <userContext.Provider user={props.row}>
       <Td>{props.row.name}</Td>
+      <Td>
+        <UserMenu />
+      </Td>
     </userContext.Provider>
   )
 }

@@ -1,12 +1,12 @@
 import contextCreator from 'context-creator'
-import { UserBase } from '../list/listTypes'
+import { RelatedUser } from './userTypes'
 
 const userContext = contextCreator({
   name: 'user',
   useValue: (props: {
-    doc: UserBase
+    user: RelatedUser
   }) => {
-    return props.doc
+    return props.user
   }
 })
 

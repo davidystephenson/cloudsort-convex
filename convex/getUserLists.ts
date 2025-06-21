@@ -5,6 +5,7 @@ import getAuthId from '../src/auth/getAuthId'
 import { Doc } from './_generated/dataModel'
 import relateList from '../src/list/relateList'
 import { RelatedList } from '../src/list/listTypes'
+import guardRelatedUser from '../src/user/guardRelatedUser'
 
 const getUserLists = query({
   args: {
@@ -31,17 +32,19 @@ const getUserLists = query({
     } catch (error) {
       throw new ConvexError('User not found')
     }
+    const auth = await getAuthId({ ctx })
     const followers = await ctx
       .db
       .query('follows')
       .withIndex('followed', (q) => q.eq('followedId', args.userId))
       .collect()
     const followerPromises = followers.map(async (f) => {
-      const follower = await guard({ ctx, id: f.followerId })
-      return {
-        _id: follower._id,
-        name: follower.name
-      }
+      const user = await guardRelatedUser({
+        ctx,
+        userId: f.followerId,
+        authId: auth
+      })
+      return user
     })
     const followerUsers = await Promise.all(followerPromises)
     const followeds = await ctx
@@ -50,37 +53,40 @@ const getUserLists = query({
       .withIndex('follower', (q) => q.eq('followerId', args.userId))
       .collect()
     const followedPromises = followeds.map(async (f) => {
-      const followed = await guard({ ctx, id: f.followedId })
-      return {
-        _id: followed._id,
-        name: followed.name
-      }
+      const user = await guardRelatedUser({
+        ctx,
+        userId: f.followedId,
+        authId: auth
+      })
+      return user
     })
     const followedUsers = await Promise.all(followedPromises)
-    const _public = {
-      user: {
-        _id: user._id,
-        name: user.name
-      },
-      lists,
-      followers: followerUsers,
-      followeds: followedUsers
-    }
-    const auth = await getAuthId({ ctx })
     if (auth == null) {
       const userLists = {
-        ..._public,
-        follower: false,
-        followed: false
+        user: {
+          follower: false,
+          followed: false,
+          _id: user._id,
+          name: user.name
+        },
+        lists,
+        followers: followerUsers,
+        followeds: followedUsers
       }
       return userLists
     }
     const follower = followers.some((f) => f.followerId === auth)
     const followed = followeds.some((f) => f.followedId === auth)
     const userLists = {
-      ..._public,
-      follower,
-      followed
+      user: {
+        follower,
+        followed,
+        _id: user._id,
+        name: user.name
+      },
+      lists,
+      followers: followerUsers,
+      followeds: followedUsers
     }
     return userLists
   }

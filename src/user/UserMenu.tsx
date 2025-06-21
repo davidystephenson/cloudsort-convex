@@ -2,14 +2,11 @@ import { JSX } from 'react'
 import { LinkMenuItemRobe, MenuRobe } from 'robes'
 import RenameAuthItem from '../auth/RenameAuthItem'
 import FollowingItem from '../follow/FollowingItem'
-import userBaseContext from './userBaseContext'
+import userContext from './userContext'
 
-export default function UserMenu (props: {
-  follow: boolean
-  unfollow: boolean
-}): JSX.Element {
-  const userBase = userBaseContext.use()
-  const url = `${window.location.origin}/user/${userBase._id}`
+export default function UserMenu (): JSX.Element {
+  const user = userContext.use()
+  const url = `${window.location.origin}/user/${user._id}`
   function handleLink (): void {
     void window.navigator.clipboard.writeText(url)
   }
@@ -19,10 +16,7 @@ export default function UserMenu (props: {
         Copy Profile Link
       </LinkMenuItemRobe>
       <RenameAuthItem />
-      <FollowingItem
-        follow={props.follow}
-        unfollow={props.unfollow}
-      />
+      <FollowingItem />
     </MenuRobe>
   )
 }

@@ -1,5 +1,5 @@
 import contextCreator from 'context-creator'
-import { UserBase } from '../list/listTypes'
+import { UserBase } from './userTypes'
 
 const userBaseContext = contextCreator({
   name: 'userBase',

@@ -4,7 +4,7 @@ import LayoutReeling from '../layout/LayoutReeling'
 import UserMenu from './UserMenu'
 import userIdContext from './userIdContext'
 import userListsContext from './userListsContext'
-import userBaseContext from './userBaseContext'
+import userContext from './userContext'
 
 export default function UserPageMenu (): ReactNode {
   const auth = authContext.query.useMaybe()
@@ -16,13 +16,9 @@ export default function UserPageMenu (): ReactNode {
   if (auth.value.loading || userId.loading || userLists.loading) {
     return <LayoutReeling />
   }
-  const follow = userId.data !== auth.value.data._id && !userLists.data.follower
   return (
-    <userBaseContext.Provider user={userLists.data.user}>
-      <UserMenu
-        follow={follow}
-        unfollow={userLists.data.followed}
-      />
-    </userBaseContext.Provider>
+    <userContext.Provider user={userLists.data.user}>
+      <UserMenu />
+    </userContext.Provider>
   )
 }

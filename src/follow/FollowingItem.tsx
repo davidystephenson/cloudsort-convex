@@ -3,23 +3,27 @@ import followContext from './followContext'
 import FollowItem from './FollowItem'
 import UnfollowItem from './UnfollowItem'
 import unfollowContext from './unfollowContext'
-import userBaseContext from '../user/userBaseContext'
+import authContext from '../auth/authContext'
+import userContext from '../user/userContext'
 
-export default function FollowingItem (props: {
-  follow: boolean
-  unfollow: boolean
-}): JSX.Element {
-  const userBase = userBaseContext.use()
-  if (props.follow) {
+export default function FollowingItem (): JSX.Element {
+  const auth = authContext.data.useMaybe()
+  const user = userContext.useMaybe()
+  console.log('user', user)
+  if (!user.provided) {
+    return <></>
+  }
+  const follow = auth.provided && user.value._id !== auth.value._id && !user.value.follower
+  if (follow) {
     return (
-      <followContext.Provider args={{ userId: userBase._id }}>
+      <followContext.Provider args={{ userId: user.value._id }}>
         <FollowItem />
       </followContext.Provider>
     )
   }
-  if (props.unfollow) {
+  if (user.value.follower) {
     return (
-      <unfollowContext.Provider args={{ userId: userBase._id }}>
+      <unfollowContext.Provider args={{ userId: user.value._id }}>
         <UnfollowItem />
       </unfollowContext.Provider>
     )

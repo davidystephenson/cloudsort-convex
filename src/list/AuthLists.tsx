@@ -25,7 +25,7 @@ export default function AuthLists (): ReactNode {
     <userBaseContext.Provider user={auth.data}>
       <LayoutTitle
         title={<AuthListsTitle />}
-        menu={<UserMenu follow={false} unfollow={false} />}
+        menu={<UserMenu />}
       >
         <HStack width='100%' height='32px'>
           <Heading size='md'>Lists</Heading>
