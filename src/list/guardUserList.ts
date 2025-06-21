@@ -1,6 +1,6 @@
 import { Doc, Id } from '../../convex/_generated/dataModel'
 import { ConvexError } from 'convex/values'
-import { Ctx } from '../convex/convexTypes'
+import { Ctx } from '../arched/archedTypes'
 
 export default async function guardUserList (props: {
   ctx: Ctx

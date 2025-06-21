@@ -1,11 +1,11 @@
 import { Heading, HStack } from '@chakra-ui/react'
 import { JSX } from 'react'
 import { MdPublic } from 'react-icons/md'
-import { Doc } from '../../convex/_generated/dataModel'
 import PublicListsTable from './PublicListsTable'
+import { RelatedList } from './listTypes'
 
 export default function PublicLists (props: {
-  docs?: Array<Doc<'lists'>>
+  docs?: RelatedList[]
 }): JSX.Element {
   if (props.docs == null || props.docs.length === 0) {
     return <></>

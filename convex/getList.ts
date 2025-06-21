@@ -1,6 +1,7 @@
 import { v } from 'convex/values'
 import { query } from './_generated/server'
 import getAuthId from '../src/auth/getAuthId'
+import relateList from '../src/list/relateList'
 
 const getList = query({
   args: {
@@ -15,7 +16,8 @@ const getList = query({
     if (!list.public && list.userId !== authId) {
       return null
     }
-    return list
+    const related = await relateList({ ctx, authId, list })
+    return related
   }
 })
 export default getList

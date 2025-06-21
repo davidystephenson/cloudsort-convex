@@ -1,14 +1,16 @@
 import { query } from './_generated/server'
 import guardAuthId from '../src/auth/guardAuthId'
+import relateLists from '../src/list/relateLists'
 
 const getAuthLists = query({
   handler: async (ctx) => {
-    const userId = await guardAuthId({ ctx })
-    const userLists = await ctx.db
+    const authId = await guardAuthId({ ctx })
+    const lists = await ctx.db
       .query('lists')
-      .withIndex('user', (q) => q.eq('userId', userId))
+      .withIndex('user', (q) => q.eq('userId', authId))
       .collect()
-    return userLists
+    const related = await relateLists({ ctx, authId, lists })
+    return related
   }
 })
 export default getAuthLists

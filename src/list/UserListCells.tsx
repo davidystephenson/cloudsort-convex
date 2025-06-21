@@ -1,13 +1,13 @@
 import { Td } from '@chakra-ui/react'
-import { Doc } from '../../convex/_generated/dataModel'
 import { JSX } from 'react'
 import ListMenu from './ListMenu'
 import ClinkRobe from 'clink-robe'
 import ListLabel from './ListLabel'
 import listContext from './listContext'
+import { RelatedList } from './listTypes'
 
 export default function UserListCells (props: {
-  row: Doc<'lists'>
+  row: RelatedList
 }): JSX.Element {
   const path = `/list/${props.row._id}`
   return (

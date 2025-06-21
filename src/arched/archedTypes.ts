@@ -1,6 +1,7 @@
 import { ContextCreation } from 'context-creator'
 import { DefaultFunctionArgs, FunctionReference } from 'convex/server'
 import { ReactNode } from 'react'
+import { QueryCtx, MutationCtx } from '../../convex/_generated/server'
 
 export interface ArchedLoading {
   data: undefined
@@ -15,6 +16,8 @@ export interface ArchedLoaded<T> {
 export type ArchedResult<T> = ArchedLoading | ArchedLoaded<T>
 
 export type ArchedFound<T> = ArchedLoaded<NonNullable<T>>
+
+export type Ctx = QueryCtx | MutationCtx
 
 type Override<Base, K extends PropertyKey, V> =
   Base extends Record<string, never>

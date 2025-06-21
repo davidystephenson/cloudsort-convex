@@ -1,10 +1,10 @@
 import { JSX } from 'react'
 import ListsTable from './ListsTable'
 import PublicListCells from './PublicLIstCells'
-import { Doc } from '../../convex/_generated/dataModel'
+import { RelatedList } from './listTypes'
 
 export default function PublicListsTable (props: {
-  docs?: Array<Doc<'lists'>>
+  docs?: RelatedList[]
 }): JSX.Element {
   if (props.docs == null || props.docs.length === 0) {
     return <></>

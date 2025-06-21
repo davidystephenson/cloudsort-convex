@@ -25,8 +25,7 @@ const createList = mutation({
       name: args.name,
       createdAt: Date.now(),
       public: false,
-      userId,
-      userName: user.name
+      userId
     })
   }
 })

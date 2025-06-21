@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import LayoutNotFound from '../layout/LayoutNotFound'
 import UserPageMenu from './UserPageMenu'
 import UserListsTable from '../list/UserListsTable'
+import listContext from '../list/listContext'
 
 export default function UserLists (): ReactNode {
   const params = useParams()
@@ -19,12 +20,12 @@ export default function UserLists (): ReactNode {
   }
   const first = filtered[0]
   return (
-    <>
+    <listContext.Provider doc={first}>
       <HStack>
         <Heading size='lg'>{first.userName}</Heading>
         <UserPageMenu />
       </HStack>
       <UserListsTable docs={filtered} />
-    </>
+    </listContext.Provider>
   )
 }

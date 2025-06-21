@@ -5,13 +5,13 @@ import { Heading, HStack } from '@chakra-ui/react'
 import ListsLoading from './ListsLoading'
 import LayoutTitle from '../layout/LayoutPage'
 import publicListsContext from './publicListsContext'
-import userContext from '../user/userContext'
 import UserMenu from '../user/UserMenu'
 import AuthListsTitle from './AuthListsTitle'
 import AuthListsMenu from './AuthListsMenu'
 import PublicLists from './PublicLists'
 import authContext from '../auth/authContext'
 import UserListsTable from './UserListsTable'
+import userIdContext from '../user/userIdContext'
 
 export default function AuthLists (): ReactNode {
   const auth = authContext.query.use()
@@ -22,8 +22,11 @@ export default function AuthLists (): ReactNode {
   }
   const filtered = publicLists.data.filter((list) => list.userId !== auth.data._id)
   return (
-    <userContext.Provider doc={auth.data}>
-      <LayoutTitle title={<AuthListsTitle />} menu={<UserMenu />}>
+    <userIdContext.Provider userId={auth.data._id}>
+      <LayoutTitle
+        title={<AuthListsTitle />}
+        menu={<UserMenu follow={false} unfollow={false} />}
+      >
         <HStack width='100%' height='32px'>
           <Heading size='md'>Lists</Heading>
           <AuthListsMenu />
@@ -32,6 +35,6 @@ export default function AuthLists (): ReactNode {
         <UserListsTable docs={authLists.data} />
         <PublicLists docs={filtered} />
       </LayoutTitle>
-    </userContext.Provider>
+    </userIdContext.Provider>
   )
 }

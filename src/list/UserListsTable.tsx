@@ -1,10 +1,10 @@
 import { JSX } from 'react'
 import ListsTable from './ListsTable'
-import { Doc } from '../../convex/_generated/dataModel'
 import UserListCells from './UserListCells'
+import { RelatedList } from './listTypes'
 
 export default function UserListsTable (props: {
-  docs?: Array<Doc<'lists'>>
+  docs?: RelatedList[]
 }): JSX.Element {
   if (props.docs == null || props.docs.length === 0) {
     return <></>

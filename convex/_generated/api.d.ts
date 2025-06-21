@@ -16,6 +16,7 @@ import type {
 import type * as auth from "../auth.js";
 import type * as createList from "../createList.js";
 import type * as deleteList from "../deleteList.js";
+import type * as follow from "../follow.js";
 import type * as getAuth from "../getAuth.js";
 import type * as getAuthLists from "../getAuthLists.js";
 import type * as getList from "../getList.js";
@@ -26,6 +27,7 @@ import type * as normalizeListId from "../normalizeListId.js";
 import type * as publishList from "../publishList.js";
 import type * as renameAuth from "../renameAuth.js";
 import type * as renameList from "../renameList.js";
+import type * as unfollow from "../unfollow.js";
 import type * as unpublishList from "../unpublishList.js";
 
 /**
@@ -40,6 +42,7 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   createList: typeof createList;
   deleteList: typeof deleteList;
+  follow: typeof follow;
   getAuth: typeof getAuth;
   getAuthLists: typeof getAuthLists;
   getList: typeof getList;
@@ -50,6 +53,7 @@ declare const fullApi: ApiFromModules<{
   publishList: typeof publishList;
   renameAuth: typeof renameAuth;
   renameList: typeof renameList;
+  unfollow: typeof unfollow;
   unpublishList: typeof unpublishList;
 }>;
 export declare const api: FilterApi<

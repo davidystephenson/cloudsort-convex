@@ -1,11 +1,11 @@
 import { ComponentType, JSX, ReactNode, useState } from 'react'
 import { LongRowmanceRobe, ReelingRobe } from 'robes'
-import { Doc } from '../../convex/_generated/dataModel'
+import { RelatedList } from './listTypes'
 
 export default function ListsTable (props: {
-  cells: ComponentType<{ index: number, row: Doc<'lists'> }>
+  cells: ComponentType<{ index: number, row: RelatedList }>
   columns: ReactNode[]
-  docs?: Array<Doc<'lists'>>
+  docs?: RelatedList[]
 }): JSX.Element {
   const [query, setQuery] = useState<string>()
   if (props.docs == null) {

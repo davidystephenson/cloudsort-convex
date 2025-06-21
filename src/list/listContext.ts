@@ -1,8 +1,8 @@
-import { Doc } from '../../convex/_generated/dataModel'
 import contextCreator from 'context-creator'
+import { RelatedList } from './listTypes'
 
 const listContext = contextCreator({
   name: 'list',
-  useValue: (props: { doc: Doc<'lists'> }) => props.doc
+  useValue: (props: { doc: RelatedList }) => props.doc
 })
 export default listContext

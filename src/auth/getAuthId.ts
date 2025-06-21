@@ -1,6 +1,6 @@
 import { getAuthUserId } from '@convex-dev/auth/server'
 import { Id } from '../../convex/_generated/dataModel'
-import { Ctx } from '../convex/convexTypes'
+import { Ctx } from '../arched/archedTypes'
 
 export default async function getAuthId (props: {
   ctx: Ctx

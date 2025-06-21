@@ -1,5 +1,5 @@
 import { Id } from '../../convex/_generated/dataModel'
-import { Ctx } from '../convex/convexTypes'
+import { Ctx } from '../arched/archedTypes'
 import getAuthId from './getAuthId'
 
 export default async function guardAuthId (props: {
