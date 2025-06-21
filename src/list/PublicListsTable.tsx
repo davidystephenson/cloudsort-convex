@@ -1,6 +1,6 @@
 import { JSX } from 'react'
 import ListsTable from './ListsTable'
-import PublicListCells from './PublicLIstCells'
+import PublicListCells from './PublicListCells'
 import { RelatedList } from './listTypes'
 
 export default function PublicListsTable (props: {

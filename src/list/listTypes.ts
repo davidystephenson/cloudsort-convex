@@ -1,9 +1,10 @@
-import { Doc } from '../../convex/_generated/dataModel'
+import { Doc, Id } from '../../convex/_generated/dataModel'
 
-export interface ListRelation {
-  userName: string
-  userFollower: boolean
-  userFollowed: boolean
+export interface UserBase {
+  _id: Id<'users'>
+  name: string
 }
 
-export type RelatedList = Doc<'lists'> & ListRelation
+export interface RelatedList extends Doc<'lists'> {
+  user: UserBase
+}

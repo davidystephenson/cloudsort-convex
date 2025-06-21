@@ -20,7 +20,8 @@ const schema = defineSchema({
   })
     .index('user', ['userId'])
     .index('name', ['name'])
-    .index('public', ['public']),
+    .index('public', ['public'])
+    .index('userPublic', ['userId', 'public']),
   users: defineTable({
     name: v.string(),
     email: v.string()

@@ -20,7 +20,7 @@ export default function PublicListCells (props: {
       </Td>
       <Td>
         <ClinkRobe to={userPath}>
-          {props.row.userName}
+          {props.row.user.name}
         </ClinkRobe>
       </Td>
       <Td><ListMenu /></Td>

@@ -2,14 +2,14 @@ import { JSX } from 'react'
 import { MenuItem } from '@chakra-ui/react'
 import { MdEdit } from 'react-icons/md'
 import authContext from './authContext'
-import userIdContext from '../user/userIdContext'
 import renameAuthContext from './renameAuthContext'
+import userBaseContext from '../user/userBaseContext'
 
 export default function RenameAuthItem (): JSX.Element {
   const auth = authContext.data.useMaybe()
   const rename = renameAuthContext.use()
-  const userId = userIdContext.use()
-  if (rename.active || (auth.provided && userId !== auth.value._id)) {
+  const userBase = userBaseContext.use()
+  if (rename.active || (auth.provided && userBase._id !== auth.value._id)) {
     return <></>
   }
   function handleClick (): void {

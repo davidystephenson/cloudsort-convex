@@ -1,13 +1,9 @@
-import contextCreator from 'context-creator'
-import { Id } from '../../convex/_generated/dataModel'
+import { api } from '../../convex/_generated/api'
+import queryContext from '../arched/queryContext'
 
-const userIdContext = contextCreator({
+const userIdContext = queryContext({
   name: 'userId',
-  useValue: (props: {
-    userId: Id<'users'>
-  }) => {
-    return props.userId
-  }
+  query: api.normalizeUserId.default
 })
 
 export default userIdContext

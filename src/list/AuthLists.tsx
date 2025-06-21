@@ -11,7 +11,7 @@ import AuthListsMenu from './AuthListsMenu'
 import PublicLists from './PublicLists'
 import authContext from '../auth/authContext'
 import UserListsTable from './UserListsTable'
-import userIdContext from '../user/userIdContext'
+import userBaseContext from '../user/userBaseContext'
 
 export default function AuthLists (): ReactNode {
   const auth = authContext.query.use()
@@ -22,7 +22,7 @@ export default function AuthLists (): ReactNode {
   }
   const filtered = publicLists.data.filter((list) => list.userId !== auth.data._id)
   return (
-    <userIdContext.Provider userId={auth.data._id}>
+    <userBaseContext.Provider user={auth.data}>
       <LayoutTitle
         title={<AuthListsTitle />}
         menu={<UserMenu follow={false} unfollow={false} />}
@@ -35,6 +35,6 @@ export default function AuthLists (): ReactNode {
         <UserListsTable docs={authLists.data} />
         <PublicLists docs={filtered} />
       </LayoutTitle>
-    </userIdContext.Provider>
+    </userBaseContext.Provider>
   )
 }

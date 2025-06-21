@@ -1,10 +1,10 @@
 import contextCreator from 'context-creator'
-import { Doc } from '../../convex/_generated/dataModel'
+import { UserBase } from '../list/listTypes'
 
 const userContext = contextCreator({
   name: 'user',
   useValue: (props: {
-    doc: Doc<'users'>
+    doc: UserBase
   }) => {
     return props.doc
   }

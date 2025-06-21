@@ -1,31 +1,24 @@
 import { Heading, HStack } from '@chakra-ui/react'
 import { ReactNode } from 'react'
-import publicListsContext from '../list/publicListsContext'
 import LayoutLoading from '../layout/LayoutLoading'
-import { useParams } from 'react-router-dom'
-import LayoutNotFound from '../layout/LayoutNotFound'
 import UserPageMenu from './UserPageMenu'
 import UserListsTable from '../list/UserListsTable'
-import listContext from '../list/listContext'
+import userIdContext from './userIdContext'
+import userListsContext from './userListsContext'
 
 export default function UserLists (): ReactNode {
-  const params = useParams()
-  const publicLists = publicListsContext.query.use()
-  if (publicLists.loading) {
+  const userId = userIdContext.query.use()
+  const userLists = userListsContext.query.useMaybe()
+  if (userId.loading || !userLists.provided || userLists.value.loading) {
     return <LayoutLoading />
   }
-  const filtered = publicLists.data.filter((list) => list.userId === params.userId)
-  if (filtered.length === 0) {
-    return <LayoutNotFound>User {params.userId}</LayoutNotFound>
-  }
-  const first = filtered[0]
   return (
-    <listContext.Provider doc={first}>
+    <>
       <HStack>
-        <Heading size='lg'>{first.userName}</Heading>
+        <Heading size='lg'>{userLists.value.data.user.name}</Heading>
         <UserPageMenu />
       </HStack>
-      <UserListsTable docs={filtered} />
-    </listContext.Provider>
+      <UserListsTable docs={userLists.value.data.lists} />
+    </>
   )
 }

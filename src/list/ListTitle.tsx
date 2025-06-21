@@ -17,7 +17,7 @@ export default function ListTitle (): JSX.Element {
         <ListMenu />
       </HStack>
       <ButtonClinkRobe to={userPath}>
-        {list.userName}
+        {list.user.name}
       </ButtonClinkRobe>
     </HStack>
   )
