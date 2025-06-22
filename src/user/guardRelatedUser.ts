@@ -3,7 +3,7 @@ import { Ctx } from '../arched/archedTypes'
 import guard from '../arched/guard'
 import { RelatedUser } from './userTypes'
 
-export default async function guardRelateduser (props: {
+export default async function guardRelatedUser (props: {
   ctx: Ctx
   userId: Id<'users'>
   authId?: Id<'users'>

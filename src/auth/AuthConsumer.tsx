@@ -1,6 +1,5 @@
 import { JSX, ReactNode } from 'react'
 import authContext from './authContext'
-import renameAuthContext from './renameAuthContext'
 import createListContext from '../list/createListContext'
 
 export default function AuthConsumer (props: {
@@ -11,10 +10,8 @@ export default function AuthConsumer (props: {
     return <>{props.children}</>
   }
   return (
-    <renameAuthContext.Provider>
-      <createListContext.Provider>
-        {props.children}
-      </createListContext.Provider>
-    </renameAuthContext.Provider>
+    <createListContext.Provider>
+      {props.children}
+    </createListContext.Provider>
   )
 }

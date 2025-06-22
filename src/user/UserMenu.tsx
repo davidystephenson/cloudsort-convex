@@ -3,6 +3,7 @@ import { LinkMenuItemRobe, MenuRobe } from 'robes'
 import RenameAuthItem from '../auth/RenameAuthItem'
 import FollowingItem from '../follow/FollowingItem'
 import userContext from './userContext'
+import renameAuthContext from '../auth/renameAuthContext'
 
 export default function UserMenu (): JSX.Element {
   const user = userContext.use()
@@ -15,7 +16,9 @@ export default function UserMenu (): JSX.Element {
       <LinkMenuItemRobe onClick={handleLink}>
         Copy Profile Link
       </LinkMenuItemRobe>
-      <RenameAuthItem />
+      <renameAuthContext.Provider>
+        <RenameAuthItem />
+      </renameAuthContext.Provider>
       <FollowingItem />
     </MenuRobe>
   )

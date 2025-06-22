@@ -1,10 +1,10 @@
-import { Heading, HStack } from '@chakra-ui/react'
 import { ReactNode } from 'react'
 import LayoutLoading from '../layout/LayoutLoading'
-import UserPageMenu from './UserPageMenu'
 import UserListsTable from '../list/UserListsTable'
 import userIdContext from './userIdContext'
 import userListsContext from './userListsContext'
+import UserSection from './UserSection'
+import UserHeading from './UserHeading'
 
 export default function UserLists (): ReactNode {
   const userId = userIdContext.query.use()
@@ -14,11 +14,10 @@ export default function UserLists (): ReactNode {
   }
   return (
     <>
-      <HStack>
-        <Heading size='lg'>{userLists.value.data.user.name}</Heading>
-        <UserPageMenu />
-      </HStack>
+      <UserHeading />
       <UserListsTable docs={userLists.value.data.lists} />
+      <UserSection users={userLists.value.data.followers}>Followers</UserSection>
+      <UserSection users={userLists.value.data.followeds}>Following</UserSection>
     </>
   )
 }

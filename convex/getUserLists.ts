@@ -1,37 +1,15 @@
 import { query } from './_generated/server'
-import { ConvexError, v } from 'convex/values'
-import guard from '../src/arched/guard'
+import { v } from 'convex/values'
 import getAuthId from '../src/auth/getAuthId'
-import { Doc } from './_generated/dataModel'
-import relateList from '../src/list/relateList'
-import { RelatedList } from '../src/list/listTypes'
 import guardRelatedUser from '../src/user/guardRelatedUser'
+import guardUserBundle from '../src/user/guardUserBundle'
 
 const getUserLists = query({
   args: {
     userId: v.id('users')
   },
   handler: async (ctx, args) => {
-    let user: Doc<'users'>
-    let lists: RelatedList[]
-    try {
-      user = await guard({ ctx, id: args.userId })
-      const docs = await ctx
-        .db
-        .query('lists')
-        .withIndex('userPublic', (q) => q.eq('userId', args.userId).eq('public', true))
-        .collect()
-      if (docs.length === 0) {
-        throw new Error()
-      }
-      const listPromises = docs.map(async (doc) => {
-        const list = await relateList({ ctx, list: doc })
-        return list
-      })
-      lists = await Promise.all(listPromises)
-    } catch (error) {
-      throw new ConvexError('User not found')
-    }
+    const bundle = await guardUserBundle({ ctx, userId: args.userId })
     const auth = await getAuthId({ ctx })
     const followers = await ctx
       .db
@@ -66,10 +44,10 @@ const getUserLists = query({
         user: {
           follower: false,
           followed: false,
-          _id: user._id,
-          name: user.name
+          _id: bundle.user._id,
+          name: bundle.user.name
         },
-        lists,
+        lists: bundle.lists,
         followers: followerUsers,
         followeds: followedUsers
       }
@@ -81,10 +59,10 @@ const getUserLists = query({
       user: {
         follower,
         followed,
-        _id: user._id,
-        name: user.name
+        _id: bundle.user._id,
+        name: bundle.user.name
       },
-      lists,
+      lists: bundle.lists,
       followers: followerUsers,
       followeds: followedUsers
     }

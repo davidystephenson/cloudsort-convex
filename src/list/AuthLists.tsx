@@ -11,7 +11,9 @@ import AuthListsMenu from './AuthListsMenu'
 import PublicLists from './PublicLists'
 import authContext from '../auth/authContext'
 import UserListsTable from './UserListsTable'
-import userBaseContext from '../user/userBaseContext'
+import userContext from '../user/userContext'
+import { RelatedUser } from '../user/userTypes'
+import renameAuthContext from '../auth/renameAuthContext'
 
 export default function AuthLists (): ReactNode {
   const auth = authContext.query.use()
@@ -21,20 +23,27 @@ export default function AuthLists (): ReactNode {
     return <ListsLoading />
   }
   const filtered = publicLists.data.filter((list) => list.userId !== auth.data._id)
+  const related: RelatedUser = {
+    ...auth.data,
+    followed: false,
+    follower: false
+  }
   return (
-    <userBaseContext.Provider user={auth.data}>
-      <LayoutTitle
-        title={<AuthListsTitle />}
-        menu={<UserMenu />}
-      >
-        <HStack width='100%' height='32px'>
-          <Heading size='md'>Lists</Heading>
-          <AuthListsMenu />
-          <CreateListForm />
-        </HStack>
-        <UserListsTable docs={authLists.data} />
-        <PublicLists docs={filtered} />
-      </LayoutTitle>
-    </userBaseContext.Provider>
+    <userContext.Provider user={related}>
+      <renameAuthContext.Provider>
+        <LayoutTitle
+          title={<AuthListsTitle />}
+          menu={<UserMenu />}
+        >
+          <HStack width='100%' height='32px'>
+            <Heading size='md'>Lists</Heading>
+            <AuthListsMenu />
+            <CreateListForm />
+          </HStack>
+          <UserListsTable docs={authLists.data} />
+          <PublicLists docs={filtered} />
+        </LayoutTitle>
+      </renameAuthContext.Provider>
+    </userContext.Provider>
   )
 }

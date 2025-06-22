@@ -1,17 +1,17 @@
 import { ComponentType, JSX, ReactNode } from 'react'
-import { RelatedList } from './listTypes'
+import { RelatedUser } from './userTypes'
 import LayoutTable from '../layout/LayoutTable'
 
-export default function ListsTable (props: {
-  cells: ComponentType<{ index: number, row: RelatedList }>
+export default function UsersTable (props: {
+  Cells: ComponentType<{ index: number, row: RelatedUser }>
   columns: ReactNode[]
-  lists: RelatedList[]
+  users: RelatedUser[]
 }): JSX.Element {
   return (
     <LayoutTable
       columns={props.columns}
-      Cells={props.cells}
-      rows={props.lists}
+      Cells={props.Cells}
+      rows={props.users}
       filter={(props) => {
         if (props.query == null) {
           return true

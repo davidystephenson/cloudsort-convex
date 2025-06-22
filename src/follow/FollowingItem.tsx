@@ -9,7 +9,6 @@ import userContext from '../user/userContext'
 export default function FollowingItem (): JSX.Element {
   const auth = authContext.data.useMaybe()
   const user = userContext.useMaybe()
-  console.log('user', user)
   if (!user.provided) {
     return <></>
   }

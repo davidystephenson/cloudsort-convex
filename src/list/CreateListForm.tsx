@@ -6,7 +6,6 @@ export default function CreateListForm (): JSX.Element {
   const createList = createListContext.use()
   const [name, setName] = useState('')
   function handleChange (value: string): void {
-    console.log('value', value)
     setName(value)
   }
   return (

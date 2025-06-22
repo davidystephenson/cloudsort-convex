@@ -13,7 +13,7 @@ export default function PublicListsTable (props: {
     <ListsTable
       cells={PublicListCells}
       columns={['List', 'User', '']}
-      docs={props.docs}
+      lists={props.docs}
     />
   )
 }

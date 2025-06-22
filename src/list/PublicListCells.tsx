@@ -1,10 +1,12 @@
-import { Td } from '@chakra-ui/react'
+import { HStack, Td } from '@chakra-ui/react'
 import { JSX } from 'react'
 import listContext from './listContext'
 import ListMenu from './ListMenu'
 import ClinkRobe from 'clink-robe'
 import ListLabel from './ListLabel'
 import { RelatedList } from './listTypes'
+import UserBadge from '../user/UserBadge'
+import userContext from '../user/userContext'
 
 export default function PublicListCells (props: {
   row: RelatedList
@@ -19,9 +21,14 @@ export default function PublicListCells (props: {
         </ClinkRobe>
       </Td>
       <Td>
-        <ClinkRobe to={userPath}>
-          {props.row.user.name}
-        </ClinkRobe>
+        <userContext.Provider user={props.row.user}>
+          <ClinkRobe to={userPath}>
+            <HStack>
+              <span>{props.row.user.name}</span>
+              <UserBadge />
+            </HStack>
+          </ClinkRobe>
+        </userContext.Provider>
       </Td>
       <Td><ListMenu /></Td>
     </listContext.Provider>
