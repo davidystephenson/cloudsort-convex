@@ -3,6 +3,6 @@ import { RelatedList } from './listTypes'
 
 const listContext = contextCreator({
   name: 'list',
-  useValue: (props: { doc: RelatedList }) => props.doc
+  useValue: (props: { list: RelatedList }) => props.list
 })
 export default listContext

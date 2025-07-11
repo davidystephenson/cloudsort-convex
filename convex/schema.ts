@@ -4,33 +4,12 @@ import { v } from 'convex/values'
 
 const schema = defineSchema({
   ...authTables,
-  choiceEpisodes: defineTable({
+  choices: defineTable({
     createdAt: v.number(),
     listId: v.id('lists'),
-    itemUid: v.string()
+    option: v.string()
   })
     .index('listId', ['listId']),
-  importEpisodes: defineTable({
-    createdAt: v.number(),
-    listId: v.id('lists')
-  })
-    .index('listId', ['listId']),
-  importItems: defineTable({
-    createdAt: v.number(),
-    ignored: v.boolean(),
-    itemUid: v.string(),
-    importEpisodeId: v.id('importEpisodes'),
-    seed: v.optional(v.number())
-  })
-    .index('itemUid', ['itemUid'])
-    .index('importEpisodeId', ['importEpisodeId']),
-  listItems: defineTable({
-    createdAt: v.number(),
-    listId: v.id('lists'),
-    itemUid: v.string()
-  })
-    .index('listId', ['listId'])
-    .index('itemUid', ['itemUid']),
   follows: defineTable({
     createdAt: v.number(),
     followerId: v.id('users'),
@@ -39,6 +18,29 @@ const schema = defineSchema({
     .index('follower', ['followerId'])
     .index('followed', ['followedId'])
     .index('both', ['followerId', 'followedId']),
+  imports: defineTable({
+    createdAt: v.number(),
+    listId: v.id('lists')
+  })
+    .index('listId', ['listId']),
+  importItems: defineTable({
+    createdAt: v.number(),
+    ignored: v.boolean(),
+    itemUid: v.string(),
+    importId: v.id('imports'),
+    seed: v.optional(v.number())
+  })
+    .index('itemUid', ['itemUid'])
+    .index('importId', ['importId']),
+  listItems: defineTable({
+    createdAt: v.number(),
+    listId: v.id('lists'),
+    itemUid: v.string(),
+    seed: v.optional(v.number()),
+    rank: v.number()
+  })
+    .index('listId', ['listId'])
+    .index('itemUid', ['itemUid']),
   items: defineTable({
     createdAt: v.number(),
     label: v.string(),
@@ -46,9 +48,11 @@ const schema = defineSchema({
   })
     .index('uid', ['uid']),
   lists: defineTable({
+    catalog: v.optional(v.string()),
     createdAt: v.number(),
     name: v.string(),
     public: v.boolean(),
+    queue: v.optional(v.string()),
     userId: v.id('users')
   })
     .index('user', ['userId'])

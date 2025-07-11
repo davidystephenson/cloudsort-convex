@@ -11,7 +11,7 @@ export default function UserListCells (props: {
 }): JSX.Element {
   const path = `/list/${props.row._id}`
   return (
-    <listContext.Provider doc={props.row}>
+    <listContext.Provider list={props.row}>
       <Td>
         <ClinkRobe to={path}>
           <ListLabel />

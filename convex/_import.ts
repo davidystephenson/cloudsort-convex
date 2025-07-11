@@ -3,7 +3,7 @@ import { v } from 'convex/values'
 import guardAuthList from '../src/list/guardAuthList'
 import { overAll } from 'overpromise'
 import { itemDef } from '../src/item/itemTypes'
-import { chooseOption, createFlow, importItems } from 'choice-sort'
+import { chooseOption, createFlow, getChoice, getRanking, importItems } from 'choice-sort'
 
 const _import = mutation({
   args: {
@@ -13,7 +13,7 @@ const _import = mutation({
   handler: async (ctx, args) => {
     await guardAuthList({ ctx, listId: args.listId })
     const createdAt = Date.now()
-    const importEpisodeId = await ctx.db.insert('importEpisodes', {
+    const importId = await ctx.db.insert('imports', {
       createdAt,
       listId: args.listId
     })
@@ -36,29 +36,29 @@ const _import = mutation({
       const ignored = existingListItem != null
       await ctx.db.insert('importItems', {
         createdAt,
-        importEpisodeId,
+        importId,
         itemUid: item.uid,
         ignored,
         seed: item.seed
       })
     })
-    const choiceDocs = await ctx
+    const choices = await ctx
       .db
-      .query('choiceEpisodes')
+      .query('choices')
       .withIndex('listId', (q) => q.eq('listId', args.listId))
       .collect()
-    const choiceEpisodes = choiceDocs.map((doc) => {
+    const choiceEpisodes = choices.map((doc) => {
       return {
         ...doc,
         type: 'choice'
       } as const
     })
-    const importDocs = await ctx
+    const imports = await ctx
       .db
-      .query('importEpisodes')
+      .query('imports')
       .withIndex('listId', (q) => q.eq('listId', args.listId))
       .collect()
-    const importEpisodes = importDocs.map((doc) => {
+    const importEpisodes = imports.map((doc) => {
       return {
         ...doc,
         type: 'import'
@@ -70,12 +70,12 @@ const _import = mutation({
     let flow = createFlow({ uid: args.listId })
     for (const episode of sortedEpisodes) {
       if (episode.type === 'choice') {
-        flow = chooseOption({ flow, option: episode.itemUid })
+        flow = chooseOption({ flow, option: episode.option })
       } else {
         const importItemDocs = await ctx
           .db
           .query('importItems')
-          .withIndex('importEpisodeId', (q) => q.eq('importEpisodeId', episode._id))
+          .withIndex('importId', (q) => q.eq('importId', episode._id))
           .collect()
         const items = await overAll(importItemDocs, async (doc) => {
           const item = await ctx
@@ -91,8 +91,8 @@ const _import = mutation({
       }
     }
     flow = importItems({ flow, items: args.items })
-    const items = Object.values(flow.items)
-    await overAll(items, async (item) => {
+    const ranking = getRanking({ flow })
+    await overAll(ranking, async (item) => {
       const existingListItem = await ctx
         .db
         .query('listItems')
@@ -101,10 +101,23 @@ const _import = mutation({
         return
       }
       await ctx.db.insert('listItems', {
+        createdAt,
         listId: args.listId,
         itemUid: item.uid,
-        createdAt
+        rank: item.rank,
+        seed: item.seed
       })
+    })
+    const choice = getChoice({ flow })
+    if (choice == null) {
+      return await ctx.db.patch(args.listId, {
+        catalog: undefined,
+        queue: undefined
+      })
+    }
+    await ctx.db.patch(args.listId, {
+      catalog: choice.catalog,
+      queue: choice.queue
     })
   }
 })

@@ -14,7 +14,7 @@ export default function PublicListCells (props: {
   const listPath = `/list/${props.row._id}`
   const userPath = `/user/${props.row.userId}`
   return (
-    <listContext.Provider doc={props.row}>
+    <listContext.Provider list={props.row}>
       <Td>
         <ClinkRobe to={listPath}>
           <ListLabel />

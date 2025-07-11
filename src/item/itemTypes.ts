@@ -1,4 +1,5 @@
 import { Infer, v } from 'convex/values'
+import { Doc } from '../../convex/_generated/dataModel'
 
 export const itemDef = v.object({
   label: v.string(),
@@ -6,3 +7,7 @@ export const itemDef = v.object({
   uid: v.string()
 })
 export type ItemDef = Infer<typeof itemDef>
+
+export interface RelatedListItem extends Doc<'listItems'> {
+  item: Doc<'items'>
+}

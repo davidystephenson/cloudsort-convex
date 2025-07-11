@@ -5,6 +5,8 @@ import LayoutPage from '../layout/LayoutPage'
 import { listIdQueryContext } from './listIdQueryContext'
 import ListTitle from './ListTitle'
 import listContext from './listContext'
+import ListItemsTable from '../item/ListItemsTable'
+import Choice from '../choice/Choice'
 
 export default function ListConsumer (): JSX.Element {
   const listId = listIdQueryContext.query.use()
@@ -17,8 +19,12 @@ export default function ListConsumer (): JSX.Element {
     return <LayoutPage loading={loading} />
   }
   return (
-    <listContext.Provider doc={list.value.data}>
+    <listContext.Provider list={list.value.data}>
       <ListTitle />
+      <Choice />
+      <ListItemsTable
+        listItems={list.value.data.items}
+      />
     </listContext.Provider>
   )
 }
