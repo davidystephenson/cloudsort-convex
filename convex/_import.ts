@@ -111,13 +111,16 @@ const _import = mutation({
     const choice = getChoice({ flow })
     if (choice == null) {
       return await ctx.db.patch(args.listId, {
-        catalog: undefined,
-        queue: undefined
+        a: undefined,
+        b: undefined
       })
     }
+    const catalogA = Math.random() > 0.5
+    const a = catalogA ? choice.catalog : choice.queue
+    const b = catalogA ? choice.queue : choice.catalog
     await ctx.db.patch(args.listId, {
-      catalog: choice.catalog,
-      queue: choice.queue
+      a,
+      b
     })
   }
 })

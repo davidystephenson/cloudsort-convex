@@ -6,6 +6,7 @@ import relateList from '../list/relateList'
 import { UserBundle } from './userTypes'
 
 export default async function guardUserBundle (props: {
+  authId?: Id<'users'>
   ctx: Ctx
   userId: Id<'users'>
 }): Promise<UserBundle> {
@@ -16,7 +17,7 @@ export default async function guardUserBundle (props: {
       .query('lists')
       .withIndex('userPublic', (q) => q.eq('userId', props.userId).eq('public', true))
       .collect()
-    if (listDocs.length === 0) {
+    if (listDocs.length === 0 && props.userId !== props.authId) {
       const followerDocs = await props.ctx
         .db
         .query('follows')
@@ -40,6 +41,7 @@ export default async function guardUserBundle (props: {
     const lists = await Promise.all(listPromises)
     return { user, lists }
   } catch (error) {
-    throw new ConvexError('User not found')
+    const message = `User ${props.userId} not found`
+    throw new ConvexError(message)
   }
 }

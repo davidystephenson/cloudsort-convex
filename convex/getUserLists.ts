@@ -9,8 +9,8 @@ const getUserLists = query({
     userId: v.id('users')
   },
   handler: async (ctx, args) => {
-    const bundle = await guardUserBundle({ ctx, userId: args.userId })
-    const auth = await getAuthId({ ctx })
+    const authId = await getAuthId({ ctx })
+    const bundle = await guardUserBundle({ authId, ctx, userId: args.userId })
     const followers = await ctx
       .db
       .query('follows')
@@ -20,7 +20,7 @@ const getUserLists = query({
       const user = await guardRelatedUser({
         ctx,
         userId: f.followerId,
-        authId: auth
+        authId
       })
       return user
     })
@@ -34,12 +34,12 @@ const getUserLists = query({
       const user = await guardRelatedUser({
         ctx,
         userId: f.followedId,
-        authId: auth
+        authId
       })
       return user
     })
     const followedUsers = await Promise.all(followedPromises)
-    if (auth == null) {
+    if (authId == null) {
       const userLists = {
         user: {
           follower: false,
@@ -53,8 +53,8 @@ const getUserLists = query({
       }
       return userLists
     }
-    const follower = followers.some((f) => f.followerId === auth)
-    const followed = followeds.some((f) => f.followedId === auth)
+    const follower = followers.some((f) => f.followerId === authId)
+    const followed = followeds.some((f) => f.followedId === authId)
     const userLists = {
       user: {
         follower,

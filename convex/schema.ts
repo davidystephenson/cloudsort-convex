@@ -48,11 +48,11 @@ const schema = defineSchema({
   })
     .index('uid', ['uid']),
   lists: defineTable({
-    catalog: v.optional(v.string()),
+    a: v.optional(v.string()),
     createdAt: v.number(),
     name: v.string(),
     public: v.boolean(),
-    queue: v.optional(v.string()),
+    b: v.optional(v.string()),
     userId: v.id('users')
   })
     .index('user', ['userId'])
