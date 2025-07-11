@@ -22,6 +22,7 @@ const authHub = convexAuth({
         throw new Error('Username taken')
       }
       return await ctx.db.insert('users', {
+        createdAt: Date.now(),
         name: args.profile.name,
         email: args.profile.email
       })
