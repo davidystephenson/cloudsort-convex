@@ -29,12 +29,13 @@ export default function AuthRegisterPage (): JSX.Element {
   async function authenticate (): Promise<void> {
     setLoading(true)
     try {
-      await signIn('password', {
+      const args = {
         email,
         name,
         password,
         flow: 'signUp'
-      })
+      }
+      await signIn('password', args)
       await navigate('/')
     } catch (error) {
       if (!(error instanceof Error)) {

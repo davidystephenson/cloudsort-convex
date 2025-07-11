@@ -1,9 +1,9 @@
-import { Password } from '@convex-dev/auth/providers/Password'
 import { convexAuth } from '@convex-dev/auth/server'
 import { api } from './_generated/api'
+import CustomPassword from './CustomPassword'
 
 const authHub = convexAuth({
-  providers: [Password],
+  providers: [CustomPassword],
   callbacks: {
     async createOrUpdateUser (ctx, args) {
       if (args.existingUserId != null) {
@@ -22,7 +22,7 @@ const authHub = convexAuth({
         throw new Error('Username taken')
       }
       return await ctx.db.insert('users', {
-        createdAt: Date.now(),
+        createdAt: args.profile.createdAt,
         name: args.profile.name,
         email: args.profile.email
       })

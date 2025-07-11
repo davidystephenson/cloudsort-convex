@@ -19,7 +19,16 @@ const schema = defineSchema({
     itemUid: v.string(),
     importId: v.id('imports'),
     seed: v.optional(v.number())
-  }),
+  })
+    .index('itemUid', ['itemUid'])
+    .index('importId', ['importId']),
+  listItems: defineTable({
+    createdAt: v.number(),
+    listId: v.id('lists'),
+    itemUid: v.string()
+  })
+    .index('listId', ['listId'])
+    .index('itemUid', ['itemUid']),
   follows: defineTable({
     createdAt: v.number(),
     followerId: v.id('users'),

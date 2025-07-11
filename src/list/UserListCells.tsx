@@ -1,6 +1,6 @@
 import { Td } from '@chakra-ui/react'
 import { JSX } from 'react'
-import ListMenu from './ListMenu'
+import ListRowMenu from './ListRowMenu'
 import ClinkRobe from 'clink-robe'
 import ListLabel from './ListLabel'
 import listContext from './listContext'
@@ -17,7 +17,7 @@ export default function UserListCells (props: {
           <ListLabel />
         </ClinkRobe>
       </Td>
-      <Td><ListMenu /></Td>
+      <Td><ListRowMenu /></Td>
     </listContext.Provider>
   )
 }

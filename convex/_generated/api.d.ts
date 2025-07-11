@@ -13,6 +13,8 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as CustomPassword from "../CustomPassword.js";
+import type * as _import from "../_import.js";
 import type * as auth from "../auth.js";
 import type * as createList from "../createList.js";
 import type * as deleteList from "../deleteList.js";
@@ -41,6 +43,8 @@ import type * as unpublishList from "../unpublishList.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  CustomPassword: typeof CustomPassword;
+  _import: typeof _import;
   auth: typeof auth;
   createList: typeof createList;
   deleteList: typeof deleteList;

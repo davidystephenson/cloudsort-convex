@@ -1,7 +1,6 @@
 import { JSX } from 'react'
-import { MenuRobe, LinkMenuItemRobe } from 'robes'
+import { LinkMenuItemRobe } from 'robes'
 import listContext from './listContext'
-import PrivateListItems from './PrivateListItems'
 
 export default function ListMenu (): JSX.Element {
   const list = listContext.use()
@@ -10,11 +9,8 @@ export default function ListMenu (): JSX.Element {
     void window.navigator.clipboard.writeText(url)
   }
   return (
-    <MenuRobe>
-      <LinkMenuItemRobe onClick={handleLink}>
-        Copy List Link
-      </LinkMenuItemRobe>
-      <PrivateListItems />
-    </MenuRobe>
+    <LinkMenuItemRobe onClick={handleLink}>
+      Copy List Link
+    </LinkMenuItemRobe>
   )
 }

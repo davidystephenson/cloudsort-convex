@@ -1,7 +1,7 @@
 import { HStack, Td } from '@chakra-ui/react'
 import { JSX } from 'react'
 import listContext from './listContext'
-import ListMenu from './ListMenu'
+import ListRowMenu from './ListRowMenu'
 import ClinkRobe from 'clink-robe'
 import ListLabel from './ListLabel'
 import { RelatedList } from './listTypes'
@@ -30,7 +30,7 @@ export default function PublicListCells (props: {
           </ClinkRobe>
         </userContext.Provider>
       </Td>
-      <Td><ListMenu /></Td>
+      <Td><ListRowMenu /></Td>
     </listContext.Provider>
   )
 }

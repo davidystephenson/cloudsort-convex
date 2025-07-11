@@ -1,7 +1,11 @@
-import { api } from '../../convex/_generated/api'
-import queryContext from '../arched/queryContext'
+import contextCreator from 'context-creator'
+import { Id } from '../../convex/_generated/dataModel'
 
-export const listIdContext = queryContext({
-  name: 'listId',
-  query: api.normalizeListId.default
+export const listIdContext = contextCreator({
+  name: 'List ID',
+  useValue: (props: {
+    listId: Id<'lists'>
+  }) => {
+    return props.listId
+  }
 })

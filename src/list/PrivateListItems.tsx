@@ -1,11 +1,13 @@
-import { JSX } from 'react'
+import { JSX, ReactNode } from 'react'
+import authContext from '../auth/authContext'
 import deleteListContext from './deleteListContext'
 import DeleteListItem from './DeleteListItem'
-import PublicListItem from './PublicListItem'
-import authContext from '../auth/authContext'
 import listContext from './listContext'
+import PublicListMenuItem from './PublicListMenuItem'
 
-export default function PrivateListItems (): JSX.Element {
+export default function PrivateListItems (props: {
+  children?: ReactNode
+}): JSX.Element {
   const auth = authContext.data.useMaybe()
   const list = listContext.use()
   if (!auth.provided || list.userId !== auth.value._id) {
@@ -14,7 +16,8 @@ export default function PrivateListItems (): JSX.Element {
   const args = { listId: list._id }
   return (
     <>
-      <PublicListItem />
+      <PublicListMenuItem />
+      {props.children}
       <deleteListContext.Provider args={args}>
         <DeleteListItem />
       </deleteListContext.Provider>

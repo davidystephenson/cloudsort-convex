@@ -3,7 +3,7 @@ import { MenuItem } from '@chakra-ui/react'
 import { MdPublicOff } from 'react-icons/md'
 import unpublishListContext from './unpublishListContext'
 
-export default function UnpublishListItem (): JSX.Element {
+export default function UnpublishListMenuItem (): JSX.Element {
   const unpublishList = unpublishListContext.use()
   function unpublish (): void {
     void unpublishList.act()
