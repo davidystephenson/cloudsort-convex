@@ -4,24 +4,26 @@ import { v } from 'convex/values'
 
 const schema = defineSchema({
   ...authTables,
-  choices: defineTable({
+  choiceEpisodes: defineTable({
     createdAt: v.number(),
     listId: v.id('lists'),
     itemUid: v.string()
-  }),
-  imports: defineTable({
+  })
+    .index('listId', ['listId']),
+  importEpisodes: defineTable({
     createdAt: v.number(),
     listId: v.id('lists')
-  }),
+  })
+    .index('listId', ['listId']),
   importItems: defineTable({
     createdAt: v.number(),
     ignored: v.boolean(),
     itemUid: v.string(),
-    importId: v.id('imports'),
+    importEpisodeId: v.id('importEpisodes'),
     seed: v.optional(v.number())
   })
     .index('itemUid', ['itemUid'])
-    .index('importId', ['importId']),
+    .index('importEpisodeId', ['importEpisodeId']),
   listItems: defineTable({
     createdAt: v.number(),
     listId: v.id('lists'),

@@ -19,8 +19,9 @@ export default function ImportMenuItem (): JSX.Element {
         try {
           const critickers = critickerSchema.array().parse(props.data)
           const items: ItemDef[] = critickers.map((criticker) => {
+            const label = `${criticker[' Film Name']} (${criticker[' Year']})`
             return {
-              label: criticker[' Film Name'],
+              label,
               seed: Number(criticker.Score),
               uid: criticker[' IMDB ID']
             }
