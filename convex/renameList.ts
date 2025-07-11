@@ -2,7 +2,7 @@ import { mutation } from './_generated/server'
 import { ConvexError, v } from 'convex/values'
 import guardAuthId from '../src/auth/guardAuthId'
 
-export const m = mutation({
+const renameList = mutation({
   args: {
     listId: v.id('lists'),
     name: v.string()
@@ -21,3 +21,5 @@ export const m = mutation({
     })
   }
 })
+
+export default renameList

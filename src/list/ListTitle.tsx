@@ -1,24 +1,21 @@
 import { JSX } from 'react'
 import { Heading, HStack } from '@chakra-ui/react'
 import ListLabel from './ListLabel'
-import listContext from './listContext'
-import { ButtonClinkRobe } from 'clink-robe'
 import ListTitleMenu from './ListTitleMenu'
+import renameListContext from './renameListContext'
+import RenameListForm from './RenameListForm'
 
 export default function ListTitle (): JSX.Element {
-  const list = listContext.use()
-  const userPath = `/user/${list.userId}`
+  const renameList = renameListContext.use()
+  if (renameList.active) {
+    return <RenameListForm />
+  }
   return (
-    <HStack justify='space-between'>
-      <HStack>
-        <Heading size='lg'>
-          <ListLabel />
-        </Heading>
-        <ListTitleMenu />
-      </HStack>
-      <ButtonClinkRobe to={userPath}>
-        {list.user.name}
-      </ButtonClinkRobe>
+    <HStack>
+      <Heading size='lg'>
+        <ListLabel />
+      </Heading>
+      <ListTitleMenu />
     </HStack>
   )
 }

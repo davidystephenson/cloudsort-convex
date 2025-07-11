@@ -3,7 +3,7 @@ import { listQueryContext } from './listQueryContext'
 import ListNotFound from './ListNotFound'
 import LayoutPage from '../layout/LayoutPage'
 import { listIdQueryContext } from './listIdQueryContext'
-import ListTitle from './ListTitle'
+import ListHeader from './ListHeader'
 import listContext from './listContext'
 import ListItemsTable from '../item/ListItemsTable'
 import Choice from '../choice/Choice'
@@ -20,7 +20,7 @@ export default function ListConsumer (): JSX.Element {
   }
   return (
     <listContext.Provider list={list.value.data}>
-      <ListTitle />
+      <ListHeader />
       <Choice />
       <ListItemsTable
         listItems={list.value.data.items}
