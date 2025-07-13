@@ -4,6 +4,7 @@ import guardAuthList from '../src/list/guardAuthList'
 import { overAll } from 'overpromise'
 import { itemDef } from '../src/item/itemTypes'
 import { chooseOption, createFlow, getChoice, getRanking, importItems } from 'choice-sort'
+import updateOperationList from '../src/operation/updateOperationList'
 
 const _import = mutation({
   args: {
@@ -11,10 +12,8 @@ const _import = mutation({
     items: v.array(itemDef)
   },
   handler: async (ctx, args) => {
-    await guardAuthList({ ctx, listId: args.listId })
-    const createdAt = Date.now()
+    const list = await guardAuthList({ ctx, listId: args.listId })
     const importId = await ctx.db.insert('imports', {
-      createdAt,
       listId: args.listId
     })
     await overAll(args.items, async (item) => {
@@ -25,8 +24,7 @@ const _import = mutation({
       if (existingItem == null) {
         await ctx.db.insert('items', {
           label: item.label,
-          uid: item.uid,
-          createdAt
+          uid: item.uid
         })
       }
       const existingListItem = await ctx
@@ -35,7 +33,6 @@ const _import = mutation({
         .withIndex('itemUid', (q) => q.eq('itemUid', item.uid)).unique()
       const ignored = existingListItem != null
       await ctx.db.insert('importItems', {
-        createdAt,
         importId,
         itemUid: item.uid,
         ignored,
@@ -65,8 +62,7 @@ const _import = mutation({
       } as const
     })
     const allEpisodes = [...choiceEpisodes, ...importEpisodes]
-    // Earliest to latest
-    const sortedEpisodes = allEpisodes.toSorted((a, b) => a.createdAt - b.createdAt)
+    const sortedEpisodes = allEpisodes.toSorted((a, b) => a._creationTime - b._creationTime)
     let flow = createFlow({ uid: args.listId })
     for (const episode of sortedEpisodes) {
       if (episode.type === 'choice') {
@@ -90,7 +86,43 @@ const _import = mutation({
         flow = importItems({ flow, items })
       }
     }
-    flow = importItems({ flow, items: args.items })
+    const listItems = await ctx
+      .db
+      .query('listItems')
+      .withIndex('listId', (q) => q.eq('listId', args.listId))
+      .collect()
+    const items = await overAll(listItems, async (doc) => {
+      const item = await ctx
+        .db
+        .query('items')
+        .withIndex('uid', (q) => q.eq('uid', doc.itemUid)).unique()
+      return item
+    })
+    const operations = await ctx
+      .db
+      .query('operations')
+      .withIndex('listId', (q) => q.eq('listId', args.listId))
+      .collect()
+    const relatedOperations = await overAll(operations, async (operation) => {
+      const catalogs = await ctx
+        .db
+        .query('catalogs')
+        .withIndex('operationUid', (q) => q.eq('operationUid', operation._id)).collect()
+      const outputs = await ctx
+        .db
+        .query('outputs')
+        .withIndex('operationUid', (q) => q.eq('operationUid', operation._id)).collect()
+      const queues = await ctx
+        .db
+        .query('queues')
+        .withIndex('operationUid', (q) => q.eq('operationUid', operation._id)).collect()
+      return {
+        catalogs,
+        outputs,
+        queues
+      }
+    })
+    flow = importItems({ flow, items })
     const ranking = getRanking({ flow })
     await overAll(ranking, async (item) => {
       const existingListItem = await ctx
@@ -101,7 +133,6 @@ const _import = mutation({
         return
       }
       await ctx.db.insert('listItems', {
-        createdAt,
         listId: args.listId,
         itemUid: item.uid,
         rank: item.rank,
@@ -121,6 +152,84 @@ const _import = mutation({
     await ctx.db.patch(args.listId, {
       a,
       b
+    })
+    const existingOperations = await ctx
+      .db
+      .query('operations')
+      .withIndex('listId', (q) => q.eq('listId', args.listId))
+      .collect()
+    const operations = Object.values(flow.operations)
+    const removedOperations = existingOperations.filter((existingOperation) => {
+      const removed = operations.every(operation => operation.uid !== existingOperation.uid)
+      return removed
+    })
+    await overAll(removedOperations, async (operation) => {
+      await ctx.db.delete(operation._id)
+    })
+    const newOperations = operations.filter((operation) => {
+      const _new = existingOperations.every((existingOperation) => existingOperation.uid !== operation.uid)
+      return _new
+    })
+    await overAll(newOperations, async (operation) => {
+      await ctx.db.insert('operations', {
+        better: operation.better,
+        listId: args.listId,
+        uid: operation.uid
+      })
+      await overAll(operation.catalog, async (item, index) => {
+        await ctx.db.insert('catalogs', {
+          index,
+          itemUid: item,
+          operationUid: operation.uid
+        })
+      })
+      await overAll(operation.queue, async (item, index) => {
+        await ctx.db.insert('queues', {
+          index,
+          itemUid: item,
+          operationUid: operation.uid
+        })
+      })
+      await overAll(operation.output, async (item, index) => {
+        await ctx.db.insert('outputs', {
+          index,
+          itemUid: item,
+          operationUid: operation.uid
+        })
+      })
+    })
+    const updatedOperations = operations.filter((operation) => {
+      const existing = existingOperations.some((existingOperation) => existingOperation.uid === operation.uid)
+      return existing
+    })
+    await overAll(updatedOperations, async (operation) => {
+      const existingOperation = existingOperations.find((existingOperation) => existingOperation.uid === operation.uid)
+      if (existingOperation == null) {
+        throw new Error(`Operation ${operation.uid} not found`)
+      }
+      if (operation.better !== existingOperation.better) {
+        await ctx.db.patch(existingOperation._id, {
+          better: operation.better
+        })
+      }
+      await updateOperationList({
+        collection: 'catalogs',
+        ctx,
+        itemUids: operation.catalog,
+        operationUid: operation.uid
+      })
+      await updateOperationList({
+        collection: 'queues',
+        ctx,
+        itemUids: operation.queue,
+        operationUid: operation.uid
+      })
+      await updateOperationList({
+        collection: 'outputs',
+        ctx,
+        itemUids: operation.output,
+        operationUid: operation.uid
+      })
     })
   }
 })

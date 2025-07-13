@@ -23,7 +23,7 @@ const createList = mutation({
     }
     await ctx.db.insert('lists', {
       name: args.name,
-      createdAt: Date.now(),
+      flowCount: 0,
       public: false,
       userId
     })
