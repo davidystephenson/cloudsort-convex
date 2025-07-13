@@ -6,7 +6,9 @@ const schema = defineSchema({
   ...authTables,
   choices: defineTable({
     listId: v.id('lists'),
-    option: v.string()
+    aUid: v.string(),
+    bUid: v.string(),
+    aChosen: v.boolean()
   })
     .index('listId', ['listId']),
   follows: defineTable({

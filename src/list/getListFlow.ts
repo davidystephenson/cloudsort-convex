@@ -6,17 +6,15 @@ import { Doc } from '../../convex/_generated/dataModel'
 export default async function getListFlow (props: {
   ctx: Ctx
   list: Doc<'lists'>
+  listItems?: Array<Doc<'listItems'>>
 }): Promise<Flow> {
-  const listItems = await props.ctx
-    .db
+  const listItems = props.listItems ?? await props.ctx.db
     .query('listItems')
     .withIndex('listId', (q) => q.eq('listId', props.list._id))
     .collect()
   const flowItems: Record<string, Item> = {}
   await overAll(listItems, async (doc) => {
-    const item = await props.ctx
-      .db
-      .query('items')
+    const item = await props.ctx.db.query('items')
       .withIndex('uid', (q) => q.eq('uid', doc.itemUid)).unique()
     if (item == null) {
       throw new Error(`Item ${doc.itemUid} not found`)
