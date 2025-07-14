@@ -7,6 +7,7 @@ export default async function deleteUser (props: {
   ctx: MutationCtx
   id: Id<'users'>
 }): Promise<void> {
+  await props.ctx.db.delete(props.id)
   const lists = await props.ctx.db.query('lists')
     .withIndex('user', q => q.eq('userId', props.id))
     .collect()

@@ -3,6 +3,7 @@ import listContext from '../list/listContext'
 import { HStack } from '@chakra-ui/react'
 import optionContext from '../option/optionContext'
 import Option from '../option/Option'
+import chooseContext from './chooseContext'
 
 export default function Choice (): JSX.Element {
   const list = listContext.use()
@@ -14,12 +15,20 @@ export default function Choice (): JSX.Element {
   }
   return (
     <HStack mx='auto'>
-      <optionContext.Provider hotkey='a' uid={list.a}>
-        <Option />
-      </optionContext.Provider>
-      <optionContext.Provider hotkey='b' uid={list.b}>
-        <Option />
-      </optionContext.Provider>
+      <chooseContext.Provider
+        args={{ listId: list._id, itemUid: list.a, aChosen: true }}
+      >
+        <optionContext.Provider hotkey='a' uid={list.a}>
+          <Option />
+        </optionContext.Provider>
+      </chooseContext.Provider>
+      <chooseContext.Provider
+        args={{ listId: list._id, itemUid: list.b, aChosen: false }}
+      >
+        <optionContext.Provider hotkey='b' uid={list.b}>
+          <Option />
+        </optionContext.Provider>
+      </chooseContext.Provider>
     </HStack>
   )
 }

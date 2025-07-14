@@ -6,6 +6,7 @@ export default async function deleteImport (props: {
   ctx: MutationCtx
   id: Id<'imports'>
 }): Promise<void> {
+  await props.ctx.db.delete(props.id)
   const importItems = await props.ctx.db.query('importItems')
     .withIndex('importId', q => q.eq('importId', props.id))
     .collect()

@@ -16,10 +16,10 @@ import type {
 import type * as CustomPassword from "../CustomPassword.js";
 import type * as _import from "../_import.js";
 import type * as auth from "../auth.js";
+import type * as choose from "../choose.js";
 import type * as createList from "../createList.js";
 import type * as deleteList from "../deleteList.js";
 import type * as follow from "../follow.js";
-import type * as functions from "../functions.js";
 import type * as getAuth from "../getAuth.js";
 import type * as getAuthLists from "../getAuthLists.js";
 import type * as getList from "../getList.js";
@@ -47,10 +47,10 @@ declare const fullApi: ApiFromModules<{
   CustomPassword: typeof CustomPassword;
   _import: typeof _import;
   auth: typeof auth;
+  choose: typeof choose;
   createList: typeof createList;
   deleteList: typeof deleteList;
   follow: typeof follow;
-  functions: typeof functions;
   getAuth: typeof getAuth;
   getAuthLists: typeof getAuthLists;
   getList: typeof getList;

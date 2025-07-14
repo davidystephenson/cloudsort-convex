@@ -9,6 +9,7 @@ export default async function deleteList (props: {
   ctx: MutationCtx
   id: Id<'lists'>
 }): Promise<void> {
+  await props.ctx.db.delete(props.id)
   const choices = await props.ctx.db.query('choices')
     .withIndex('listId', q => q.eq('listId', props.id))
     .collect()
@@ -27,6 +28,8 @@ export default async function deleteList (props: {
     .withIndex('listId', q => q.eq('listId', props.id))
     .collect()
   await overAll(operations, async (operationDoc) => {
-    await deleteOperation({ ctx: props.ctx, id: operationDoc._id })
+    await deleteOperation({
+      ctx: props.ctx, id: operationDoc._id, uid: operationDoc.uid
+    })
   })
 }

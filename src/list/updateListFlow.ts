@@ -2,39 +2,53 @@ import { Flow, getChoice, getRanking } from 'choice-sort'
 import { overAll } from 'overpromise'
 import updateOperationList from '../operation/updateOperationList'
 import { MutationCtx } from '../../convex/_generated/server'
-import { Id } from '../../convex/_generated/dataModel'
+import { Doc, Id } from '../../convex/_generated/dataModel'
 
 export default async function (props: {
   ctx: MutationCtx
   flow: Flow
   listId: Id<'lists'>
+  listItems: Array<Doc<'listItems'>>
 }): Promise<void> {
   const ranking = getRanking({ flow: props.flow })
   await overAll(ranking, async (item) => {
-    const existingListItem = await props.ctx.db
-      .query('listItems')
-      .withIndex('itemUid', (q) => q.eq('itemUid', item.uid)).unique()
-    if (existingListItem != null) {
+    const existingListItem = props
+      .listItems
+      .find((listItem) => listItem.itemUid === item.uid)
+    if (existingListItem == null) {
+      return await props.ctx.db.insert('listItems', {
+        listId: props.listId,
+        itemUid: item.uid,
+        rank: item.rank,
+        seed: item.seed
+      })
+    }
+    if (existingListItem.rank === item.rank) {
       return
     }
-    await props.ctx.db.insert('listItems', {
-      listId: props.listId,
-      itemUid: item.uid,
-      rank: item.rank,
-      seed: item.seed
+    await props.ctx.db.patch(existingListItem._id, {
+      rank: item.rank
     })
+  })
+  const removedListItems = props.listItems.filter((listItem) => {
+    const removed = ranking.every((item) => item.uid !== listItem.itemUid)
+    return removed
+  })
+  await overAll(removedListItems, async (listItem) => {
+    await props.ctx.db.delete(listItem._id)
   })
   const choice = getChoice({ flow: props.flow })
   if (choice == null) {
     await props.ctx.db.patch(props.listId, {
       a: undefined,
-      b: undefined
+      b: undefined,
+      flowCount: props.flow.count
     })
   } else {
     const catalogA = Math.random() > 0.5
     const a = catalogA ? choice.catalog : choice.queue
     const b = catalogA ? choice.queue : choice.catalog
-    await props.ctx.db.patch(props.listId, { a, b })
+    await props.ctx.db.patch(props.listId, { a, b, flowCount: props.flow.count })
   }
   const existingOperations = await props.ctx.db
     .query('operations')
@@ -42,14 +56,18 @@ export default async function (props: {
     .collect()
   const operations = Object.values(props.flow.operations)
   const removedOperations = existingOperations.filter((existingOperation) => {
-    const removed = operations.every(operation => operation.uid !== existingOperation.uid)
+    const removed = operations.every(
+      operation => operation.uid !== existingOperation.uid
+    )
     return removed
   })
   await overAll(removedOperations, async (operation) => {
     await props.ctx.db.delete(operation._id)
   })
   const newOperations = operations.filter((operation) => {
-    const _new = existingOperations.every((existingOperation) => existingOperation.uid !== operation.uid)
+    const _new = existingOperations.every(
+      (existingOperation) => existingOperation.uid !== operation.uid
+    )
     return _new
   })
   await overAll(newOperations, async (operation) => {
@@ -81,7 +99,9 @@ export default async function (props: {
     })
   })
   const updatedOperations = operations.filter((operation) => {
-    const existing = existingOperations.some((existingOperation) => existingOperation.uid === operation.uid)
+    const existing = existingOperations.some(
+      (existingOperation) => existingOperation.uid === operation.uid
+    )
     return existing
   })
   await overAll(updatedOperations, async (operation) => {

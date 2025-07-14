@@ -8,7 +8,7 @@ export default function ListItemsTable (props: {
 }): JSX.Element {
   return (
     <LayoutTable
-      columns={['Movie', 'Score', 'Actions']}
+      columns={['Item', 'Points']}
       Cells={ListItemCells}
       rows={props.listItems}
       filter={(props) => {

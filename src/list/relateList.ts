@@ -19,7 +19,8 @@ export default async function relateList (props: {
     .query('listItems')
     .withIndex('listId', (q) => q.eq('listId', props.list._id))
     .collect()
-  const relatedListItems = await overAll(listItems, async (listItem) => {
+  const ranked = listItems.sort((a, b) => a.rank - b.rank)
+  const relatedListItems = await overAll(ranked, async (listItem) => {
     const item = await props.ctx
       .db
       .query('items')

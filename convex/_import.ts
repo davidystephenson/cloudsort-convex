@@ -33,7 +33,9 @@ const _import = mutation({
           uid: item.uid
         })
       }
-      const listItemExists = listItems.some((listItem) => listItem.itemUid === item.uid)
+      const listItemExists = listItems.some(
+        (listItem) => listItem.itemUid === item.uid
+      )
       await ctx.db.insert('importItems', {
         importId,
         itemUid: item.uid,
@@ -43,7 +45,12 @@ const _import = mutation({
     })
     const flow = await getListFlow({ ctx, list, listItems })
     const importedFlow = importItems({ flow, items: args.items })
-    await updateListFlow({ ctx, flow: importedFlow, listId: args.listId })
+    await updateListFlow({
+      ctx,
+      flow: importedFlow,
+      listId: args.listId,
+      listItems
+    })
   }
 })
 export default _import

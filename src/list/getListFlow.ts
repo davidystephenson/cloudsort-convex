@@ -19,7 +19,7 @@ export default async function getListFlow (props: {
     if (item == null) {
       throw new Error(`Item ${doc.itemUid} not found`)
     }
-    flowItems[item._id] = item
+    flowItems[item.uid] = item
   })
   const flowOperations: Record<string, Operation> = {}
   const operations = await props.ctx
@@ -31,15 +31,15 @@ export default async function getListFlow (props: {
     const catalogs = await props.ctx
       .db
       .query('catalogs')
-      .withIndex('operationUid', (q) => q.eq('operationUid', operation._id)).collect()
+      .withIndex('operationUid', (q) => q.eq('operationUid', operation.uid)).collect()
     const outputs = await props.ctx
       .db
       .query('outputs')
-      .withIndex('operationUid', (q) => q.eq('operationUid', operation._id)).collect()
+      .withIndex('operationUid', (q) => q.eq('operationUid', operation.uid)).collect()
     const queues = await props.ctx
       .db
       .query('queues')
-      .withIndex('operationUid', (q) => q.eq('operationUid', operation._id)).collect()
+      .withIndex('operationUid', (q) => q.eq('operationUid', operation.uid)).collect()
     const catalog = catalogs.map((catalog) => {
       return catalog.itemUid
     })
@@ -51,11 +51,12 @@ export default async function getListFlow (props: {
     })
     const flowOperation: Operation = {
       uid: operation.uid,
+      better: operation.better,
       catalog,
       output,
       queue
     }
-    flowOperations[operation._id] = flowOperation
+    flowOperations[operation.uid] = flowOperation
   })
   const flow: Flow = {
     uid: props.list._id,
