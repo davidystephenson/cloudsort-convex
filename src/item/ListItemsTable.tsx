@@ -2,25 +2,21 @@ import { JSX } from 'react'
 import LayoutTable from '../layout/LayoutTable'
 import { RelatedListItem } from './itemTypes'
 import ListItemCells from './ListItemCells'
+import filterListItem from './filterListItem'
 
 export default function ListItemsTable (props: {
   listItems: RelatedListItem[]
 }): JSX.Element {
   return (
     <LayoutTable
-      columns={['Item', 'Points']}
+      columns={[`Movies (${props.listItems.length})`, 'Points']}
       Cells={ListItemCells}
       rows={props.listItems}
       filter={(props) => {
-        if (props.query == null) {
-          return true
-        }
-        const lowerUid = props.row.item.uid.toLowerCase()
-        if (lowerUid.includes(props.query)) {
-          return true
-        }
-        const lowerLabel = props.row.item.label.toLowerCase()
-        return lowerLabel.includes(props.query)
+        return filterListItem({
+          item: props.row.item,
+          query: props.query
+        })
       }}
     />
   )

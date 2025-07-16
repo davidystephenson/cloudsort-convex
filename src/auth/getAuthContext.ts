@@ -1,9 +1,9 @@
 import { api } from '../../convex/_generated/api'
 import queryContext from '../arched/queryContext'
 
-const authContext = queryContext({
-  name: 'auth',
+const getAuthContext = queryContext({
+  name: 'getAuth',
   query: api.getAuth.default
 })
 
-export default authContext
+export default getAuthContext

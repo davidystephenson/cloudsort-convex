@@ -3,18 +3,15 @@ import { JSX } from 'react'
 import listItemContext from './listItemContext'
 import ClinkRobe from 'clink-robe'
 import { RelatedListItem } from './itemTypes'
-import listContext from '../list/listContext'
 import ListItemMenu from './ListItemMenu'
 import { RiExternalLinkLine } from 'react-icons/ri'
+import useItemPoints from './useItemPoints'
 
 export default function ListItemCells (props: {
   row: RelatedListItem
 }): JSX.Element {
-  const list = listContext.use()
   const imdbPath = `https://imdb.com/title/${props.row.item.uid}`
-  const ranks = list.items.map((item) => item.rank)
-  const maximum = Math.max(...ranks)
-  const score = maximum - props.row.rank
+  const points = useItemPoints({ rank: props.row.rank })
   return (
     <listItemContext.Provider listItem={props.row}>
       <Td>
@@ -36,7 +33,7 @@ export default function ListItemCells (props: {
       </Td>
       <Td>
         <HStack gap='4px' justifyContent='end'>
-          <span>{score}</span>
+          <span>{points}</span>
           <ListItemMenu />
         </HStack>
       </Td>

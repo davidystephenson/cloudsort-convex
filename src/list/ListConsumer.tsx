@@ -1,30 +1,31 @@
 import { JSX } from 'react'
-import { listQueryContext } from './listQueryContext'
+import authorizeListContext from '../auth/authorizeListContext'
+import getAuthContext from '../auth/getAuthContext'
+import listContext from './listContext'
+import { getListContext } from './getListContext'
+import { listIdQueryContext } from './listIdQueryContext'
 import ListNotFound from './ListNotFound'
 import LayoutPage from '../layout/LayoutPage'
-import { listIdQueryContext } from './listIdQueryContext'
-import ListHeader from './ListHeader'
-import listContext from './listContext'
-import ListItemsTable from '../item/ListItemsTable'
-import Choice from '../choice/Choice'
+import AuthList from './AuthList'
+import PublicList from './PublicList'
 
 export default function ListConsumer (): JSX.Element {
+  const authorizeList = authorizeListContext.query.useMaybe()
+  const auth = getAuthContext.data.useMaybe()
+  const getList = getListContext.query.useMaybe()
+  const list = listContext.useMaybe()
   const listId = listIdQueryContext.query.use()
-  const list = listQueryContext.query.useMaybe()
-  const loading = listId.loading || !list.provided || list.value.loading
-  if (!loading && list.value.data == null) {
+  const authorizeLoading = authorizeList.provided && authorizeList.value.loading
+  const loading = authorizeLoading || listId.loading || !getList.provided || getList.value.loading
+  if (!loading && getList.value.data == null) {
     return <ListNotFound />
   }
-  if (list.value == null || list.value.data == null) {
-    return <LayoutPage loading={loading} />
+  if (loading) {
+    return <LayoutPage loading />
   }
-  return (
-    <listContext.Provider list={list.value.data}>
-      <ListHeader />
-      <Choice />
-      <ListItemsTable
-        listItems={list.value.data.items}
-      />
-    </listContext.Provider>
-  )
+  const authed = auth.provided && list.provided && auth.value._id === list.value.userId
+  if (authed) {
+    return <AuthList />
+  }
+  return <PublicList />
 }

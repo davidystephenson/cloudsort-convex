@@ -30,6 +30,10 @@ export default async function relateList (props: {
     }
     return { ...listItem, item }
   })
-  const related: RelatedList = { ...props.list, user, items: relatedListItems }
+  const related: RelatedList = {
+    ...props.list,
+    listItems: relatedListItems,
+    user
+  }
   return related
 }

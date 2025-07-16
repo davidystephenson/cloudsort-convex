@@ -3,11 +3,11 @@ import followContext from './followContext'
 import FollowItem from './FollowItem'
 import UnfollowItem from './UnfollowItem'
 import unfollowContext from './unfollowContext'
-import authContext from '../auth/authContext'
+import getAuthContext from '../auth/getAuthContext'
 import userContext from '../user/userContext'
 
 export default function FollowingItem (): JSX.Element {
-  const auth = authContext.data.useMaybe()
+  const auth = getAuthContext.data.useMaybe()
   const user = userContext.useMaybe()
   if (!user.provided) {
     return <></>

@@ -8,7 +8,7 @@ export default function Option (): JSX.Element {
   const choose = chooseContext.use()
   const list = listContext.use()
   const option = optionContext.use()
-  const listItem = list.items.find((item) => item.itemUid === option.uid)
+  const listItem = list.listItems.find((item) => item.itemUid === option.uid)
   if (listItem == null) {
     throw new Error('List item not found')
   }

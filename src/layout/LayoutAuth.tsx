@@ -4,11 +4,11 @@ import ClinkRobe, { ButtonClinkRobe } from 'clink-robe'
 import { HStack } from '@chakra-ui/react'
 import LayoutProfile from './LayoutProfile'
 import { useConvexAuth } from 'convex/react'
-import authContext from '../auth/authContext'
+import getAuthContext from '../auth/getAuthContext'
 
 export default function LayoutAuth (): JSX.Element {
   const auth = useConvexAuth()
-  const authUser = authContext.data.useMaybe()
+  const authUser = getAuthContext.data.useMaybe()
   if (auth.isLoading) {
     return <ButtonRobe isLoading />
   }

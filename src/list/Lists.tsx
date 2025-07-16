@@ -2,7 +2,7 @@ import { JSX } from 'react'
 import authListsContext from './authListsContext'
 import AuthLists from './AuthLists'
 import { useConvexAuth } from 'convex/react'
-import authContext from '../auth/authContext'
+import getAuthContext from '../auth/getAuthContext'
 import ListsLoading from './ListsLoading'
 import publicListsContext from './publicListsContext'
 import LayoutPage from '../layout/LayoutPage'
@@ -12,8 +12,8 @@ import PublicLists from './PublicLists'
 
 export default function Lists (): JSX.Element {
   const auth = useConvexAuth()
-  const authData = authContext.data.useMaybe()
-  const authQuery = authContext.query.useMaybe()
+  const authData = getAuthContext.data.useMaybe()
+  const authQuery = getAuthContext.query.useMaybe()
   const publicLists = publicListsContext.query.use()
   if (auth.isLoading) {
     return <LayoutPage loading />

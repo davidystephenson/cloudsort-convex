@@ -1,0 +1,16 @@
+import { Doc } from '../../convex/_generated/dataModel'
+import { AuthListChoice, AuthListChoiceItem, AuthListImport, AuthListImportItem } from '../list/listTypes'
+
+export interface ChoiceEpisode extends Doc<'choices'> {
+  type: 'choice'
+}
+export interface EpisodeActors {
+  choice: (props: ChoiceEpisode) => [AuthListChoice] | [AuthListChoice, AuthListChoiceItem, AuthListChoiceItem]
+  import: (props: ImportEpisode) => [AuthListImport, ...AuthListImportItem[]]
+}
+export interface ImportEpisode extends RelatedImport {
+  type: 'import'
+}
+export interface RelatedImport extends Doc<'imports'> {
+  importItems: Array<Doc<'importItems'>>
+}

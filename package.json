@@ -28,7 +28,7 @@
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.5.3",
     "reeling": "^0.1.3",
-    "robes": "^0.1.39",
+    "robes": "^0.1.41",
     "use-actor": "^0.1.4"
   },
   "devDependencies": {

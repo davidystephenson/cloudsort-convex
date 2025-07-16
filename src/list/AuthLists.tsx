@@ -9,14 +9,14 @@ import UserMenu from '../user/UserMenu'
 import AuthListsTitle from './AuthListsTitle'
 import AuthListsMenu from './AuthListsMenu'
 import PublicLists from './PublicLists'
-import authContext from '../auth/authContext'
+import getAuthContext from '../auth/getAuthContext'
 import UserListsTable from './UserListsTable'
 import userContext from '../user/userContext'
 import { RelatedUser } from '../user/userTypes'
 import renameAuthContext from '../auth/renameAuthContext'
 
 export default function AuthLists (): ReactNode {
-  const auth = authContext.query.use()
+  const auth = getAuthContext.query.use()
   const authLists = authListsContext.query.use()
   const publicLists = publicListsContext.query.use()
   if (auth.loading || authLists.loading || publicLists.loading) {

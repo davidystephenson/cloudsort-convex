@@ -16,6 +16,7 @@ import type {
 import type * as CustomPassword from "../CustomPassword.js";
 import type * as _import from "../_import.js";
 import type * as auth from "../auth.js";
+import type * as authorizeList from "../authorizeList.js";
 import type * as choose from "../choose.js";
 import type * as createList from "../createList.js";
 import type * as deleteList from "../deleteList.js";
@@ -47,6 +48,7 @@ declare const fullApi: ApiFromModules<{
   CustomPassword: typeof CustomPassword;
   _import: typeof _import;
   auth: typeof auth;
+  authorizeList: typeof authorizeList;
   choose: typeof choose;
   createList: typeof createList;
   deleteList: typeof deleteList;

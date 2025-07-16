@@ -2,12 +2,12 @@ import { ReactNode } from 'react'
 import AuthLoginButton from '../auth/AuthLoginButton'
 import { ButtonClinkRobe } from 'clink-robe'
 import { Heading } from '@chakra-ui/react'
-import authContext from '../auth/authContext'
+import getAuthContext from '../auth/getAuthContext'
 
 export default function LayoutNotFound (props: {
   children: ReactNode
 }): ReactNode {
-  const authUser = authContext.data.useMaybe()
+  const authUser = getAuthContext.data.useMaybe()
   if (authUser == null) {
     return <AuthLoginButton />
   }

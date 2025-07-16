@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import authContext from '../auth/authContext'
+import getAuthContext from '../auth/getAuthContext'
 import LayoutReeling from '../layout/LayoutReeling'
 import userIdContext from './userIdContext'
 import userListsContext from './userListsContext'
@@ -9,7 +9,7 @@ import UserPageMenu from './UserPageMenu'
 import UserBadge from './UserBadge'
 
 export default function UserHeading (): ReactNode {
-  const auth = authContext.query.useMaybe()
+  const auth = getAuthContext.query.useMaybe()
   const userId = userIdContext.query.use()
   const userLists = userListsContext.query.use()
   if ((auth.provided && auth.value.loading) || userId.loading || userLists.loading) {

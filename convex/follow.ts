@@ -18,7 +18,6 @@ export const follow = mutation({
       throw new ConvexError('Already following')
     }
     await ctx.db.insert('follows', {
-      createdAt: Date.now(),
       followerId: authId,
       followedId: args.userId
     })

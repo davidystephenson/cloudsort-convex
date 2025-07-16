@@ -11,7 +11,7 @@ export default function ListItemPercent (props: {
 }): JSX.Element {
   const list = listContext.use()
   const imdbPath = `https://imdb.com/${props.row.item.uid}`
-  const percent = Math.round((props.row.rank / list.items.length) * 100)
+  const percent = Math.round((props.row.rank / list.listItems.length) * 100)
   return (
     <listItemContext.Provider listItem={props.row}>
       <Td>
