@@ -9,7 +9,7 @@ export default function AuthListEpisodesCells (props: AuthListEpisodes): JSX.Ele
   void props
   const authList = authListContext.use()
   const list = authorizeListContext.data.use()
-  const length = list.choices.length + list.choices.length
+  const length = list.choices.length + list.imports.length
   function handleClick (): void {
     authList.toggleEpisodes()
   }

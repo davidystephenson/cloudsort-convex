@@ -1,5 +1,5 @@
-import authorizeListContext from '../auth/authorizeListContext'
 import { EpisodeActors } from '../episode/episodeTypes'
+import useSortedEpisodes from '../episode/useSortedEpisodes'
 import marion from '../marion/marion'
 import authListContext from './authListContext'
 import listContext from './listContext'
@@ -7,23 +7,13 @@ import { AuthListRow } from './listTypes'
 
 export default function useAuthListRows (): AuthListRow[] {
   const authList = authListContext.use()
-  const authorization = authorizeListContext.data.use()
-  const choiceEpisodes = authorization.choices.map((choice) => {
-    return { ...choice, type: 'choice' } as const
-  })
-  const importEpisodes = authorization.imports.map((importItem) => {
-    return { ...importItem, type: 'import' } as const
-  })
-  const episodes = [...choiceEpisodes, ...importEpisodes]
-  const sortedEpisodes = episodes.toSorted((a, b) => {
-    return b._creationTime - a._creationTime
-  })
+  const episodes = useSortedEpisodes()
   const list = listContext.use()
   const rows: AuthListRow[] = []
   rows.push({ type: 'episodes' })
   const episodeActors: EpisodeActors = {
     choice: (props) => {
-      const opened = authList.openedChoiceIds.includes(props._id)
+      const opened = authList.openedEpisodeIds.includes(props._id)
       const choice = { type: 'choice', choiceId: props._id } as const
       if (opened) {
         return [
@@ -35,7 +25,7 @@ export default function useAuthListRows (): AuthListRow[] {
       return [choice]
     },
     import: (props) => {
-      const opened = authList.openedImportIds.includes(props._id)
+      const opened = authList.openedEpisodeIds.includes(props._id)
       const _import = { type: 'import', importId: props._id } as const
       if (opened) {
         const itemRows = props.importItems.map((importItem) => {
@@ -50,14 +40,14 @@ export default function useAuthListRows (): AuthListRow[] {
     }
   }
   if (authList.episodesOpened == null) {
-    const first = sortedEpisodes[0]
+    const first = episodes[0]
     if (first != null) {
       const episodeRows = marion(episodeActors, first)
       rows.push(...episodeRows)
     }
   }
   if (authList.episodesOpened === true) {
-    sortedEpisodes.forEach((episode) => {
+    episodes.forEach((episode) => {
       const episodeRows = marion(episodeActors, episode)
       rows.push(...episodeRows)
     })

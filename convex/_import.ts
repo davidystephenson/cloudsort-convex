@@ -36,10 +36,12 @@ const _import = mutation({
       const listItemExists = listItems.some(
         (listItem) => listItem.itemUid === item.uid
       )
+      if (listItemExists) {
+        return
+      }
       await ctx.db.insert('importItems', {
         importId,
         itemUid: item.uid,
-        ignored: listItemExists,
         seed: item.seed
       })
     })

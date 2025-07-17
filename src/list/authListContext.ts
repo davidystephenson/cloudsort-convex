@@ -1,45 +1,43 @@
 import contextCreator from 'context-creator'
 import { useCallback, useMemo, useState } from 'react'
 import { Id } from '../../convex/_generated/dataModel'
-
-function toggleElement <Element> (props: {
-  elements: Element[]
-  element: Element
-}): Element[] {
-  if (props.elements.includes(props.element)) {
-    const filtered = props.elements.filter(element => element !== props.element)
-    return filtered
-  } else {
-    const added = [...props.elements, props.element]
-    return added
-  }
-}
+import useSortedEpisodes from '../episode/useSortedEpisodes'
 
 const authListContext = contextCreator({
   name: 'Auth List',
   useValue: () => {
     const [episodesOpened, setEpisodesOpened] = useState<boolean>()
-    const [openedChoiceIds, setOpenedChoiceIds] = useState<Array<Id<'choices'>>>([])
-    const [openedImportIds, setOpenedImportIds] = useState<Array<Id<'imports'>>>([])
+    const episodes = useSortedEpisodes()
+    const [openedEpisodeIds, setOpenedEpisodeIds] = useState<Array<Id<'choices' | 'imports'>>>(() => {
+      const first = episodes[0]
+      if (first == null) {
+        return []
+      }
+      return [first._id]
+    })
     const [itemsOpened, setItemsOpened] = useState(true)
+    const toggleEpisode = useCallback((props: {
+      episodeId: Id<'choices' | 'imports'>
+    }) => {
+      const opened = openedEpisodeIds.includes(props.episodeId)
+      if (opened) {
+        const filtered = openedEpisodeIds.filter(element => element !== props.episodeId)
+        setOpenedEpisodeIds(filtered)
+      } else {
+        const added = [...openedEpisodeIds, props.episodeId]
+        setOpenedEpisodeIds(added)
+      }
+    }, [openedEpisodeIds])
     const toggleChoice = useCallback((props: {
       choiceId: Id<'choices'>
     }) => {
-      const toggled = toggleElement({
-        elements: openedChoiceIds,
-        element: props.choiceId
-      })
-      setOpenedChoiceIds(toggled)
-    }, [openedChoiceIds])
+      toggleEpisode({ episodeId: props.choiceId })
+    }, [openedEpisodeIds])
     const toggleImport = useCallback((props: {
       importId: Id<'imports'>
     }) => {
-      const toggled = toggleElement({
-        elements: openedImportIds,
-        element: props.importId
-      })
-      setOpenedImportIds(toggled)
-    }, [openedImportIds])
+      toggleEpisode({ episodeId: props.importId })
+    }, [openedEpisodeIds])
     const toggleEpisodes = useCallback((): void => {
       if (episodesOpened == null) {
         setEpisodesOpened(true)
@@ -52,8 +50,7 @@ const authListContext = contextCreator({
     }, [itemsOpened])
     const value = useMemo(() => ({
       episodesOpened,
-      openedChoiceIds,
-      openedImportIds,
+      openedEpisodeIds,
       itemsOpened,
       toggleChoice,
       toggleImport,
@@ -61,8 +58,7 @@ const authListContext = contextCreator({
       toggleItems
     }), [
       episodesOpened,
-      openedChoiceIds,
-      openedImportIds,
+      openedEpisodeIds,
       itemsOpened,
       toggleChoice,
       toggleImport,

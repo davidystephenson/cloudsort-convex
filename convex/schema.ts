@@ -23,7 +23,6 @@ const schema = defineSchema({
   })
     .index('listId', ['listId']),
   importItems: defineTable({
-    ignored: v.boolean(),
     itemUid: v.string(),
     importId: v.id('imports'),
     seed: v.optional(v.number())
