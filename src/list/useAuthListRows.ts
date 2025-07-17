@@ -5,7 +5,7 @@ import authListContext from './authListContext'
 import listContext from './listContext'
 import { AuthListRow } from './listTypes'
 
-export default function useAuthListRows(): AuthListRow[] {
+export default function useAuthListRows (): AuthListRow[] {
   const authList = authListContext.use()
   const authorization = authorizeListContext.data.use()
   const choiceEpisodes = authorization.choices.map((choice) => {
@@ -63,8 +63,10 @@ export default function useAuthListRows(): AuthListRow[] {
     })
   }
   rows.push({ type: 'items' })
-  list.listItems.forEach((item) => {
-    rows.push({ type: 'item', uid: item.item.uid })
-  })
+  if (authList.itemsOpened) {
+    list.listItems.forEach((item) => {
+      rows.push({ type: 'item', uid: item.item.uid })
+    })
+  }
   return rows
 }

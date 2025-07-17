@@ -1,4 +1,4 @@
-import { JSX } from 'react'
+import { JSX, MouseEvent } from 'react'
 import { FullCellRobe } from 'robes'
 import { AuthListImport } from '../list/listTypes'
 import authorizeListContext from '../auth/authorizeListContext'
@@ -13,7 +13,8 @@ export default function AuthListImportCells (props: AuthListImport): JSX.Element
   if (_import == null) {
     throw new Error('import not found')
   }
-  function handleClick (): void {
+  function handleClick (event: MouseEvent): void {
+    event.preventDefault()
     if (_import == null) {
       throw new Error('Import not found')
     }

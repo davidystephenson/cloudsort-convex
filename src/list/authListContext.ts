@@ -21,7 +21,7 @@ const authListContext = contextCreator({
     const [episodesOpened, setEpisodesOpened] = useState<boolean>()
     const [openedChoiceIds, setOpenedChoiceIds] = useState<Array<Id<'choices'>>>([])
     const [openedImportIds, setOpenedImportIds] = useState<Array<Id<'imports'>>>([])
-    const [itemsOpened, setItemsOpened] = useState(false)
+    const [itemsOpened, setItemsOpened] = useState(true)
     const toggleChoice = useCallback((props: {
       choiceId: Id<'choices'>
     }) => {

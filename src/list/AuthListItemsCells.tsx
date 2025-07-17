@@ -1,16 +1,25 @@
-import { JSX } from 'react'
+import { JSX, MouseEvent } from 'react'
 import { FullCellRobe } from 'robes'
 import listContext from './listContext'
 import { AuthListItems } from './listTypes'
-import { Heading } from '@chakra-ui/react'
+import { Heading, Link } from '@chakra-ui/react'
+import authListContext from './authListContext'
 
 export default function AuthListItemsCells (props: AuthListItems): JSX.Element {
   void props
+  const authList = authListContext.use()
   const list = listContext.use()
+  function handleClick (event: MouseEvent): void {
+    event.preventDefault()
+    authList.toggleItems()
+    console.log('toggleItems')
+  }
   return (
     <FullCellRobe>
       <Heading size='sm'>
-        Movies ({list.listItems.length})
+        <Link href='#' onClick={handleClick}>
+          Movies ({list.listItems.length})
+        </Link>
       </Heading>
     </FullCellRobe>
   )

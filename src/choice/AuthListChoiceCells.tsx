@@ -1,4 +1,4 @@
-import { JSX } from 'react'
+import { JSX, MouseEvent } from 'react'
 import { FullCellRobe } from 'robes'
 import { AuthListChoice } from '../list/listTypes'
 import authorizeListContext from '../auth/authorizeListContext'
@@ -11,19 +11,26 @@ export default function AuthListChoiceCells (props: AuthListChoice): JSX.Element
   const authList = authListContext.use()
   const authorization = authorizeListContext.data.use()
   const list = listContext.use()
-  const choice = authorization.choices.find((choice) => choice._id === props.choiceId)
+  const choice = authorization.choices.find(
+    (choice) => choice._id === props.choiceId
+  )
   if (choice == null) {
     throw new Error('import not found')
   }
-  const aListItem = list.listItems.find((listItem) => listItem.item.uid === choice.aUid)
+  const aListItem = list.listItems.find(
+    (listItem) => listItem.item.uid === choice.aUid
+  )
   if (aListItem == null) {
     throw new Error(`List item ${choice.aUid} not found in list`)
   }
-  const bListItem = list.listItems.find((listItem) => listItem.item.uid === choice.bUid)
+  const bListItem = list.listItems.find(
+    (listItem) => listItem.item.uid === choice.bUid
+  )
   if (bListItem == null) {
     throw new Error(`List item ${choice.bUid} not found in list`)
   }
-  function handleClick (): void {
+  function handleClick (event: MouseEvent): void {
+    event.preventDefault()
     if (choice == null) {
       throw new Error('Choice not found')
     }
