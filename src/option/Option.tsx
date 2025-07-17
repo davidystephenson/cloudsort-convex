@@ -1,25 +1,31 @@
 import { JSX } from 'react'
-import { ButtonRobe } from 'robes'
 import optionContext from './optionContext'
 import listContext from '../list/listContext'
-import chooseContext from '../choice/chooseContext'
+import { ClinkRobe } from 'clink-robe'
+import { HStack, VStack } from '@chakra-ui/react'
+import { RiExternalLinkLine } from 'react-icons/ri'
+import OptionControls from './OptionControls'
 
 export default function Option (): JSX.Element {
-  const choose = chooseContext.use()
   const list = listContext.use()
   const option = optionContext.use()
   const listItem = list.listItems.find((item) => item.itemUid === option.uid)
   if (listItem == null) {
     throw new Error('List item not found')
   }
-  function handleClick (): void {
-    void choose.act()
-  }
+  const url = `https://imdb.com/title/${listItem.item.uid}`
   return (
-    <ButtonRobe onClick={handleClick}>
-      [{option.hotkey}]
-      &thinsp;
-      {listItem.item.label}
-    </ButtonRobe>
+    <VStack>
+      <OptionControls />
+      <ClinkRobe
+        to={url}
+        isExternal
+      >
+        <HStack>
+          <span>[{option.hotkey}] imdb</span>
+          <RiExternalLinkLine />
+        </HStack>
+      </ClinkRobe>
+    </VStack>
   )
 }

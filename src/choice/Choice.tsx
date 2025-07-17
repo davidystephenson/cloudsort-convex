@@ -14,7 +14,7 @@ export default function Choice (): JSX.Element {
     throw new Error('List b is null')
   }
   return (
-    <HStack mx='auto'>
+    <HStack flexWrap='wrap' justifyContent='center'>
       <chooseContext.Provider
         args={{ listId: list._id, itemUid: list.a, aChosen: true }}
       >

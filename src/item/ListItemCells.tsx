@@ -10,7 +10,7 @@ import useItemPoints from './useItemPoints'
 export default function ListItemCells (props: {
   row: RelatedListItem
 }): JSX.Element {
-  const imdbPath = `https://imdb.com/title/${props.row.item.uid}`
+  const url = `https://imdb.com/title/${props.row.item.uid}`
   const points = useItemPoints({ rank: props.row.rank })
   return (
     <listItemContext.Provider listItem={props.row}>
@@ -22,7 +22,7 @@ export default function ListItemCells (props: {
               textDecoration: 'underline'
             }}
             isExternal
-            to={imdbPath}
+            to={url}
           >
             <HStack>
               <span>{props.row.item.label}</span>
