@@ -1,33 +1,30 @@
-import { JSX, MouseEvent } from 'react'
-import { FullCellRobe } from 'robes'
-import { AuthListImport } from '../list/listTypes'
-import authorizeListContext from '../auth/authorizeListContext'
-import { HStack, Link } from '@chakra-ui/react'
+import { JSX } from 'react'
 import { BsCloudUpload } from 'react-icons/bs'
-import authListContext from '../list/authListContext'
+import { FullCellRobe } from 'robes'
+import authorizeListContext from '../auth/authorizeListContext'
+import episodeContext from '../episode/episodeContext'
+import EpisodeTitle from '../episode/EpisodeTitle'
+import { ImportEpisode } from '../episode/episodeTypes'
+import { AuthListImport } from '../list/listTypes'
 
 export default function AuthListImportCells (props: AuthListImport): JSX.Element {
-  const authList = authListContext.use()
   const list = authorizeListContext.data.use()
   const _import = list.imports.find((_import) => _import._id === props.importId)
   if (_import == null) {
     throw new Error('import not found')
   }
-  function handleClick (event: MouseEvent): void {
-    event.preventDefault()
-    if (_import == null) {
-      throw new Error('Import not found')
-    }
-    authList.toggleImport({ importId: _import._id })
+  const episode: ImportEpisode = {
+    ..._import,
+    type: 'import'
   }
   return (
-    <FullCellRobe fontWeight='bold'>
-      <Link href='#' onClick={handleClick}>
-        <HStack>
+    <episodeContext.Provider episode={episode}>
+      <FullCellRobe>
+        <EpisodeTitle>
           <BsCloudUpload />
           <span>{_import.importItems.length}</span>
-        </HStack>
-      </Link>
-    </FullCellRobe>
+        </EpisodeTitle>
+      </FullCellRobe>
+    </episodeContext.Provider>
   )
 }

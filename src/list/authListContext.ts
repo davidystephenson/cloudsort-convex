@@ -28,16 +28,6 @@ const authListContext = contextCreator({
         setOpenedEpisodeIds(added)
       }
     }, [openedEpisodeIds])
-    const toggleChoice = useCallback((props: {
-      choiceId: Id<'choices'>
-    }) => {
-      toggleEpisode({ episodeId: props.choiceId })
-    }, [openedEpisodeIds])
-    const toggleImport = useCallback((props: {
-      importId: Id<'imports'>
-    }) => {
-      toggleEpisode({ episodeId: props.importId })
-    }, [openedEpisodeIds])
     const toggleEpisodes = useCallback((): void => {
       if (episodesOpened == null) {
         setEpisodesOpened(true)
@@ -52,16 +42,14 @@ const authListContext = contextCreator({
       episodesOpened,
       openedEpisodeIds,
       itemsOpened,
-      toggleChoice,
-      toggleImport,
+      toggleEpisode,
       toggleEpisodes,
       toggleItems
     }), [
       episodesOpened,
       openedEpisodeIds,
       itemsOpened,
-      toggleChoice,
-      toggleImport,
+      toggleEpisode,
       toggleEpisodes,
       toggleItems
     ])

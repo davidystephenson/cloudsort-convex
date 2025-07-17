@@ -7,7 +7,7 @@ export default function ChoiceLabel (props: {
   label: string
 }): JSX.Element {
   return (
-    <HStack spacing='4px' fontWeight='bold'>
+    <HStack spacing='4px'>
       <ChoiceIcon chosen={props.chosen} />
       <span>{props.label}</span>
     </HStack>

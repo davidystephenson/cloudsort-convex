@@ -1,14 +1,14 @@
-import { JSX, MouseEvent } from 'react'
+import { JSX } from 'react'
 import { FullCellRobe } from 'robes'
-import { AuthListChoice } from '../list/listTypes'
 import authorizeListContext from '../auth/authorizeListContext'
-import { HStack, Link } from '@chakra-ui/react'
+import EpisodeTitle from '../episode/EpisodeTitle'
+import episodeContext from '../episode/episodeContext'
+import { ChoiceEpisode } from '../episode/episodeTypes'
 import listContext from '../list/listContext'
+import { AuthListChoice } from '../list/listTypes'
 import ChoiceLabel from './ChoiceLabel'
-import authListContext from '../list/authListContext'
 
 export default function AuthListChoiceCells (props: AuthListChoice): JSX.Element {
-  const authList = authListContext.use()
   const authorization = authorizeListContext.data.use()
   const list = listContext.use()
   const choice = authorization.choices.find(
@@ -29,21 +29,18 @@ export default function AuthListChoiceCells (props: AuthListChoice): JSX.Element
   if (bListItem == null) {
     throw new Error(`List item ${choice.bUid} not found in list`)
   }
-  function handleClick (event: MouseEvent): void {
-    event.preventDefault()
-    if (choice == null) {
-      throw new Error('Choice not found')
-    }
-    authList.toggleChoice({ choiceId: choice._id })
+  const episode: ChoiceEpisode = {
+    ...choice,
+    type: 'choice'
   }
   return (
-    <FullCellRobe>
-      <Link href='#' onClick={handleClick}>
-        <HStack width='100%'>
+    <episodeContext.Provider episode={episode}>
+      <FullCellRobe>
+        <EpisodeTitle>
           <ChoiceLabel chosen={choice.aChosen} label={aListItem.item.label} />
           <ChoiceLabel chosen={!choice.aChosen} label={bListItem.item.label} />
-        </HStack>
-      </Link>
-    </FullCellRobe>
+        </EpisodeTitle>
+      </FullCellRobe>
+    </episodeContext.Provider>
   )
 }
