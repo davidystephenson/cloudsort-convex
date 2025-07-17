@@ -28,15 +28,15 @@ export default function OptionControls (): JSX.Element {
   if (first) {
     return (
       <HStack>
-        {button}
         <ListItemMenu />
+        {button}
       </HStack>
     )
   }
   return (
     <HStack>
-      <ListItemMenu />
       {button}
+      <ListItemMenu />
     </HStack>
   )
 }
