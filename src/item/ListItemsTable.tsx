@@ -12,7 +12,7 @@ export default function ListItemsTable (props: {
       columns={[`Movies (${props.listItems.length})`, 'Points']}
       Cells={ListItemCells}
       rows={props.listItems}
-      filter={(props) => {
+      onSearch={(props) => {
         return filterListItem({
           item: props.row.item,
           query: props.query

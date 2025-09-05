@@ -1,9 +1,9 @@
 import { HStack, Heading } from '@chakra-ui/react'
 import ClinkRobe from 'clink-robe'
 import { JSX } from 'react'
-import LayoutAuth from '../layout/LayoutAuth'
 import { Doc } from '../../convex/_generated/dataModel'
 import headerContext from './headerContext'
+import HeaderAuth from './HeaderAuth'
 
 export default function Header (props: {
   loading?: boolean
@@ -15,7 +15,7 @@ export default function Header (props: {
         <ClinkRobe to='/'>
           <Heading>Cloudsort</Heading>
         </ClinkRobe>
-        <LayoutAuth />
+        <HeaderAuth />
       </HStack>
     </headerContext.Provider>
   )

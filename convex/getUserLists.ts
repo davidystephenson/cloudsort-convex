@@ -42,10 +42,9 @@ const getUserLists = query({
     if (authId == null) {
       const userLists = {
         user: {
+          ...bundle.user,
           follower: false,
-          followed: false,
-          _id: bundle.user._id,
-          name: bundle.user.name
+          followed: false
         },
         lists: bundle.lists,
         followers: followerUsers,
@@ -57,10 +56,9 @@ const getUserLists = query({
     const followed = followeds.some((f) => f.followedId === authId)
     const userLists = {
       user: {
+        ...bundle.user,
         follower,
-        followed,
-        _id: bundle.user._id,
-        name: bundle.user.name
+        followed
       },
       lists: bundle.lists,
       followers: followerUsers,

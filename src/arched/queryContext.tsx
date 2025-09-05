@@ -4,8 +4,6 @@ import { useArchedQuery } from './useArchedQuery'
 import { QueryContext } from './archedTypes'
 import { ReactNode } from 'react'
 
-export type EmptyObject = Record<string, never>
-
 export default function queryContext<
   Args extends DefaultFunctionArgs,
   Data,

@@ -1,14 +1,9 @@
-import { Doc, Id } from '../../convex/_generated/dataModel'
+import { Doc } from '../../convex/_generated/dataModel'
 import { RelatedList } from '../list/listTypes'
 
-export interface UserBase {
-  _id: Id<'users'>
-  name: string
-}
-
-export interface RelatedUser extends UserBase {
-  follower: boolean
-  followed: boolean
+export interface RelatedUser extends Doc<'users'> {
+  follower?: boolean
+  followed?: boolean
 }
 
 export interface UserBundle {

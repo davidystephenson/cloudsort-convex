@@ -9,11 +9,12 @@ import CreateListForm from '../list/CreateListForm'
 import PublicLists from '../list/PublicLists'
 import UserListsTable from '../list/UserListsTable'
 import userContext from '../user/userContext'
-import { RelatedUser } from '../user/userTypes'
 import Header from '../header/Header'
 import { MdPublic } from 'react-icons/md'
 import { useArchedQuery } from '../arched/useArchedQuery'
 import { api } from '../../convex/_generated/api'
+import createListContext from '../list/createListContext'
+import authContext from '../auth/authContext'
 
 export default function HomePage (): JSX.Element {
   const home = useArchedQuery({ args: {}, query: api.home.default })
@@ -37,27 +38,26 @@ export default function HomePage (): JSX.Element {
       </>
     )
   }
-  const related: RelatedUser = {
-    ...home.data.user,
-    followed: false,
-    follower: false
-  }
   return (
-    <userContext.Provider user={related}>
-      <renameAuthContext.Provider>
-        <Header user={home.data.user} />
-        <LayoutTitle
-          title={<AuthListsTitle name={home.data.user.name} />}
-          menu={<UserMenu />}
-        />
-        <HStack width='100%' height='32px'>
-          <Heading size='md'>Lists</Heading>
-          <AuthListsMenu />
-          <CreateListForm />
-        </HStack>
-        <UserListsTable docs={home.data.privateUserLists} />
-        <PublicLists docs={home.data.publicLists} />
-      </renameAuthContext.Provider>
-    </userContext.Provider>
+    <authContext.Provider user={home.data.user}>
+      <userContext.Provider user={home.data.user}>
+        <createListContext.Provider>
+          <renameAuthContext.Provider>
+            <Header user={home.data.user} />
+            <LayoutTitle
+              title={<AuthListsTitle name={home.data.user.name} />}
+              menu={<UserMenu />}
+            />
+            <HStack width='100%' height='32px'>
+              <Heading size='md'>Lists</Heading>
+              <AuthListsMenu />
+              <CreateListForm />
+            </HStack>
+            <UserListsTable docs={home.data.privateUserLists} />
+            <PublicLists docs={home.data.publicLists} />
+          </renameAuthContext.Provider>
+        </createListContext.Provider>
+      </userContext.Provider>
+    </authContext.Provider>
   )
 }

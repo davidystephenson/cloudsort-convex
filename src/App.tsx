@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom'
 import Router from './route/Router'
 import { RobesProvider } from 'robes'
 import { Container, Stack } from '@chakra-ui/react'
-import AuthController from './auth/AuthController'
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL)
 
@@ -15,11 +14,9 @@ export default function App (): ReactNode {
       <RobesProvider>
         <ConvexAuthProvider client={convex}>
           <Container pt='10px'>
-            <AuthController>
-              <Stack>
-                <Router />
-              </Stack>
-            </AuthController>
+            <Stack>
+              <Router />
+            </Stack>
           </Container>
         </ConvexAuthProvider>
       </RobesProvider>

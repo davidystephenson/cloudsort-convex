@@ -3,9 +3,10 @@ import { LongRowmanceRobe, ReelingRobe } from 'robes'
 
 export default function LayoutTable <Row> (props: {
   Cells: ComponentType<{ index: number, row: Row }>
+  debug?: boolean
   columns: ReactNode[]
   rows: Row[]
-  filter: (props: { query: string | undefined, row: Row }) => boolean
+  onSearch: (props: { query: string | undefined, row: Row }) => boolean
 }): JSX.Element {
   const [query, setQuery] = useState<string>()
   if (props.rows == null) {
@@ -14,16 +15,17 @@ export default function LayoutTable <Row> (props: {
   if (props.rows.length === 0) {
     return <></>
   }
-  function filter (props: { query?: string | undefined }): void {
+  function handleSearch (props: { query?: string | undefined }): void {
     setQuery(props.query?.toLowerCase())
   }
-  const filtered = props.rows.filter((row) => props.filter({ query, row }))
+  const filtered = props.rows.filter((row) => props.onSearch({ query, row }))
   return (
     <LongRowmanceRobe
       columns={props.columns}
       Cells={props.Cells}
       data={filtered}
-      filter={filter}
+      debug={props.debug}
+      onSearch={handleSearch}
     />
   )
 }

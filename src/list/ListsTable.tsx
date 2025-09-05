@@ -5,14 +5,16 @@ import LayoutTable from '../layout/LayoutTable'
 export default function ListsTable (props: {
   cells: ComponentType<{ index: number, row: RelatedList }>
   columns: ReactNode[]
+  debug?: boolean
   lists: RelatedList[]
 }): JSX.Element {
   return (
     <LayoutTable
       columns={props.columns}
       Cells={props.cells}
+      debug={props.debug}
       rows={props.lists}
-      filter={(props) => {
+      onSearch={(props) => {
         if (props.query == null) {
           return true
         }

@@ -9,4 +9,3 @@ export const critickerSchema = z.object({
   ' IMDB ID': z.string(),
   Score: z.string()
 })
-export type Criticker = z.infer<typeof critickerSchema>

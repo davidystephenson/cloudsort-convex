@@ -12,7 +12,7 @@ export default function UsersTable (props: {
       columns={props.columns}
       Cells={props.Cells}
       rows={props.users}
-      filter={(props) => {
+      onSearch={(props) => {
         if (props.query == null) {
           return true
         }

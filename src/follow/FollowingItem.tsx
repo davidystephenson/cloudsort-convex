@@ -12,7 +12,7 @@ export default function FollowingItem (): JSX.Element {
   if (!user.provided) {
     return <></>
   }
-  const follow = auth.provided && user.value._id !== auth.value._id && !user.value.follower
+  const follow = auth.provided && user.value._id !== auth.value._id && user.value.follower !== true
   if (follow) {
     return (
       <followContext.Provider args={{ userId: user.value._id }}>
@@ -20,7 +20,7 @@ export default function FollowingItem (): JSX.Element {
       </followContext.Provider>
     )
   }
-  if (user.value.follower) {
+  if (user.value.follower === true) {
     return (
       <unfollowContext.Provider args={{ userId: user.value._id }}>
         <UnfollowItem />

@@ -12,8 +12,7 @@ export default async function guardRelatedUser (props: {
   const { authId } = props
   if (authId == null || user._id === props.authId) {
     return {
-      _id: user._id,
-      name: user.name,
+      ...user,
       follower: false,
       followed: false
     }
@@ -29,9 +28,8 @@ export default async function guardRelatedUser (props: {
     })
     .first()
   return {
+    ...user,
     follower: follower != null,
-    followed: followed != null,
-    _id: user._id,
-    name: user.name
+    followed: followed != null
   }
 }

@@ -4,10 +4,10 @@ import userContext from './userContext'
 
 export default function UserLabel (): JSX.Element {
   const user = userContext.use()
-  if (user.followed) {
+  if (user.followed === true) {
     return <Badge size='xs'>Follows You</Badge>
   }
-  if (user.follower) {
+  if (user.follower === true) {
     return <Badge>Following</Badge>
   }
   return <></>

@@ -2,7 +2,7 @@ import { ConvexError, v } from 'convex/values'
 import { mutation } from './_generated/server'
 import guardAuthId from '../src/auth/guardAuthId'
 
-export const follow = mutation({
+const follow = mutation({
   args: {
     userId: v.id('users')
   },

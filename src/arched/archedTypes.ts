@@ -3,19 +3,17 @@ import { DefaultFunctionArgs, FunctionReference } from 'convex/server'
 import { ReactNode } from 'react'
 import { QueryCtx, MutationCtx } from '../../convex/_generated/server'
 
-export interface ArchedLoading {
+interface ArchedLoading {
   data: undefined
   loading: true
 }
 
-export interface ArchedLoaded<T> {
+interface ArchedLoaded<T> {
   data: T
   loading: false
 }
 
 export type ArchedResult<T> = ArchedLoading | ArchedLoaded<T>
-
-export type ArchedFound<T> = ArchedLoaded<NonNullable<T>>
 
 export type Ctx = QueryCtx | MutationCtx
 

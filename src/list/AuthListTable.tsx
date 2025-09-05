@@ -1,7 +1,7 @@
 import { JSX } from 'react'
 import useAuthListRows from './useAuthListRows'
 import LayoutTable from '../layout/LayoutTable'
-import marion from '../marion/marion'
+import marion from 'marion'
 import AuthListColumnsCells from './AuthListColumnsCells'
 import AuthListItemCells from './AuthListItemCells'
 import AuthListItemsCells from './AuthListItemsCells'
@@ -30,7 +30,7 @@ export default function AuthListTable (): JSX.Element {
         return marion(actors, props.row)
       }}
       columns={['Movies', 'Points']}
-      filter={(props) => {
+      onSearch={(props) => {
         return filterAuthList({
           row: props.row,
           query: props.query

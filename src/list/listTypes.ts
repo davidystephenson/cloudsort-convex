@@ -6,10 +6,6 @@ export interface RelatedList extends Doc<'lists'> {
   listItems: RelatedListItem[]
   user: RelatedUser
 }
-export interface AuthList extends RelatedList {
-  choices: Array<Doc<'choices'>>
-  imports: Array<Doc<'imports'>>
-}
 export interface AuthListColumns {
   type: 'columns'
 }

@@ -1,6 +1,6 @@
 import { EpisodeActors } from '../episode/episodeTypes'
 import useSortedEpisodes from '../episode/useSortedEpisodes'
-import marion from '../marion/marion'
+import marion from 'marion'
 import authListContext from './authListContext'
 import listContext from './listContext'
 import { AuthListRow } from './listTypes'

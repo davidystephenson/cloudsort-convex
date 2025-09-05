@@ -1,0 +1,10 @@
+{
+  "ignoreDependencies": [
+    "@eslint/js",
+    "eslint-plugin-react-hooks",
+    "eslint-plugin-react-refresh",
+    "globals",
+    "ts-standard",
+    "typescript-eslint"
+  ]
+}
