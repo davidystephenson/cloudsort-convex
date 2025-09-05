@@ -5,7 +5,7 @@ import listContext from './listContext'
 import { getListContext } from './getListContext'
 import { listIdQueryContext } from './listIdQueryContext'
 import ListNotFound from './ListNotFound'
-import LayoutPage from '../layout/LayoutPage'
+import LayoutTitle from '../layout/LayoutPage'
 import AuthList from './AuthList'
 import PublicList from './PublicList'
 
@@ -21,7 +21,7 @@ export default function ListConsumer (): JSX.Element {
     return <ListNotFound />
   }
   if (loading) {
-    return <LayoutPage loading />
+    return <LayoutTitle loading />
   }
   const authed = auth.provided && list.provided && auth.value._id === list.value.userId
   if (authed) {

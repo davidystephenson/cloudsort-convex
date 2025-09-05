@@ -1,5 +1,5 @@
 import { JSX, ReactNode, useState } from 'react'
-import LayoutPage from '../layout/LayoutPage'
+import LayoutTitle from '../layout/LayoutPage'
 import { Stack } from '@chakra-ui/react'
 import { useAuthActions } from '@convex-dev/auth/react'
 import { useConvexAuth } from 'convex/react'
@@ -62,7 +62,8 @@ export default function AuthRegisterPage (): JSX.Element {
     setError(undefined)
   }
   return (
-    <LayoutPage title='Register'>
+    <>
+      <LayoutTitle title='Register' />
       <form onSubmit={handleSubmit}>
         <Stack>
           <InputRobe
@@ -90,6 +91,6 @@ export default function AuthRegisterPage (): JSX.Element {
           </ImpressedRobe>
         </Stack>
       </form>
-    </LayoutPage>
+    </>
   )
 }

@@ -1,18 +1,13 @@
 import { JSX, ReactNode } from 'react'
 import { Box, Heading, HStack } from '@chakra-ui/react'
-import useAuthLoading from '../auth/useAuthLoading'
 import { ReelingRobe } from 'robes'
 
-export default function LayoutPage (props: {
+export default function LayoutTitle (props: {
   menu?: ReactNode
   title?: ReactNode
-} & (
-  { loading?: boolean, children?: ReactNode } |
-  { loading: true }
-)): JSX.Element {
-  const authLoading = useAuthLoading()
-  const loading = props.loading === true || authLoading
-  if (loading) {
+  loading?: boolean
+}): JSX.Element {
+  if (props.loading === true) {
     return (
       <Heading size='lg'>
         <HStack align='start'>
@@ -33,7 +28,6 @@ export default function LayoutPage (props: {
         </Heading>
         {props.menu}
       </HStack>
-      {props.children}
     </>
   )
 }
