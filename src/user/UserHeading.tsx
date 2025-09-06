@@ -1,25 +1,16 @@
 import { ReactNode } from 'react'
-import getAuthContext from '../auth/getAuthContext'
-import LayoutReeling from '../layout/LayoutReeling'
-import userIdContext from './userIdContext'
-import userListsContext from './userListsContext'
 import userContext from './userContext'
 import { Heading, HStack } from '@chakra-ui/react'
-import UserPageMenu from './UserPageMenu'
 import UserBadge from './UserBadge'
+import UserMenu from './UserMenu'
 
 export default function UserHeading (): ReactNode {
-  const auth = getAuthContext.query.useMaybe()
-  const userId = userIdContext.query.use()
-  const userLists = userListsContext.query.use()
-  if ((auth.provided && auth.value.loading) || userId.loading || userLists.loading) {
-    return <LayoutReeling />
-  }
+  const user = userContext.use()
   return (
-    <userContext.Provider user={userLists.data.user}>
+    <userContext.Provider user={user}>
       <HStack>
-        <Heading size='lg'>{userLists.data.user.name}</Heading>
-        <UserPageMenu />
+        <Heading size='lg'>{user.name}</Heading>
+        <UserMenu />
         <UserBadge />
       </HStack>
     </userContext.Provider>

@@ -8,13 +8,13 @@ import userContext from '../user/userContext'
 export default function ListRowMenu (props: {
   debug?: boolean
 }): JSX.Element {
-  const auth = authContext.use()
+  const auth = authContext.useMaybe()
   const user = userContext.use()
   if (props.debug === true) {
-    console.debug('auth user', auth.user)
+    console.debug('auth', auth)
     console.debug('row user', user)
   }
-  if (auth.user._id !== user._id) {
+  if (auth.value?._id !== user._id) {
     return <></>
   }
   return (

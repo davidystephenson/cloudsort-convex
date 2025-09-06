@@ -1,14 +1,23 @@
 import { JSX } from 'react'
-import { Badge } from '@chakra-ui/react'
 import userContext from './userContext'
+import UserFollowsBadge from './UserFollowsBadge'
+import UserFollowingBadge from './UserFollowingBadge'
 
 export default function UserLabel (): JSX.Element {
   const user = userContext.use()
+  if (user.followed === true && user.follower === true) {
+    return (
+      <>
+        <UserFollowsBadge />
+        <UserFollowingBadge />
+      </>
+    )
+  }
   if (user.followed === true) {
-    return <Badge size='xs'>Follows You</Badge>
+    return <UserFollowsBadge />
   }
   if (user.follower === true) {
-    return <Badge>Following</Badge>
+    return <UserFollowingBadge />
   }
   return <></>
 }

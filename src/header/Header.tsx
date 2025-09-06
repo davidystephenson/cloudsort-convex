@@ -1,16 +1,16 @@
 import { HStack, Heading } from '@chakra-ui/react'
 import ClinkRobe from 'clink-robe'
 import { JSX } from 'react'
-import { Doc } from '../../convex/_generated/dataModel'
 import headerContext from './headerContext'
 import HeaderAuth from './HeaderAuth'
+import authContext from '../auth/authContext'
 
 export default function Header (props: {
   loading?: boolean
-  user?: Doc<'users'>
 }): JSX.Element {
+  const auth = authContext.useMaybe()
   return (
-    <headerContext.Provider {...props}>
+    <headerContext.Provider {...props} user={auth.value}>
       <HStack justifyContent='space-between'>
         <ClinkRobe to='/'>
           <Heading>Cloudsort</Heading>

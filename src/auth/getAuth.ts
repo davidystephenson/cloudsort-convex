@@ -2,7 +2,7 @@ import { getAuthUserId } from '@convex-dev/auth/server'
 import { Doc } from '../../convex/_generated/dataModel'
 import { Ctx } from '../arched/archedTypes'
 
-export default async function getUser (props: { ctx: Ctx }): Promise<Doc<'users'> | undefined> {
+export default async function getAuth (props: { ctx: Ctx }): Promise<Doc<'users'> | undefined> {
   const userId = await getAuthUserId(props.ctx)
   if (userId == null) {
     return undefined

@@ -15,6 +15,8 @@ import { useArchedQuery } from '../arched/useArchedQuery'
 import { api } from '../../convex/_generated/api'
 import createListContext from '../list/createListContext'
 import authContext from '../auth/authContext'
+import PublicListsTable from '../list/PublicListsTable'
+import UserSection from '../user/UserSection'
 
 export default function HomePage (): JSX.Element {
   const home = useArchedQuery({ args: {}, query: api.home.default })
@@ -27,25 +29,25 @@ export default function HomePage (): JSX.Element {
     )
   }
   console.log('home.data', home.data)
-  if (home.data.user == null) {
+  if (home.data.auth == null) {
     return (
       <>
         <Header />
         <LayoutTitle
           title={<HStack><span>Lists</span><MdPublic /></HStack>}
         />
-        <PublicLists docs={home.data.lists} />
+        <PublicListsTable docs={home.data.lists} />
       </>
     )
   }
   return (
-    <authContext.Provider user={home.data.user}>
-      <userContext.Provider user={home.data.user}>
+    <authContext.Provider user={home.data.auth}>
+      <userContext.Provider user={home.data.auth}>
         <createListContext.Provider>
           <renameAuthContext.Provider>
-            <Header user={home.data.user} />
+            <Header />
             <LayoutTitle
-              title={<AuthListsTitle name={home.data.user.name} />}
+              title={<AuthListsTitle name={home.data.auth.name} />}
               menu={<UserMenu />}
             />
             <HStack width='100%' height='32px'>
@@ -54,6 +56,8 @@ export default function HomePage (): JSX.Element {
               <CreateListForm />
             </HStack>
             <UserListsTable docs={home.data.privateUserLists} />
+            <UserSection users={home.data.followers}>Followers</UserSection>
+            <UserSection users={home.data.followeds}>Following</UserSection>
             <PublicLists docs={home.data.publicLists} />
           </renameAuthContext.Provider>
         </createListContext.Provider>

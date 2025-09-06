@@ -36,6 +36,7 @@ import type * as renameAuth from "../renameAuth.js";
 import type * as renameList from "../renameList.js";
 import type * as unfollow from "../unfollow.js";
 import type * as unpublishList from "../unpublishList.js";
+import type * as user from "../user.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -69,6 +70,7 @@ declare const fullApi: ApiFromModules<{
   renameList: typeof renameList;
   unfollow: typeof unfollow;
   unpublishList: typeof unpublishList;
+  user: typeof user;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
