@@ -1,5 +1,4 @@
 import { EpisodeActors } from '../episode/episodeTypes'
-import useSortedEpisodes from '../episode/useSortedEpisodes'
 import marion from 'marion'
 import authListContext from './authListContext'
 import listContext from './listContext'
@@ -7,7 +6,6 @@ import { AuthListRow } from './listTypes'
 
 export default function useAuthListRows (): AuthListRow[] {
   const authList = authListContext.use()
-  const episodes = useSortedEpisodes()
   const list = listContext.use()
   const rows: AuthListRow[] = []
   rows.push({ type: 'episodes' })
@@ -40,14 +38,14 @@ export default function useAuthListRows (): AuthListRow[] {
     }
   }
   if (authList.episodesOpened == null) {
-    const first = episodes[0]
+    const first = authList.episodes[0]
     if (first != null) {
       const episodeRows = marion(episodeActors, first)
       rows.push(...episodeRows)
     }
   }
   if (authList.episodesOpened === true) {
-    episodes.forEach((episode) => {
+    authList.episodes.forEach((episode) => {
       const episodeRows = marion(episodeActors, episode)
       rows.push(...episodeRows)
     })

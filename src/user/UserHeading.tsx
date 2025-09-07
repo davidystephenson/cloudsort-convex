@@ -7,12 +7,10 @@ import UserMenu from './UserMenu'
 export default function UserHeading (): ReactNode {
   const user = userContext.use()
   return (
-    <userContext.Provider user={user}>
-      <HStack>
-        <Heading size='lg'>{user.name}</Heading>
-        <UserMenu />
-        <UserBadge />
-      </HStack>
-    </userContext.Provider>
+    <HStack>
+      <Heading size='lg'>{user.name}</Heading>
+      <UserMenu />
+      <UserBadge />
+    </HStack>
   )
 }

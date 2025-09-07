@@ -5,6 +5,7 @@ import { useAuthActions } from '@convex-dev/auth/react'
 import { useConvexAuth } from 'convex/react'
 import { useNavigate } from 'react-router-dom'
 import { ImpressedRobe, InputRobe } from 'robes'
+import Header from '../header/Header'
 
 export default function AuthLoginPage (): JSX.Element {
   const actions = useAuthActions()
@@ -56,6 +57,7 @@ export default function AuthLoginPage (): JSX.Element {
   }
   return (
     <>
+      <Header />
       <LayoutTitle title='Login' />
       <form onSubmit={handleSubmit}>
         <Stack>

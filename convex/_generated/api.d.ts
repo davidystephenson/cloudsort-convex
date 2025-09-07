@@ -29,6 +29,7 @@ import type * as getUserByName from "../getUserByName.js";
 import type * as getUserLists from "../getUserLists.js";
 import type * as home from "../home.js";
 import type * as http from "../http.js";
+import type * as list from "../list.js";
 import type * as normalizeListId from "../normalizeListId.js";
 import type * as normalizeUserId from "../normalizeUserId.js";
 import type * as publishList from "../publishList.js";
@@ -63,6 +64,7 @@ declare const fullApi: ApiFromModules<{
   getUserLists: typeof getUserLists;
   home: typeof home;
   http: typeof http;
+  list: typeof list;
   normalizeListId: typeof normalizeListId;
   normalizeUserId: typeof normalizeUserId;
   publishList: typeof publishList;

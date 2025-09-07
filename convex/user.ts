@@ -21,17 +21,19 @@ const user = query({
     if (user == null) {
       return { auth, user: undefined }
     }
-    const lists = await ctx
+    const userLists = await ctx
       .db
       .query('lists')
-      .withIndex('userPublic', (q) => q.eq('userId', userId).eq('public', true))
+      .withIndex('userPublic', (q) => q.eq('userId', userId))
       .collect()
     const followers = await ctx
       .db
       .query('follows')
       .withIndex('followed', (q) => q.eq('followedId', userId))
       .collect()
-    if (args.userId !== authId && lists.length === 0 && followers.length === 0) {
+    const publicLists = userLists.filter((list) => list.public)
+    const self = userId === authId
+    if (!self && publicLists.length === 0 && followers.length === 0) {
       const followings = await ctx
         .db
         .query('follows')
@@ -41,6 +43,8 @@ const user = query({
         return { auth, user: undefined }
       }
     }
+    console.log('lists', userLists)
+    const lists = self ? userLists : publicLists
     const relatedLists = await relateLists({ ctx, lists, authId })
     const followerUsers = await overAll(followers, async (follower) => {
       const user = await guardRelatedUser({
@@ -77,14 +81,13 @@ const user = query({
     const followed = followeds.some((f) => f.followedId === authId)
     const follower = followers.some((f) => f.followerId === authId)
     const relatedUser = { ...user, followed, follower }
-    const userLists = {
+    return {
       auth,
       followeds: followedUsers,
       followers: followerUsers,
       lists: relatedLists,
       user: relatedUser
     }
-    return userLists
   }
 })
 export default user

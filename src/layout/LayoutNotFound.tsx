@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import AuthLoginButton from '../auth/AuthLoginButton'
 import { ButtonClinkRobe } from 'clink-robe'
-import { Heading } from '@chakra-ui/react'
+import { Heading, HStack } from '@chakra-ui/react'
 import getAuthContext from '../auth/getAuthContext'
 
 export default function LayoutNotFound (props: {
@@ -13,7 +13,12 @@ export default function LayoutNotFound (props: {
   }
   return (
     <>
-      <Heading size='sm'>{props.children} not found</Heading>
+      <Heading size='sm'>
+        <HStack>
+          {props.children}
+          <span>not found</span>
+        </HStack>
+      </Heading>
       <ButtonClinkRobe to='/'>
         Lists
       </ButtonClinkRobe>

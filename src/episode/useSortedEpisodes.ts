@@ -1,12 +1,13 @@
-import authorizeListContext from '../auth/authorizeListContext'
+import { AuthList } from '../list/listTypes'
 import { Episode } from './episodeTypes'
 
-export default function useSortedEpisodes (): Episode[] {
-  const authorization = authorizeListContext.data.use()
-  const choiceEpisodes = authorization.choices.map((choice) => {
+export default function useSortedEpisodes (props: {
+  list: AuthList
+}): Episode[] {
+  const choiceEpisodes = props.list.choices.map((choice) => {
     return { ...choice, type: 'choice' } as const
   })
-  const importEpisodes = authorization.imports.map((importItem) => {
+  const importEpisodes = props.list.imports.map((importItem) => {
     return { ...importItem, type: 'import' } as const
   })
   const episodes = [...choiceEpisodes, ...importEpisodes]

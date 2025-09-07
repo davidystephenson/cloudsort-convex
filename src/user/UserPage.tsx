@@ -1,12 +1,11 @@
 import { JSX } from 'react'
 import { useParams } from 'react-router-dom'
-import LayoutNotFound from '../layout/LayoutNotFound'
 import UserPageContent from './UserPageContent'
 
 export default function UserPage (): JSX.Element {
   const params = useParams()
   if (params.userId == null) {
-    return <LayoutNotFound>User {params.userId}</LayoutNotFound>
+    throw new Error('userId is null')
   }
   return <UserPageContent userId={params.userId} />
 }

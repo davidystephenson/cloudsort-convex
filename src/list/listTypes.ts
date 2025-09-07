@@ -1,10 +1,11 @@
 import { Doc, Id } from '../../convex/_generated/dataModel'
+import { RelatedImport } from '../episode/episodeTypes'
 import { RelatedListItem } from '../item/itemTypes'
 import { RelatedUser } from '../user/userTypes'
 
-export interface RelatedList extends Doc<'lists'> {
-  listItems: RelatedListItem[]
-  user: RelatedUser
+export interface AuthList extends RelatedList {
+  choices: Array<Doc<'choices'>>
+  imports: RelatedImport[]
 }
 export interface AuthListColumns {
   type: 'columns'
@@ -44,3 +45,7 @@ export type AuthListRow = AuthListColumns
 | AuthListImportItem
 | AuthListChoice
 | AuthListChoiceItem
+export interface RelatedList extends Doc<'lists'> {
+  listItems: RelatedListItem[]
+  user: RelatedUser
+}
