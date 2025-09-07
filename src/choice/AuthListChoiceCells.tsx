@@ -1,29 +1,27 @@
 import { JSX } from 'react'
 import { FullCellRobe } from 'robes'
-import authorizeListContext from '../auth/authorizeListContext'
 import EpisodeTitle from '../episode/EpisodeTitle'
 import episodeContext from '../episode/episodeContext'
 import { ChoiceEpisode } from '../episode/episodeTypes'
-import listContext from '../list/listContext'
 import { AuthListChoice } from '../list/listTypes'
 import ChoiceLabel from './ChoiceLabel'
+import authListContext from '../list/authListContext'
 
 export default function AuthListChoiceCells (props: AuthListChoice): JSX.Element {
-  const authorization = authorizeListContext.data.use()
-  const list = listContext.use()
-  const choice = authorization.choices.find(
+  const authList = authListContext.use()
+  const choice = authList.list.choices.find(
     (choice) => choice._id === props.choiceId
   )
   if (choice == null) {
     throw new Error('import not found')
   }
-  const aListItem = list.listItems.find(
+  const aListItem = authList.list.listItems.find(
     (listItem) => listItem.item.uid === choice.aUid
   )
   if (aListItem == null) {
     throw new Error(`List item ${choice.aUid} not found in list`)
   }
-  const bListItem = list.listItems.find(
+  const bListItem = authList.list.listItems.find(
     (listItem) => listItem.item.uid === choice.bUid
   )
   if (bListItem == null) {
