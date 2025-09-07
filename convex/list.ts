@@ -3,9 +3,9 @@ import { v } from 'convex/values'
 import getAuthId from '../src/auth/getAuthId'
 import getRelatedUser from '../src/user/getRelatedUser'
 import getRelatedList from '../src/list/getRelatedList'
-import relateImports from '../src/import/relateImports'
 import { AuthList, RelatedList } from '../src/list/listTypes'
 import { RelatedUser } from '../src/user/userTypes'
+import getEpisodes from '../src/episode/getEpisodes'
 
 const list = query<any, any, Promise<{
   auth: RelatedUser | undefined
@@ -31,21 +31,10 @@ const list = query<any, any, Promise<{
       }
       return { auth, list: undefined }
     }
-    const choices = await ctx
-      .db
-      .query('choices')
-      .withIndex('listId', (q) => q.eq('listId', listId))
-      .collect()
-    const imports = await ctx
-      .db
-      .query('imports')
-      .withIndex('listId', (q) => q.eq('listId', listId))
-      .collect()
-    const relatedImports = await relateImports({ ctx, imports })
+    const episodes = await getEpisodes({ ctx, listId })
     const authList: AuthList = {
       ...list,
-      choices,
-      imports: relatedImports
+      ...episodes
     }
     const result: { auth: RelatedUser | undefined, list: AuthList } = { auth, list: authList }
     return result

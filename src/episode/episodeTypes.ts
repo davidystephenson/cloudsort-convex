@@ -5,6 +5,10 @@ export interface ChoiceEpisode extends Doc<'choices'> {
   type: 'choice'
 }
 export type Episode = ChoiceEpisode | ImportEpisode
+export interface Episodes {
+  choices: Array<Doc<'choices'>>
+  imports: RelatedImport[]
+}
 export interface EpisodeActors {
   choice: (props: ChoiceEpisode) => [AuthListChoice] | [AuthListChoice, AuthListChoiceItem, AuthListChoiceItem]
   import: (props: ImportEpisode) => [AuthListImport, ...AuthListImportItem[]]

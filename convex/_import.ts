@@ -1,6 +1,6 @@
 import { mutation } from './_generated/server'
 import { v } from 'convex/values'
-import guardAuthList from '../src/list/guardAuthList'
+import guardAuthUserList from '../src/list/guardAuthUserList'
 import { overAll } from 'overpromise'
 import { itemDef } from '../src/item/itemTypes'
 import { importItems } from 'choice-sort'
@@ -13,7 +13,7 @@ const _import = mutation({
     items: v.array(itemDef)
   },
   handler: async (ctx, args) => {
-    const list = await guardAuthList({ ctx, listId: args.listId })
+    const list = await guardAuthUserList({ ctx, listId: args.listId })
     const listItems = await ctx
       .db
       .query('listItems')

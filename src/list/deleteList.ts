@@ -18,7 +18,7 @@ export default async function deleteList (props: {
     .withIndex('listId', q => q.eq('listId', props.id))
     .collect()
   await overAll(imports, async (importDoc) => {
-    await deleteImport({ ctx: props.ctx, id: importDoc._id })
+    await deleteImport({ ctx: props.ctx, importId: importDoc._id })
   })
   const listItems = await props.ctx.db.query('listItems')
     .withIndex('listId', q => q.eq('listId', props.id))

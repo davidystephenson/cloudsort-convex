@@ -3,6 +3,8 @@ import { JSX, MouseEvent, ReactNode } from 'react'
 import EpisodeTime from './EpisodeTime'
 import episodeContext from './episodeContext'
 import authListContext from '../list/authListContext'
+import EpisodeMenu from './EpisodeMenu'
+import rewindListContext from '../list/rewindlistContext'
 
 export default function EpisodeTitle (props: {
   children: ReactNode
@@ -25,6 +27,9 @@ export default function EpisodeTitle (props: {
           <EpisodeTime />
         </HStack>
       </Link>
+      <rewindListContext.Provider>
+        <EpisodeMenu />
+      </rewindListContext.Provider>
     </HStack>
   )
 }

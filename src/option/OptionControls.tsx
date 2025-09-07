@@ -25,7 +25,11 @@ export default function OptionControls (): JSX.Element {
     <ButtonRobe onClick={handleClick}>
       [{option.hotkey}]
       &thinsp;
-      {listItem.item.label}
+      <span
+        style={{ maxWidth: '65vw', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+      >
+        {listItem.item.label}
+      </span>
     </ButtonRobe>
   )
   if (first) {

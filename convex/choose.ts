@@ -1,9 +1,10 @@
 import { mutation } from './_generated/server'
 import { v } from 'convex/values'
-import guardAuthList from '../src/list/guardAuthList'
+import guardAuthUserList from '../src/list/guardAuthUserList'
 import { chooseOption } from 'choice-sort'
 import getListFlow from '../src/list/getListFlow'
 import updateListFlow from '../src/list/updateListFlow'
+import getListItems from '../src/list/getListItems'
 
 const choose = mutation({
   args: {
@@ -12,12 +13,7 @@ const choose = mutation({
     aChosen: v.boolean()
   },
   handler: async (ctx, args) => {
-    const list = await guardAuthList({ ctx, listId: args.listId })
-    const listItems = await ctx
-      .db
-      .query('listItems')
-      .withIndex('listId', (q) => q.eq('listId', args.listId))
-      .collect()
+    const list = await guardAuthUserList({ ctx, listId: args.listId })
     if (list.a == null) {
       throw new Error('List a is null')
     }
@@ -35,6 +31,7 @@ const choose = mutation({
       bUid: list.b,
       aChosen: args.aChosen
     })
+    const listItems = await getListItems({ ctx, listId: args.listId })
     const flow = await getListFlow({ ctx, list, listItems })
     const chosenFlow = chooseOption({ flow, option: args.itemUid })
     await updateListFlow({

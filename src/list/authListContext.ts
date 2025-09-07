@@ -1,7 +1,7 @@
 import contextCreator from 'context-creator'
 import { useCallback, useMemo, useState } from 'react'
 import { Id } from '../../convex/_generated/dataModel'
-import useSortedEpisodes from '../episode/useSortedEpisodes'
+import getSortedEpisodes from '../episode/getSortedEpisodes'
 import { AuthList } from './listTypes'
 
 const authListContext = contextCreator({
@@ -10,7 +10,7 @@ const authListContext = contextCreator({
     list: AuthList
   }) => {
     const [episodesOpened, setEpisodesOpened] = useState<boolean>()
-    const episodes = useSortedEpisodes({ list: props.list })
+    const episodes = getSortedEpisodes(props.list)
     const [openedEpisodeIds, setOpenedEpisodeIds] = useState<Array<Id<'choices' | 'imports'>>>(() => {
       const first = episodes[0]
       if (first == null) {
