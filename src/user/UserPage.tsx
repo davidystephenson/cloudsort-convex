@@ -9,11 +9,4 @@ export default function UserPage (): JSX.Element {
     return <LayoutNotFound>User {params.userId}</LayoutNotFound>
   }
   return <UserPageContent userId={params.userId} />
-  // return (
-  //   <userIdContext.Provider userId={params.userId}>
-  //     <UserListsController>
-  //       <UserLists />
-  //     </UserListsController>
-  //   </userIdContext.Provider>
-  // )
 }

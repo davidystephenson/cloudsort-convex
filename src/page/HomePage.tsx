@@ -8,15 +8,14 @@ import AuthListsMenu from '../list/AuthListsMenu'
 import CreateListForm from '../list/CreateListForm'
 import PublicLists from '../list/PublicLists'
 import UserListsTable from '../list/UserListsTable'
-import userContext from '../user/userContext'
 import Header from '../header/Header'
 import { MdPublic } from 'react-icons/md'
 import { useArchedQuery } from '../arched/useArchedQuery'
 import { api } from '../../convex/_generated/api'
 import createListContext from '../list/createListContext'
-import authContext from '../auth/authContext'
 import PublicListsTable from '../list/PublicListsTable'
 import UserSection from '../user/UserSection'
+import AuthController from '../auth/AuthController'
 
 export default function HomePage (): JSX.Element {
   const home = useArchedQuery({ args: {}, query: api.home.default })
@@ -41,27 +40,25 @@ export default function HomePage (): JSX.Element {
     )
   }
   return (
-    <authContext.Provider user={home.data.auth}>
-      <userContext.Provider user={home.data.auth}>
-        <createListContext.Provider>
-          <renameAuthContext.Provider>
-            <Header />
-            <LayoutTitle
-              title={<AuthListsTitle name={home.data.auth.name} />}
-              menu={<UserMenu />}
-            />
-            <HStack width='100%' height='32px'>
-              <Heading size='md'>Lists</Heading>
-              <AuthListsMenu />
-              <CreateListForm />
-            </HStack>
-            <UserListsTable docs={home.data.privateUserLists} />
-            <UserSection users={home.data.followers}>Followers</UserSection>
-            <UserSection users={home.data.followeds}>Following</UserSection>
-            <PublicLists docs={home.data.publicLists} />
-          </renameAuthContext.Provider>
-        </createListContext.Provider>
-      </userContext.Provider>
-    </authContext.Provider>
+    <AuthController auth={home.data.auth}>
+      <createListContext.Provider>
+        <renameAuthContext.Provider>
+          <Header />
+          <LayoutTitle
+            title={<AuthListsTitle name={home.data.auth.name} />}
+            menu={<UserMenu />}
+          />
+          <HStack width='100%' height='32px'>
+            <Heading size='md'>Lists</Heading>
+            <AuthListsMenu />
+            <CreateListForm />
+          </HStack>
+          <UserListsTable docs={home.data.privateUserLists} />
+          <UserSection users={home.data.followers}>Followers</UserSection>
+          <UserSection users={home.data.followeds}>Following</UserSection>
+          <PublicLists docs={home.data.publicLists} />
+        </renameAuthContext.Provider>
+      </createListContext.Provider>
+    </AuthController>
   )
 }

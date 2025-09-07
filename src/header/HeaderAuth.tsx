@@ -15,7 +15,9 @@ export default function HeaderAuth (): JSX.Element {
   }
   return (
     <HStack>
-      <ClinkRobe to='/login'>Login</ClinkRobe>
+      <ClinkRobe to='/login'>
+        Login
+      </ClinkRobe>
       <ButtonClinkRobe to='/register'>
         Register
       </ButtonClinkRobe>

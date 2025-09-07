@@ -9,7 +9,7 @@ import authContext from '../auth/authContext'
 export default function FollowingItem (): JSX.Element {
   const auth = authContext.useMaybe()
   const user = userContext.use()
-  const follow = auth.provided && auth.value != null && user._id !== auth.value._id && user.follower !== true
+  const follow = auth.provided && user._id !== auth.value._id && user.follower !== true
   if (follow) {
     return (
       <followContext.Provider args={{ userId: user._id }}>
