@@ -11,7 +11,7 @@ import AuthListTable from './AuthListTable'
 import ListHeader from './ListHeader'
 import PublicList from './PublicList'
 
-export default function ListPageContent(props: {
+export default function ListPageContent (props: {
   listId: string
 }): JSX.Element {
   const list = useArchedQuery({ args: { listId: props.listId }, query: api.list.default })

@@ -2,15 +2,15 @@ import { ReactNode } from 'react'
 import AuthLoginButton from '../auth/AuthLoginButton'
 import { ButtonClinkRobe } from 'clink-robe'
 import { Badge, Heading, Stack } from '@chakra-ui/react'
-import getAuthContext from '../auth/getAuthContext'
 import Header from '../header/Header'
+import authContext from '../auth/authContext'
 
 export default function LayoutNotFound (props: {
   id: string
   label: string
 }): ReactNode {
-  const authUser = getAuthContext.data.useMaybe()
-  if (authUser == null) {
+  const auth = authContext.useMaybe()
+  if (auth == null) {
     return <AuthLoginButton />
   }
   return (
