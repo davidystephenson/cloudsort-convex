@@ -12,7 +12,7 @@ export default function HeaderProfile (props: {
   }
   return (
     <ProfileRobe onLogout={handleLogout}>
-      {props.user.email}
+      {props.user.name}
     </ProfileRobe>
   )
 }
