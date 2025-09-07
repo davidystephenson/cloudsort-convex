@@ -1,12 +1,11 @@
 import { ReactNode } from 'react'
 import { useParams } from 'react-router-dom'
-import ListNotFound from './ListNotFound'
 import ListPageContent from './ListPageContent'
 
 export default function ListPage (): ReactNode {
   const params = useParams()
   if (params.listId == null) {
-    return <ListNotFound />
+    throw new Error('There is no listId')
   }
 
   return <ListPageContent listId={params.listId} />

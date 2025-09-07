@@ -7,7 +7,7 @@ import UserHeading from './UserHeading'
 import UserListsTable from '../list/UserListsTable'
 import UserSection from './UserSection'
 import AuthController from '../auth/AuthController'
-import UserNotFound from './UserNotFound'
+import LayoutNotFound from '../layout/LayoutNotFound'
 
 export default function UserPageContent (props: {
   userId: string
@@ -19,12 +19,7 @@ export default function UserPageContent (props: {
     return <Header loading />
   }
   if (user.data.user == null) {
-    return (
-      <>
-        <Header />
-        <UserNotFound userId={props.userId} />
-      </>
-    )
+    return <LayoutNotFound id={props.userId} label='User' />
   }
   return (
     <AuthController auth={user.data.auth}>

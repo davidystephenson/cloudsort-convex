@@ -19,12 +19,7 @@ export default function ListPageContent (props: {
     return <Header loading />
   }
   if (list.data.list == null) {
-    return (
-      <>
-        <Header />
-        <LayoutNotFound>User {props.listId}</LayoutNotFound>
-      </>
-    )
+    return <LayoutNotFound id={props.listId} label='List' />
   }
   if ('choices' in list.data.list) {
     return (

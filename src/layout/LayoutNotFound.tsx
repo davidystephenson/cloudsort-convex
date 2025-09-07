@@ -1,11 +1,13 @@
 import { ReactNode } from 'react'
 import AuthLoginButton from '../auth/AuthLoginButton'
 import { ButtonClinkRobe } from 'clink-robe'
-import { Heading, HStack } from '@chakra-ui/react'
+import { Badge, Heading, Stack } from '@chakra-ui/react'
 import getAuthContext from '../auth/getAuthContext'
+import Header from '../header/Header'
 
 export default function LayoutNotFound (props: {
-  children: ReactNode
+  id: string
+  label: string
 }): ReactNode {
   const authUser = getAuthContext.data.useMaybe()
   if (authUser == null) {
@@ -13,15 +15,14 @@ export default function LayoutNotFound (props: {
   }
   return (
     <>
-      <Heading size='sm'>
-        <HStack>
-          {props.children}
-          <span>not found</span>
-        </HStack>
-      </Heading>
-      <ButtonClinkRobe to='/'>
-        Lists
-      </ButtonClinkRobe>
+      <Header />
+      <Stack>
+        <Badge fontSize='md' w='fit-content'>{props.id}</Badge>
+        <Heading size='md'>{props.label} not found</Heading>
+        <ButtonClinkRobe to='/'>
+          Lists
+        </ButtonClinkRobe>
+      </Stack>
     </>
   )
 }
