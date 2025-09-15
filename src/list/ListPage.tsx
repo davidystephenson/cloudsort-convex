@@ -1,12 +1,14 @@
 import { ReactNode } from 'react'
-import { useParams } from 'react-router-dom'
 import ListPageContent from './ListPageContent'
+import listQueryContext from './listQueryContext'
+import useListId from './useListId'
 
 export default function ListPage (): ReactNode {
-  const params = useParams()
-  if (params.listId == null) {
-    throw new Error('There is no listId')
-  }
+  const listId = useListId()
 
-  return <ListPageContent listId={params.listId} />
+  return (
+    <listQueryContext.Provider args={{ listId }}>
+      <ListPageContent />
+    </listQueryContext.Provider>
+  )
 }

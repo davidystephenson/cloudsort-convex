@@ -1,36 +1,20 @@
 import { JSX } from 'react'
-import { useArchedQuery } from '../arched/useArchedQuery'
-import { api } from '../../convex/_generated/api'
-import HeaderLoaded from '../header/HeaderLoaded'
-import userContext from './userContext'
-import UserHeading from './UserHeading'
-import UserListsTable from '../list/UserListsTable'
-import UserSection from './UserSection'
 import AuthController from '../auth/AuthController'
-import LayoutNotFound from '../layout/LayoutNotFound'
 import HeaderLoading from '../header/HeaderLoading'
+import userQueryContext from './userQueryContext'
+import UserPageLoaded from './UserPageLoaded'
 
-export default function UserPageContent (props: {
-  userId: string
-}): JSX.Element {
-  const user = useArchedQuery({
-    args: { userId: props.userId }, query: api.user.default
-  })
-  if (user.loading) {
+export default function UserPageContent (): JSX.Element {
+  const userQuery = userQueryContext.query.use()
+  if (userQuery.isPending) {
     return <HeaderLoading />
   }
-  if (user.data.user == null) {
-    return <LayoutNotFound id={props.userId} label='User' />
+  if (userQuery.isError) {
+    return <div>Error: {userQuery.error?.message}</div>
   }
   return (
-    <AuthController auth={user.data.auth}>
-      <HeaderLoaded />
-      <userContext.Provider user={user.data.user}>
-        <UserHeading />
-        <UserListsTable docs={user.data.lists} />
-        <UserSection users={user.data.followers}>Followers</UserSection>
-        <UserSection users={user.data.followeds}>Following</UserSection>
-      </userContext.Provider>
+    <AuthController auth={userQuery.data.auth}>
+      <UserPageLoaded />
     </AuthController>
   )
 }

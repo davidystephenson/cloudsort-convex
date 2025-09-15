@@ -2,7 +2,7 @@ import { EpisodeActors } from '../episode/episodeTypes'
 import marion from 'marion'
 import authListContext from './authListContext'
 import listContext from './listContext'
-import { AuthListRow } from './listTypes'
+import { AuthListChoice, AuthListChoiceItem, AuthListImport, AuthListImportItem, AuthListItem, AuthListRow } from './listTypes'
 
 export default function useAuthListRows (): AuthListRow[] {
   const authList = authListContext.use()
@@ -11,32 +11,41 @@ export default function useAuthListRows (): AuthListRow[] {
   rows.push({ type: 'episodes' })
   const episodeActors: EpisodeActors = {
     choice: (props) => {
+      const aItem = list.listItems.find((item) => item.item.uid === props.aUid)
+      if (aItem == null) {
+        throw new Error('aItem not found')
+      }
+      const bItem = list.listItems.find((item) => item.item.uid === props.bUid)
+      if (bItem == null) {
+        throw new Error('bItem not found')
+      }
+      const choice: AuthListChoice = { type: 'choice', episode: props, aItem, bItem } as const
       const opened = authList.openedEpisodeIds.includes(props._id)
-      const choice = { type: 'choice', choiceId: props._id } as const
       if (opened) {
-        return [
-          choice,
-          { type: 'choiceItem', choiceId: props._id, itemUid: props.aUid },
-          { type: 'choiceItem', choiceId: props._id, itemUid: props.bUid }
-        ]
+        const aRow: AuthListChoiceItem = { type: 'choiceItem', episode: props, item: aItem } as const
+        const bRow: AuthListChoiceItem = { type: 'choiceItem', episode: props, item: bItem } as const
+        return [choice, aRow, bRow]
       }
       return [choice]
     },
     import: (props) => {
+      const _import: AuthListImport = { type: 'import', episode: props } as const
       const opened = authList.openedEpisodeIds.includes(props._id)
-      const _import = { type: 'import', importId: props._id } as const
       if (opened) {
         const itemRows = props.importItems.map((importItem) => {
-          return { type: 'importItem', importId: props._id, itemUid: importItem.itemUid } as const
+          const item = list.listItems.find((item) => item.item.uid === importItem.itemUid)
+          if (item == null) {
+            throw new Error('item not found')
+          }
+          const row: AuthListImportItem = { type: 'importItem', item } as const
+          return row
         })
-        return [
-          { type: 'import', importId: props._id },
-          ...itemRows
-        ]
+        return [_import, ...itemRows]
       }
       return [_import]
     }
   }
+  console.log('authList.episodes', authList.episodes)
   if (authList.episodesOpened == null) {
     const first = authList.episodes[0]
     if (first != null) {
@@ -53,7 +62,8 @@ export default function useAuthListRows (): AuthListRow[] {
   rows.push({ type: 'items' })
   if (authList.itemsOpened) {
     list.listItems.forEach((item) => {
-      rows.push({ type: 'item', uid: item.item.uid })
+      const row: AuthListItem = { type: 'item', item } as const
+      rows.push(row)
     })
   }
   return rows

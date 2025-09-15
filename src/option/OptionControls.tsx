@@ -20,7 +20,6 @@ export default function OptionControls (): JSX.Element {
   function handleClick (): void {
     void choose.act()
   }
-  console.log('option.hotkey', option.hotkey)
   useHotkeys(option.hotkey, handleClick)
   const button = (
     <ButtonRobe onClick={handleClick} width='100%' whiteSpace='normal' minHeight='var(--chakra-sizes-8)' height='auto'>

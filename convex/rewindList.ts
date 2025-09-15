@@ -20,12 +20,18 @@ const rewindList = mutation({
     const episodes = await getEpisodes({ ctx, listId: args.listId })
     console.log('episodes', episodes)
     const sortedEpisodes = getSortedEpisodes(episodes)
+    console.log('sortedEpisodes', sortedEpisodes)
+    if (sortedEpisodes.length === 0) {
+      throw new ConvexError('No episodes found')
+    }
     const index = sortedEpisodes.findIndex((ep) => ep._id === args.episodeId)
+    console.log('index', index)
     if (index === -1) {
       const message = `Episode ${args.episodeId} not found in list ${args.listId}`
       throw new ConvexError(message)
     }
     const rewound = sortedEpisodes.slice(index)
+    console.log('rewound', rewound)
     await overAll(rewound, async (episode) => {
       if (episode.type === 'choice') {
         await ctx.db.delete(episode._id)
@@ -34,6 +40,7 @@ const rewindList = mutation({
       }
     })
     const kept = sortedEpisodes.slice(0, index)
+    console.log('kept', kept)
     let flow: Flow = {
       uid: list._id,
       count: 0,
@@ -62,6 +69,7 @@ const rewindList = mutation({
         throw new Error(`Unknown episode type: ${episode.type}`)
       }
     }
+    console.log('flow', flow)
     const listItems = await getListItems({ ctx, listId: args.listId })
     await updateListFlow({
       ctx,

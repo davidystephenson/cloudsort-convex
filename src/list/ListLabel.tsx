@@ -7,7 +7,7 @@ export default function ListLabel (): JSX.Element {
   const list = listContext.use()
   return (
     <HStack>
-      <span>{list.name}!!!</span>
+      <span>{list.name}</span>
       <ListLabelPublic />
     </HStack>
   )

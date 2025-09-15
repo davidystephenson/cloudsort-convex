@@ -12,7 +12,6 @@ export default function AuthListItemsCells (props: AuthListItems): JSX.Element {
   function handleClick (event: MouseEvent): void {
     event.preventDefault()
     authList.toggleItems()
-    console.log('toggleItems')
   }
   return (
     <FullCellRobe>

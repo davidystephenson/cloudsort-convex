@@ -1,8 +1,8 @@
 import contextCreator from 'context-creator'
-import { DefaultFunctionArgs, FunctionReference } from 'convex/server'
+import type { DefaultFunctionArgs, FunctionReference } from 'convex/server'
 import { useArchedQuery } from './useArchedQuery'
-import { QueryContext } from './archedTypes'
-import { ReactNode } from 'react'
+import type { QueryContext } from './archedTypes'
+import type { ReactNode } from 'react'
 
 export default function queryContext<
   Args extends DefaultFunctionArgs,
@@ -18,10 +18,9 @@ export default function queryContext<
   const queryName = `${props.name}Query`
   const queryContext = contextCreator({
     name: queryName,
-    useValue: (contextProps: QueryArgs & { children?: ReactNode }) => {
-      const { children, ...rest } = contextProps
+    useValue: (contextProps: { args: QueryArgs }) => {
       return useArchedQuery({
-        args: rest as Args,
+        args: contextProps.args,
         query: props.query
       })
     }
@@ -40,7 +39,7 @@ export default function queryContext<
     children: ReactNode
   }): ReactNode {
     const query = queryContext.use()
-    if (query.loading) {
+    if (query.isPending || query.isError) {
       return <>{props.children}</>
     }
     return (
@@ -50,14 +49,14 @@ export default function queryContext<
     )
   }
 
-  function Provider (props: QueryArgs & {
+  function Provider (props: {
+    args: QueryArgs
     children: ReactNode
   }): ReactNode {
-    const { children, ...rest } = props
     return (
-      <queryContext.Provider {...rest as unknown as QueryArgs}>
+      <queryContext.Provider args={props.args}>
         <Consumer>
-          {children}
+          {props.children}
         </Consumer>
       </queryContext.Provider>
     )

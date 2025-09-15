@@ -10,7 +10,9 @@ const authListContext = contextCreator({
     list: AuthList
   }) => {
     const [episodesOpened, setEpisodesOpened] = useState<boolean>()
+    console.log('props.list', props.list)
     const episodes = getSortedEpisodes(props.list)
+    console.log('episodes', episodes)
     const [openedEpisodeIds, setOpenedEpisodeIds] = useState<Array<Id<'choices' | 'imports'>>>(() => {
       const first = episodes[0]
       if (first == null) {

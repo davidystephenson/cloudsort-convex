@@ -14,9 +14,17 @@ import AuthListChoiceItemCells from '../choice/AuthListChoiceItemCells'
 
 export default function AuthListTable (): JSX.Element {
   const rows = useAuthListRows()
+  console.log('AuthListTable rows', rows)
+  const random = Math.random()
   return (
     <LayoutTable
       Cells={(props) => {
+        console.log('random', random)
+        console.log('props.index', props.index)
+        console.log('props.row', props.row)
+        console.log('cells rows', rows)
+        const isRow = rows.includes(props.row)
+        console.log('isRow', isRow)
         const actors = {
           columns: AuthListColumnsCells,
           item: AuthListItemCells,

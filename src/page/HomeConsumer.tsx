@@ -19,7 +19,7 @@ import HeaderLoading from '../header/HeaderLoading'
 
 export default function HomePage (): JSX.Element {
   const homeQuery = homeQueryContext.query.use()
-  if (homeQuery.loading) {
+  if (homeQuery.isPending) {
     return (
       <>
         <HeaderLoading />
@@ -27,7 +27,9 @@ export default function HomePage (): JSX.Element {
       </>
     )
   }
-  console.log('home.data', homeQuery.data)
+  if (homeQuery.isError) {
+    return <div>Error: {homeQuery.error?.message}</div>
+  }
   if (homeQuery.data.auth == null) {
     return (
       <>

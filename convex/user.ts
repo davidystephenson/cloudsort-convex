@@ -43,7 +43,6 @@ const user = query({
         return { auth, user: undefined }
       }
     }
-    console.log('lists', userLists)
     const lists = self ? userLists : publicLists
     const relatedLists = await relateLists({ ctx, lists, authId })
     const followerUsers = await overAll(followers, async (follower) => {

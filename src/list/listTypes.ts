@@ -1,5 +1,5 @@
-import { Doc, Id } from '../../convex/_generated/dataModel'
-import { RelatedImport } from '../episode/episodeTypes'
+import { Doc } from '../../convex/_generated/dataModel'
+import { ChoiceEpisode, ImportEpisode, RelatedImport } from '../episode/episodeTypes'
 import { RelatedListItem } from '../item/itemTypes'
 import { RelatedUser } from '../user/userTypes'
 
@@ -12,7 +12,7 @@ export interface AuthListColumns {
 }
 export interface AuthListItem {
   type: 'item'
-  uid: string
+  item: RelatedListItem
 }
 export interface AuthListItems {
   type: 'items'
@@ -22,20 +22,22 @@ export interface AuthListEpisodes {
 }
 export interface AuthListImport {
   type: 'import'
-  importId: Id<'imports'>
+  episode: ImportEpisode
 }
 export interface AuthListImportItem {
   type: 'importItem'
-  itemUid: string
+  item: RelatedListItem
 }
 export interface AuthListChoice {
   type: 'choice'
-  choiceId: Id<'choices'>
+  episode: ChoiceEpisode
+  aItem: RelatedListItem
+  bItem: RelatedListItem
 }
 export interface AuthListChoiceItem {
   type: 'choiceItem'
-  choiceId: Id<'choices'>
-  itemUid: string
+  episode: ChoiceEpisode
+  item: RelatedListItem
 }
 export type AuthListRow = AuthListColumns
 | AuthListItem

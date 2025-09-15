@@ -1,19 +1,16 @@
-import { ContextCreation } from 'context-creator'
-import { DefaultFunctionArgs, FunctionReference } from 'convex/server'
-import { ReactNode } from 'react'
-import { QueryCtx, MutationCtx } from '../../convex/_generated/server'
+import type { DefaultFunctionArgs, FunctionReference } from 'convex/server'
+import type { ReactNode } from 'react'
+import type { QueryCtx, MutationCtx } from '../../convex/_generated/server'
+import type { ContextCreation } from 'context-creator'
+import type useQueryWithStatus from './useQueryWithStatus'
 
-interface ArchedLoading {
-  data: undefined
-  loading: true
-}
-
-interface ArchedLoaded<T> {
-  data: T
-  loading: false
-}
-
-export type ArchedResult<T> = ArchedLoading | ArchedLoaded<T>
+export type ArchedResult<
+  Data,
+  Args extends DefaultFunctionArgs,
+  Query extends FunctionReference<
+  'query', 'public', Args, Data
+  >
+> = ReturnType<typeof useQueryWithStatus<Query>>
 
 export type Ctx = QueryCtx | MutationCtx
 
@@ -27,5 +24,5 @@ export interface QueryContext<
 > {
   Provider: (props: { args: QueryArgs, children: ReactNode }) => ReactNode
   data: ContextCreation<Query['_returnType'], { data: Query['_returnType'] }>
-  query: ContextCreation<ArchedResult<Query['_returnType']>, QueryArgs>
+  query: ContextCreation<ArchedResult<Data, Args, Query>, QueryArgs>
 }

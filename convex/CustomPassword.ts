@@ -3,7 +3,6 @@ import { DataModel } from './_generated/dataModel'
 
 const CustomPassword = Password<DataModel>({
   profile (params) {
-    console.log('CustomPassword profile', params)
     if (params.email == null) {
       throw new Error('CustomPassword: Missing email')
     }
@@ -14,6 +13,7 @@ const CustomPassword = Password<DataModel>({
       throw new Error('CustomPassword: Invalid name')
     }
     return {
+      admin: false,
       email: params.email,
       name: params.name ?? ''
     }
