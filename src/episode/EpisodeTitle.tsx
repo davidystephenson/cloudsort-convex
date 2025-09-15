@@ -1,4 +1,4 @@
-import { Heading, HStack, Link } from '@chakra-ui/react'
+import { Heading, HStack, Link, Td } from '@chakra-ui/react'
 import { JSX, MouseEvent, ReactNode } from 'react'
 import EpisodeTime from './EpisodeTime'
 import episodeContext from './episodeContext'
@@ -16,20 +16,26 @@ export default function EpisodeTitle (props: {
     authList.toggleEpisode({ episodeId: episode._id })
   }
   return (
-    <HStack py='1px'>
-      <Link href='#' onClick={handleClick} width='100%'>
-        <HStack width='100%'>
-          <Heading size='xs' width='100%' alignItems='center'>
-            <HStack fontWeight='bold' width='100%'>
-              {props.children}
+    <>
+      <Td>
+        <HStack py='1px'>
+          <Link href='#' onClick={handleClick} width='100%'>
+            <HStack width='100%'>
+              <Heading size='xs' width='100%' alignItems='center'>
+                <HStack fontWeight='bold' width='100%' justifyContent='start'>
+                  {props.children}
+                </HStack>
+              </Heading>
+              <EpisodeTime />
             </HStack>
-          </Heading>
-          <EpisodeTime />
+          </Link>
         </HStack>
-      </Link>
-      <rewindListContext.Provider>
-        <EpisodeMenu />
-      </rewindListContext.Provider>
-    </HStack>
+      </Td>
+      <Td textAlign='right'>
+        <rewindListContext.Provider>
+          <EpisodeMenu />
+        </rewindListContext.Provider>
+      </Td>
+    </>
   )
 }

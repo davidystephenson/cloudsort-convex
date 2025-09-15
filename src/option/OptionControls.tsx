@@ -6,6 +6,7 @@ import { ButtonRobe } from 'robes'
 import chooseContext from '../choice/chooseContext'
 import listContext from '../list/listContext'
 import { useHotkeys } from 'react-hotkeys-hook'
+import ItemLabel from '../item/ItemLabel'
 
 export default function OptionControls (): JSX.Element {
   const choose = chooseContext.use()
@@ -22,14 +23,12 @@ export default function OptionControls (): JSX.Element {
   console.log('option.hotkey', option.hotkey)
   useHotkeys(option.hotkey, handleClick)
   const button = (
-    <ButtonRobe onClick={handleClick}>
+    <ButtonRobe onClick={handleClick} width='100%' whiteSpace='normal' minHeight='var(--chakra-sizes-8)' height='auto'>
       [{option.hotkey}]
       &thinsp;
-      <span
-        style={{ maxWidth: '65vw', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-      >
+      <ItemLabel>
         {listItem.item.label}
-      </span>
+      </ItemLabel>
     </ButtonRobe>
   )
   if (first) {

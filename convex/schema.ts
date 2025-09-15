@@ -83,6 +83,7 @@ const schema = defineSchema({
   })
     .index('operationUid', ['operationUid']),
   users: defineTable({
+    admin: v.boolean(),
     name: v.string(),
     email: v.string()
   })

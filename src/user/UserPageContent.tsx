@@ -1,13 +1,14 @@
 import { JSX } from 'react'
 import { useArchedQuery } from '../arched/useArchedQuery'
 import { api } from '../../convex/_generated/api'
-import Header from '../header/Header'
+import HeaderLoaded from '../header/HeaderLoaded'
 import userContext from './userContext'
 import UserHeading from './UserHeading'
 import UserListsTable from '../list/UserListsTable'
 import UserSection from './UserSection'
 import AuthController from '../auth/AuthController'
 import LayoutNotFound from '../layout/LayoutNotFound'
+import HeaderLoading from '../header/HeaderLoading'
 
 export default function UserPageContent (props: {
   userId: string
@@ -16,14 +17,14 @@ export default function UserPageContent (props: {
     args: { userId: props.userId }, query: api.user.default
   })
   if (user.loading) {
-    return <Header loading />
+    return <HeaderLoading />
   }
   if (user.data.user == null) {
     return <LayoutNotFound id={props.userId} label='User' />
   }
   return (
     <AuthController auth={user.data.auth}>
-      <Header />
+      <HeaderLoaded />
       <userContext.Provider user={user.data.user}>
         <UserHeading />
         <UserListsTable docs={user.data.lists} />

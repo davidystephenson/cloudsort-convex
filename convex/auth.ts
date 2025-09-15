@@ -1,6 +1,4 @@
 import { convexAuth } from '@convex-dev/auth/server'
-import { api } from './_generated/api'
-// import { Password } from '@convex-dev/auth/providers/Password'
 import CustomPassword from './CustomPassword'
 
 const authHub = convexAuth({
@@ -19,13 +17,14 @@ const authHub = convexAuth({
       if (args.profile.name.length === 0) {
         throw new Error('createOrUpdateUser: Name cannot be empty')
       }
-      const existingUser = await ctx.runQuery(api.getUserByName.default, {
-        name: args.profile.name
-      })
+      const users = await ctx.db.query('users').collect()
+      const existingUser = users.find(user => user.name === name)
       if (existingUser != null) {
-        throw new Error('createOrUpdateUser: Username taken')
+        throw new Error('Username taken')
       }
+      const admin = users.length === 0
       return await ctx.db.insert('users', {
+        admin,
         name: args.profile.name,
         email: args.profile.email
       })

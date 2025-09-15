@@ -1,6 +1,6 @@
 import { JSX } from 'react'
 import { AuthListChoiceItem } from '../list/listTypes'
-import { Td } from '@chakra-ui/react'
+import { HStack, Td } from '@chakra-ui/react'
 import ChoiceIcon from './ChoiceIcon'
 import authListContext from '../list/authListContext'
 
@@ -19,10 +19,12 @@ export default function AuthListChoiceItemCells (props: AuthListChoiceItem): JSX
   return (
     <>
       <Td>
-        {listItem.item.label}
+        {listItem.item.label}!!!!
       </Td>
       <Td>
-        <ChoiceIcon chosen={chosen} />
+        <HStack justifyContent='end'>
+          <ChoiceIcon chosen={chosen} />
+        </HStack>
       </Td>
     </>
   )

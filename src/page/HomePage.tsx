@@ -4,7 +4,7 @@ import homeQueryContext from './homeQueryContext'
 
 export default function HomePage (): JSX.Element {
   return (
-    <homeQueryContext.Provider>
+    <homeQueryContext.Provider args={{}}>
       <HomeConsumer />
     </homeQueryContext.Provider>
   )

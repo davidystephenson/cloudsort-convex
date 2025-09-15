@@ -18,6 +18,7 @@ const rewindList = mutation({
   handler: async (ctx, args) => {
     const list = await guardAuthUserList({ ctx, listId: args.listId })
     const episodes = await getEpisodes({ ctx, listId: args.listId })
+    console.log('episodes', episodes)
     const sortedEpisodes = getSortedEpisodes(episodes)
     const index = sortedEpisodes.findIndex((ep) => ep._id === args.episodeId)
     if (index === -1) {

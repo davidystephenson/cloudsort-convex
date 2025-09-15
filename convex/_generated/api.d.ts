@@ -27,6 +27,7 @@ import type * as list from "../list.js";
 import type * as publishList from "../publishList.js";
 import type * as renameAuth from "../renameAuth.js";
 import type * as renameList from "../renameList.js";
+import type * as resetAll from "../resetAll.js";
 import type * as rewindList from "../rewindList.js";
 import type * as unfollow from "../unfollow.js";
 import type * as unpublishList from "../unpublishList.js";
@@ -55,6 +56,7 @@ declare const fullApi: ApiFromModules<{
   publishList: typeof publishList;
   renameAuth: typeof renameAuth;
   renameList: typeof renameList;
+  resetAll: typeof resetAll;
   rewindList: typeof rewindList;
   unfollow: typeof unfollow;
   unpublishList: typeof unpublishList;

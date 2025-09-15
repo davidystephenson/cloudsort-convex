@@ -1,7 +1,7 @@
 import { mutation } from './_generated/server'
 import { v } from 'convex/values'
 import guardAuthUserList from '../src/list/guardAuthUserList'
-import { chooseOption } from 'choice-sort'
+import { chooseOption, debugChoice, getChoice } from 'choice-sort'
 import getListFlow from '../src/list/getListFlow'
 import updateListFlow from '../src/list/updateListFlow'
 import getListItems from '../src/list/getListItems'
@@ -33,6 +33,8 @@ const choose = mutation({
     })
     const listItems = await getListItems({ ctx, listId: args.listId })
     const flow = await getListFlow({ ctx, list, listItems })
+    const choice = getChoice({ flow })
+    debugChoice({ choice, label: 'choose', items: flow.items })
     const chosenFlow = chooseOption({ flow, option: args.itemUid })
     await updateListFlow({
       ctx,

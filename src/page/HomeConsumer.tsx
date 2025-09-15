@@ -8,20 +8,21 @@ import AuthListsMenu from '../list/AuthListsMenu'
 import CreateListForm from '../list/CreateListForm'
 import PublicLists from '../list/PublicLists'
 import UserListsTable from '../list/UserListsTable'
-import Header from '../header/Header'
+import HeaderLoaded from '../header/HeaderLoaded'
 import { MdPublic } from 'react-icons/md'
 import createListContext from '../list/createListContext'
 import PublicListsTable from '../list/PublicListsTable'
 import UserSection from '../user/UserSection'
 import AuthController from '../auth/AuthController'
 import homeQueryContext from './homeQueryContext'
+import HeaderLoading from '../header/HeaderLoading'
 
 export default function HomePage (): JSX.Element {
   const homeQuery = homeQueryContext.query.use()
   if (homeQuery.loading) {
     return (
       <>
-        <Header loading />
+        <HeaderLoading />
         <LayoutTitle loading />
       </>
     )
@@ -30,7 +31,7 @@ export default function HomePage (): JSX.Element {
   if (homeQuery.data.auth == null) {
     return (
       <>
-        <Header />
+        <HeaderLoaded />
         <LayoutTitle
           title={<HStack><span>Lists</span><MdPublic /></HStack>}
         />
@@ -42,7 +43,7 @@ export default function HomePage (): JSX.Element {
     <AuthController auth={homeQuery.data.auth}>
       <createListContext.Provider>
         <renameAuthContext.Provider>
-          <Header />
+          <HeaderLoaded />
           <LayoutTitle
             title={<AuthListsTitle name={homeQuery.data.auth.name} />}
             menu={<UserMenu />}

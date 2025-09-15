@@ -1,5 +1,4 @@
 import { JSX } from 'react'
-import { FullCellRobe } from 'robes'
 import EpisodeTitle from '../episode/EpisodeTitle'
 import episodeContext from '../episode/episodeContext'
 import { ChoiceEpisode } from '../episode/episodeTypes'
@@ -33,12 +32,10 @@ export default function AuthListChoiceCells (props: AuthListChoice): JSX.Element
   }
   return (
     <episodeContext.Provider episode={episode}>
-      <FullCellRobe>
-        <EpisodeTitle>
-          <ChoiceLabel chosen={choice.aChosen} label={aListItem.item.label} />
-          <ChoiceLabel chosen={!choice.aChosen} label={bListItem.item.label} />
-        </EpisodeTitle>
-      </FullCellRobe>
+      <EpisodeTitle>
+        <ChoiceLabel chosen={choice.aChosen} label={aListItem.item.label} />
+        <ChoiceLabel chosen={!choice.aChosen} label={bListItem.item.label} />
+      </EpisodeTitle>
     </episodeContext.Provider>
   )
 }

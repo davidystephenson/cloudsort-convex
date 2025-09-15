@@ -1,8 +1,8 @@
 import { ReactNode } from 'react'
 import AuthLoginButton from '../auth/AuthLoginButton'
-import { ButtonClinkRobe } from 'clink-robe'
+import { ButtonClinkRobe } from 'clink-robes'
 import { Badge, Heading, Stack } from '@chakra-ui/react'
-import Header from '../header/Header'
+import HeaderLoaded from '../header/HeaderLoaded'
 import authContext from '../auth/authContext'
 
 export default function LayoutNotFound (props: {
@@ -15,7 +15,7 @@ export default function LayoutNotFound (props: {
   }
   return (
     <>
-      <Header />
+      <HeaderLoaded />
       <Stack>
         <Badge fontSize='md' w='fit-content'>{props.id}</Badge>
         <Heading size='md'>{props.label} not found</Heading>

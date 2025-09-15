@@ -1,18 +1,20 @@
 import { JSX } from 'react'
 import { ProfileRobe } from 'robes'
 import { useAuthActions } from '@convex-dev/auth/react'
-import { Doc } from '../../convex/_generated/dataModel'
+import authContext from '../auth/authContext'
+import HeaderAdmin from './HeaderAdmin'
 
-export default function HeaderProfile (props: {
-  user: Doc<'users'>
-}): JSX.Element {
+export default function HeaderProfile (): JSX.Element {
+  const auth = authContext.use()
   const actions = useAuthActions()
   function handleLogout (): void {
     void actions.signOut()
   }
+  const colorScheme = auth.admin ? { colorScheme: 'red' } : {}
+  const button = { ...colorScheme, children: auth.name }
   return (
-    <ProfileRobe onLogout={handleLogout}>
-      {props.user.name}
+    <ProfileRobe button={button} onLogout={handleLogout}>
+      <HeaderAdmin />
     </ProfileRobe>
   )
 }

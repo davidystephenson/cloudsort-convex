@@ -1,7 +1,7 @@
 import { JSX } from 'react'
 import optionContext from './optionContext'
 import listContext from '../list/listContext'
-import { ClinkRobe } from 'clink-robe'
+import { ClinkRobe } from 'clink-robes'
 import { HStack, VStack } from '@chakra-ui/react'
 import { RiExternalLinkLine } from 'react-icons/ri'
 import OptionControls from './OptionControls'

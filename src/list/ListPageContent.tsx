@@ -2,21 +2,23 @@ import { JSX } from 'react'
 import LayoutNotFound from '../layout/LayoutNotFound'
 import { useArchedQuery } from '../arched/useArchedQuery'
 import { api } from '../../convex/_generated/api'
-import Header from '../header/Header'
 import AuthController from '../auth/AuthController'
 import listContext from './listContext'
 import authListContext from './authListContext'
-import Choice from '../choice/Choice'
 import AuthListTable from './AuthListTable'
 import ListHeader from './ListHeader'
 import PublicList from './PublicList'
+import Choice from '../choice/Choice'
+import HeaderLoading from '../header/HeaderLoading'
+import HeaderLoaded from '../header/HeaderLoaded'
 
 export default function ListPageContent (props: {
   listId: string
 }): JSX.Element {
   const list = useArchedQuery({ args: { listId: props.listId }, query: api.list.default })
+  console.log('list', list)
   if (list.loading) {
-    return <Header loading />
+    return <HeaderLoading />
   }
   if (list.data.list == null) {
     return <LayoutNotFound id={props.listId} label='List' />
@@ -25,8 +27,10 @@ export default function ListPageContent (props: {
     return (
       <AuthController auth={list.data.auth}>
         <listContext.Provider list={list.data.list}>
-          <authListContext.Provider list={list.data.list}>
+          <HeaderLoaded>
             <ListHeader />
+          </HeaderLoaded>
+          <authListContext.Provider list={list.data.list}>
             <Choice />
             <AuthListTable />
           </authListContext.Provider>

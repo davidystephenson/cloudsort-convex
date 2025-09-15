@@ -1,11 +1,12 @@
 import { Badge, HStack, Td } from '@chakra-ui/react'
 import { JSX } from 'react'
 import listItemContext from './listItemContext'
-import ClinkRobe from 'clink-robe'
+import ClinkRobe from 'clink-robes'
 import { RelatedListItem } from './itemTypes'
 import ListItemMenu from './ListItemMenu'
 import { RiExternalLinkLine } from 'react-icons/ri'
 import useItemPoints from './useItemPoints'
+import ItemLabel from './ItemLabel'
 
 export default function ListItemCells (props: {
   row: RelatedListItem
@@ -25,7 +26,7 @@ export default function ListItemCells (props: {
             to={url}
           >
             <HStack>
-              <span>{props.row.item.label}</span>
+              <ItemLabel>{props.row.item.label}</ItemLabel>
               <RiExternalLinkLine />
             </HStack>
           </ClinkRobe>

@@ -1,17 +1,13 @@
 import { JSX } from 'react'
-import { ButtonRobe } from 'robes'
-import ClinkRobe, { ButtonClinkRobe } from 'clink-robe'
+import ClinkRobe, { ButtonClinkRobe } from 'clink-robes'
 import { HStack } from '@chakra-ui/react'
-import headerContext from './headerContext'
 import HeaderProfile from './HeaderProfile'
+import authContext from '../auth/authContext'
 
 export default function HeaderAuth (): JSX.Element {
-  const header = headerContext.use()
-  if (header.loading === true) {
-    return <ButtonRobe isLoading />
-  }
-  if (header.user != null) {
-    return <HeaderProfile user={header.user} />
+  const auth = authContext.useMaybe()
+  if (auth.provided) {
+    return <HeaderProfile />
   }
   return (
     <HStack>

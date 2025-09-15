@@ -3,6 +3,7 @@ import { AuthListImportItem } from '../list/listTypes'
 import { Td } from '@chakra-ui/react'
 import { BsCloudUpload } from 'react-icons/bs'
 import listContext from '../list/listContext'
+import ItemLabel from '../item/ItemLabel'
 
 export default function AuthListImportItemCells (props: AuthListImportItem): JSX.Element {
   const list = listContext.use()
@@ -13,7 +14,7 @@ export default function AuthListImportItemCells (props: AuthListImportItem): JSX
   return (
     <>
       <Td>
-        {listItem.item.label}
+        <ItemLabel>{listItem.item.label}</ItemLabel>
       </Td>
       <Td>
         <BsCloudUpload />

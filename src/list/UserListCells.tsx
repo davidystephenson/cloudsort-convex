@@ -1,7 +1,7 @@
 import { Td } from '@chakra-ui/react'
 import { JSX } from 'react'
 import ListRowMenu from './ListRowMenu'
-import ClinkRobe from 'clink-robe'
+import ClinkRobe from 'clink-robes'
 import ListLabel from './ListLabel'
 import listContext from './listContext'
 import { RelatedList } from './listTypes'

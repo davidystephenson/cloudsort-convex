@@ -3,13 +3,10 @@ import { Doc } from '../../convex/_generated/dataModel'
 import { Ctx } from '../arched/archedTypes'
 
 export default async function getAuth (props: { ctx: Ctx }): Promise<Doc<'users'> | undefined> {
-  const userId = await getAuthUserId(props.ctx)
-  if (userId == null) {
+  const authId = await getAuthUserId(props.ctx)
+  if (authId == null) {
     return undefined
   }
-  const user = await props.ctx.db.get(userId)
-  if (user == null) {
-    throw new Error(`Authenticated user ${userId} not found`)
-  }
-  return user
+  const user = await props.ctx.db.get(authId)
+  return user ?? undefined
 }

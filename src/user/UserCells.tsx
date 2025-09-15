@@ -4,7 +4,7 @@ import UserMenu from './UserMenu'
 import { RelatedUser } from './userTypes'
 import userContext from './userContext'
 import UserBadge from './UserBadge'
-import ClinkRobe from 'clink-robe'
+import ClinkRobe from 'clink-robes'
 
 export default function UserCells (props: {
   row: RelatedUser

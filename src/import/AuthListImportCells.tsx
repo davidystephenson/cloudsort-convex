@@ -1,6 +1,5 @@
 import { JSX } from 'react'
 import { BsCloudUpload } from 'react-icons/bs'
-import { FullCellRobe } from 'robes'
 import episodeContext from '../episode/episodeContext'
 import EpisodeTitle from '../episode/EpisodeTitle'
 import { ImportEpisode } from '../episode/episodeTypes'
@@ -19,12 +18,10 @@ export default function AuthListImportCells (props: AuthListImport): JSX.Element
   }
   return (
     <episodeContext.Provider episode={episode}>
-      <FullCellRobe>
-        <EpisodeTitle>
-          <BsCloudUpload />
-          <span>{_import.importItems.length}</span>
-        </EpisodeTitle>
-      </FullCellRobe>
+      <EpisodeTitle>
+        <BsCloudUpload />
+        <span>{_import.importItems.length}</span>
+      </EpisodeTitle>
     </episodeContext.Provider>
   )
 }
