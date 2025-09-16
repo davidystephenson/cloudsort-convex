@@ -6,6 +6,7 @@ import listQueryContext from './listQueryContext'
 import useListId from './useListId'
 import ListItemsTable from '../item/ListItemsTable'
 import listContext from './listContext'
+import hidesContext from '../hide/hidesContext'
 
 export default function ListConsumer (): JSX.Element {
   const list = listContext.use()
@@ -16,12 +17,12 @@ export default function ListConsumer (): JSX.Element {
   }
   if ('hides' in listQuery) {
     return (
-      <>
+      <hidesContext.Provider hides={listQuery.hides}>
         <authListContext.Provider list={listQuery.list}>
           <Choice />
           <AuthListTable />
         </authListContext.Provider>
-      </>
+      </hidesContext.Provider>
     )
   }
   return <ListItemsTable listItems={list.listItems} />

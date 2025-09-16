@@ -1,16 +1,15 @@
 import { JSX } from 'react'
-import { MenuRobe, ReelingRobe } from 'robes'
+import { MenuRobe } from 'robes'
 import hideItemContext from '../hide/hideItemContext'
-import HideItem from '../hide/HideItem'
+import HideItems from '../hide/HideItems'
 
 export default function ItemMenuConsumer (): JSX.Element {
   const hideItem = hideItemContext.use()
-  if (hideItem.acting) {
-    return <ReelingRobe />
-  }
+  const unhideItem = hideItemContext.use()
+  const loading = hideItem.acting || unhideItem.acting
   return (
-    <MenuRobe>
-      <HideItem />
+    <MenuRobe loading={loading}>
+      <HideItems />
     </MenuRobe>
   )
 }

@@ -31,6 +31,7 @@ import type * as renameList from "../renameList.js";
 import type * as resetAll from "../resetAll.js";
 import type * as rewindList from "../rewindList.js";
 import type * as unfollow from "../unfollow.js";
+import type * as unhideItem from "../unhideItem.js";
 import type * as unpublishList from "../unpublishList.js";
 import type * as user from "../user.js";
 
@@ -61,6 +62,7 @@ declare const fullApi: ApiFromModules<{
   resetAll: typeof resetAll;
   rewindList: typeof rewindList;
   unfollow: typeof unfollow;
+  unhideItem: typeof unhideItem;
   unpublishList: typeof unpublishList;
   user: typeof user;
 }>;
