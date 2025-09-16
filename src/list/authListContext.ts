@@ -1,5 +1,5 @@
 import contextCreator from 'context-creator'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Id } from '../../convex/_generated/dataModel'
 import getSortedEpisodes from '../episode/getSortedEpisodes'
 import { AuthList } from './listTypes'
@@ -10,7 +10,7 @@ const authListContext = contextCreator({
     list: AuthList
   }) => {
     const [episodesOpened, setEpisodesOpened] = useState<boolean>()
-    const episodes = getSortedEpisodes(props.list)
+    const episodes = useMemo(() => getSortedEpisodes(props.list), [props.list])
     const [openedEpisodeIds, setOpenedEpisodeIds] = useState<Array<Id<'choices' | 'imports'>>>(() => {
       const first = episodes[0]
       if (first == null) {
@@ -18,6 +18,19 @@ const authListContext = contextCreator({
       }
       return [first._id]
     })
+    useEffect(() => {
+      console.log('effect')
+      const first = episodes[0]
+      if (first == null) {
+        setOpenedEpisodeIds([])
+        return
+      }
+      if (episodesOpened === false) {
+        setEpisodesOpened(undefined)
+      }
+      const filtered = openedEpisodeIds.filter(id => id !== first._id)
+      setOpenedEpisodeIds([first._id, ...filtered])
+    }, [episodes])
     const [itemsOpened, setItemsOpened] = useState(true)
     const toggleEpisode = useCallback((props: {
       episodeId: Id<'choices' | 'imports'>

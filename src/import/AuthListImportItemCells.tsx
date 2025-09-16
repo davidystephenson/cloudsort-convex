@@ -3,12 +3,14 @@ import { AuthListImportItem } from '../list/listTypes'
 import { HStack, Td } from '@chakra-ui/react'
 import { BsCloudUpload } from 'react-icons/bs'
 import ItemLabel from '../item/ItemLabel'
+import itemContext from '../item/itemContext'
 
 export default function AuthListImportItemCells (props: AuthListImportItem): JSX.Element {
+  console.log('props.listItem.item', props.listItem.item)
   return (
-    <>
+    <itemContext.Provider item={props.listItem.item}>
       <Td>
-        <ItemLabel>{props.listItem.item.label}</ItemLabel>
+        <ItemLabel />
       </Td>
       <Td>
         <HStack justifyContent='flex-end'>
@@ -16,6 +18,6 @@ export default function AuthListImportItemCells (props: AuthListImportItem): JSX
           <BsCloudUpload />
         </HStack>
       </Td>
-    </>
+    </itemContext.Provider>
   )
 }
