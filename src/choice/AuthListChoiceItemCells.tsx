@@ -2,27 +2,19 @@ import { JSX } from 'react'
 import { AuthListChoiceItem } from '../list/listTypes'
 import { HStack, Td } from '@chakra-ui/react'
 import ChoiceIcon from './ChoiceIcon'
-import authListContext from '../list/authListContext'
 
 export default function AuthListChoiceItemCells (props: AuthListChoiceItem): JSX.Element {
-  const authList = authListContext.use()
-  const choice = authList.list.choices.find((choice) => choice._id === props.choiceId)
-  if (choice == null) {
-    throw new Error('Choice not found')
-  }
-  const listItem = authList.list.listItems.find((item) => item.item.uid === props.itemUid)
-  if (listItem == null) {
-    throw new Error('List item not found')
-  }
-  const a = choice.aUid === listItem.item.uid
-  const chosen = a ? choice.aChosen : !choice.aChosen
+  const a = props.episode.aUid === props.listItem.item.uid
+  const chosen = a ? props.episode.aChosen : !props.episode.aChosen
+  const points = a ? props.episode.aPoints : props.episode.bPoints
   return (
     <>
       <Td>
-        {listItem.item.label}!!!!
+        {props.listItem.item.label}
       </Td>
       <Td>
         <HStack justifyContent='end'>
+          <span>{points}</span>
           <ChoiceIcon chosen={chosen} />
         </HStack>
       </Td>

@@ -8,8 +8,8 @@ export default function AuthListChoiceCells (props: AuthListChoice): JSX.Element
   return (
     <episodeContext.Provider episode={props.episode}>
       <EpisodeTitle>
-        <ChoiceLabel chosen={props.episode.aChosen} label={props.aItem.item.label} />
-        <ChoiceLabel chosen={!props.episode.aChosen} label={props.bItem.item.label} />
+        <ChoiceLabel chosen={props.episode.aChosen} label={props.aListItem.item.label} />
+        <ChoiceLabel chosen={!props.episode.aChosen} label={props.bListItem.item.label} />
       </EpisodeTitle>
     </episodeContext.Provider>
   )

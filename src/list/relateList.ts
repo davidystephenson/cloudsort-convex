@@ -8,6 +8,7 @@ import getListItems from './getListItems'
 export default async function relateList (props: {
   authId?: Id<'users'>
   ctx: Ctx
+  hides?: Array<Doc<'hides'>>
   list: Doc<'lists'>
 }): Promise<RelatedList> {
   const user = await guardRelatedUser({
@@ -15,7 +16,12 @@ export default async function relateList (props: {
     ctx: props.ctx,
     userId: props.list.userId
   })
-  const listItems = await getListItems({ ctx: props.ctx, listId: props.list._id })
+  const self = props.authId === props.list.userId
+  const listItems = await getListItems({
+    ctx: props.ctx,
+    hides: self ? undefined : props.hides,
+    listId: props.list._id
+  })
   const ranked = listItems.sort((a, b) => a.rank - b.rank)
   const relatedListItems = await overAll(ranked, async (listItem) => {
     const item = await props.ctx

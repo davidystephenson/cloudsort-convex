@@ -1,23 +1,20 @@
 import { JSX } from 'react'
 import { AuthListImportItem } from '../list/listTypes'
-import { Td } from '@chakra-ui/react'
+import { HStack, Td } from '@chakra-ui/react'
 import { BsCloudUpload } from 'react-icons/bs'
-import listContext from '../list/listContext'
 import ItemLabel from '../item/ItemLabel'
 
 export default function AuthListImportItemCells (props: AuthListImportItem): JSX.Element {
-  const list = listContext.use()
-  const listItem = list.listItems.find((item) => item.item.uid === props.itemUid)
-  if (listItem == null) {
-    throw new Error('List item not found')
-  }
   return (
     <>
       <Td>
-        <ItemLabel>{listItem.item.label}</ItemLabel>
+        <ItemLabel>{props.listItem.item.label}</ItemLabel>
       </Td>
       <Td>
-        <BsCloudUpload />
+        <HStack justifyContent='flex-end'>
+          <span>0</span>
+          <BsCloudUpload />
+        </HStack>
       </Td>
     </>
   )

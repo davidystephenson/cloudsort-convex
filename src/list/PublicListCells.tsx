@@ -32,7 +32,9 @@ export default function PublicListCells (props: {
             </ClinkRobe>
           </userContext.Provider>
         </Td>
-        <Td><ListRowMenu debug={props.debug} /></Td>
+        <Td>
+          <ListRowMenu debug={props.debug} />
+        </Td>
       </listContext.Provider>
     </userContext.Provider>
   )

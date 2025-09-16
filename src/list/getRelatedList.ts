@@ -1,10 +1,10 @@
 import { Id } from '../../convex/_generated/dataModel'
 import { Ctx } from '../arched/archedTypes'
-import getAuthId from '../auth/getAuthId'
 import { RelatedList } from './listTypes'
 import relateList from './relateList'
 
 export default async function getRelatedList (props: {
+  authId: Id<'users'> | undefined
   ctx: Ctx
   listId: Id<'lists'>
 }): Promise<RelatedList | null> {
@@ -12,10 +12,18 @@ export default async function getRelatedList (props: {
   if (list == null) {
     return null
   }
-  const authId = await getAuthId({ ctx: props.ctx })
-  if (!list.public && list.userId !== authId) {
+  const self = props.authId === list.userId
+  if (!list.public && !self) {
     return null
   }
-  const related = await relateList({ ctx: props.ctx, authId, list })
+  const hides = await props.ctx.db.query('hides').withIndex('userItem',
+    (q) => q.eq('userId', list.userId)
+  ).collect()
+  const related = await relateList({
+    authId: props.authId,
+    ctx: props.ctx,
+    hides: self ? undefined : hides,
+    list
+  })
   return related
 }

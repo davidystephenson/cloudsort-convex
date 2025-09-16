@@ -9,7 +9,7 @@ export default function RenameListItem (): JSX.Element {
   const auth = authContext.useMaybe()
   const list = listContext.use()
   const rename = renameListContext.use()
-  if (rename.active || (auth.provided && list.userId !== auth.value._id)) {
+  if (rename.active || !auth.provided || list.userId !== auth.value._id) {
     return <></>
   }
   function handleClick (): void {

@@ -11,6 +11,7 @@ export default function EpisodeMenu (): JSX.Element {
   const list = listContext.use()
   const rewindList = rewindListContext.use()
   function handleClick (): void {
+    console.log('handleClick episode', episode)
     void rewindList.act({ episodeId: episode._id, listId: list._id })
   }
   return (

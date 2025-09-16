@@ -5,10 +5,15 @@ import { critickerSchema } from '../criticker/critickerTypes'
 import { ItemDef } from '../item/itemTypes'
 import importContext from './importContext'
 import listContext from '../list/listContext'
+import authContext from '../auth/authContext'
 
 export default function ImportMenuItem (): JSX.Element {
+  const auth = authContext.useMaybe()
   const _import = importContext.use()
   const list = listContext.use()
+  if (!auth.provided || list.userId !== auth.value._id) {
+    return <></>
+  }
   function handleFile (props: {
     file: File
   }): void {

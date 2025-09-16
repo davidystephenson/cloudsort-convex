@@ -12,10 +12,11 @@ const CustomPassword = Password<DataModel>({
     if (params.name != null && typeof params.name !== 'string') {
       throw new Error('CustomPassword: Invalid name')
     }
+    console.log('CustomPassword name', params.name)
     return {
       admin: false,
       email: params.email,
-      name: params.name ?? ''
+      name: params.name ?? 'ERROR: Missing Name'
     }
   }
 })

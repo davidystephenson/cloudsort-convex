@@ -8,6 +8,8 @@ const schema = defineSchema({
     listId: v.id('lists'),
     aUid: v.string(),
     bUid: v.string(),
+    aPoints: v.number(),
+    bPoints: v.number(),
     aChosen: v.boolean()
   })
     .index('listId', ['listId']),
@@ -18,6 +20,11 @@ const schema = defineSchema({
     .index('follower', ['followerId'])
     .index('followed', ['followedId'])
     .index('both', ['followerId', 'followedId']),
+  hides: defineTable({
+    itemUid: v.string(),
+    userId: v.id('users')
+  })
+    .index('userItem', ['userId', 'itemUid']),
   imports: defineTable({
     listId: v.id('lists')
   })

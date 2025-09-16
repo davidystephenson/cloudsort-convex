@@ -5,6 +5,7 @@ import { ClinkRobe } from 'clink-robes'
 import { HStack, VStack } from '@chakra-ui/react'
 import { RiExternalLinkLine } from 'react-icons/ri'
 import OptionControls from './OptionControls'
+import itemContext from '../item/itemContext'
 
 export default function Option (): JSX.Element {
   const list = listContext.use()
@@ -15,17 +16,19 @@ export default function Option (): JSX.Element {
   }
   const url = `https://imdb.com/title/${listItem.item.uid}`
   return (
-    <VStack>
-      <OptionControls />
-      <ClinkRobe
-        to={url}
-        isExternal
-      >
-        <HStack>
-          <span>[{option.hotkey}] imdb</span>
-          <RiExternalLinkLine />
-        </HStack>
-      </ClinkRobe>
-    </VStack>
+    <itemContext.Provider item={listItem.item}>
+      <VStack>
+        <OptionControls />
+        <ClinkRobe
+          to={url}
+          isExternal
+        >
+          <HStack>
+            <span>[{option.hotkey}] imdb</span>
+            <RiExternalLinkLine />
+          </HStack>
+        </ClinkRobe>
+      </VStack>
+    </itemContext.Provider>
   )
 }

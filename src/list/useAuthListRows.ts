@@ -19,11 +19,11 @@ export default function useAuthListRows (): AuthListRow[] {
       if (bItem == null) {
         throw new Error('bItem not found')
       }
-      const choice: AuthListChoice = { type: 'choice', episode: props, aItem, bItem } as const
+      const choice: AuthListChoice = { type: 'choice', episode: props, aListItem: aItem, bListItem: bItem } as const
       const opened = authList.openedEpisodeIds.includes(props._id)
       if (opened) {
-        const aRow: AuthListChoiceItem = { type: 'choiceItem', episode: props, item: aItem } as const
-        const bRow: AuthListChoiceItem = { type: 'choiceItem', episode: props, item: bItem } as const
+        const aRow: AuthListChoiceItem = { type: 'choiceItem', episode: props, listItem: aItem } as const
+        const bRow: AuthListChoiceItem = { type: 'choiceItem', episode: props, listItem: bItem } as const
         return [choice, aRow, bRow]
       }
       return [choice]
@@ -37,7 +37,7 @@ export default function useAuthListRows (): AuthListRow[] {
           if (item == null) {
             throw new Error('item not found')
           }
-          const row: AuthListImportItem = { type: 'importItem', item } as const
+          const row: AuthListImportItem = { type: 'importItem', listItem: item } as const
           return row
         })
         return [_import, ...itemRows]
@@ -45,7 +45,6 @@ export default function useAuthListRows (): AuthListRow[] {
       return [_import]
     }
   }
-  console.log('authList.episodes', authList.episodes)
   if (authList.episodesOpened == null) {
     const first = authList.episodes[0]
     if (first != null) {

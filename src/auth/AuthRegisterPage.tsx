@@ -36,6 +36,7 @@ export default function AuthRegisterPage (): JSX.Element {
         password,
         flow: 'signUp'
       }
+      console.log('AuthRegisterPage args', args)
       await signIn('password', args)
       await navigate('/')
     } catch (error) {

@@ -21,6 +21,7 @@ import type * as createList from "../createList.js";
 import type * as deleteList from "../deleteList.js";
 import type * as follow from "../follow.js";
 import type * as getUserByName from "../getUserByName.js";
+import type * as hideItem from "../hideItem.js";
 import type * as home from "../home.js";
 import type * as http from "../http.js";
 import type * as list from "../list.js";
@@ -50,6 +51,7 @@ declare const fullApi: ApiFromModules<{
   deleteList: typeof deleteList;
   follow: typeof follow;
   getUserByName: typeof getUserByName;
+  hideItem: typeof hideItem;
   home: typeof home;
   http: typeof http;
   list: typeof list;

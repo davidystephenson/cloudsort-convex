@@ -16,10 +16,14 @@ const rewindList = mutation({
     listId: v.id('lists')
   },
   handler: async (ctx, args) => {
+    console.log('args.episodeId', args.episodeId)
     const list = await guardAuthUserList({ ctx, listId: args.listId })
     const episodes = await getEpisodes({ ctx, listId: args.listId })
     console.log('episodes', episodes)
-    const sortedEpisodes = getSortedEpisodes(episodes)
+    const sortedEpisodes = getSortedEpisodes({
+      ascend: true,
+      ...episodes
+    })
     console.log('sortedEpisodes', sortedEpisodes)
     if (sortedEpisodes.length === 0) {
       throw new ConvexError('No episodes found')
@@ -51,8 +55,7 @@ const rewindList = mutation({
       if (episode.type === 'choice') {
         const option = episode.aChosen ? episode.aUid : episode.bUid
         flow = chooseOption({ flow, option })
-      }
-      if (episode.type === 'import') {
+      } else if (episode.type === 'import') {
         const itemDefs: ItemDef[] = await overAll(episode.importItems, async (importItem) => {
           const item = await ctx
             .db
@@ -65,8 +68,6 @@ const rewindList = mutation({
           return { label: item.label, uid: importItem.itemUid, seed: importItem.seed }
         })
         flow = importItems({ flow, items: itemDefs })
-      } else {
-        throw new Error(`Unknown episode type: ${episode.type}`)
       }
     }
     console.log('flow', flow)

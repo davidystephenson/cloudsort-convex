@@ -26,18 +26,18 @@ export interface AuthListImport {
 }
 export interface AuthListImportItem {
   type: 'importItem'
-  item: RelatedListItem
+  listItem: RelatedListItem
 }
 export interface AuthListChoice {
   type: 'choice'
   episode: ChoiceEpisode
-  aItem: RelatedListItem
-  bItem: RelatedListItem
+  aListItem: RelatedListItem
+  bListItem: RelatedListItem
 }
 export interface AuthListChoiceItem {
   type: 'choiceItem'
   episode: ChoiceEpisode
-  item: RelatedListItem
+  listItem: RelatedListItem
 }
 export type AuthListRow = AuthListColumns
 | AuthListItem

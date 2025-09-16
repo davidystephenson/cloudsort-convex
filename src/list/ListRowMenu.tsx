@@ -1,26 +1,15 @@
 import { JSX } from 'react'
-import { MenuRobe } from 'robes'
-import PrivateListItems from './PrivateListItems'
-import ListLinkMenuItem from './ListLinkMenuItem'
-import authContext from '../auth/authContext'
-import userContext from '../user/userContext'
+import deleteListContext from './deleteListContext'
+import ListRowMenuConsumer from './ListRowMenuConsumer'
+import listContext from './listContext'
 
 export default function ListRowMenu (props: {
   debug?: boolean
 }): JSX.Element {
-  const auth = authContext.useMaybe()
-  const user = userContext.use()
-  if (props.debug === true) {
-    console.debug('auth', auth)
-    console.debug('row user', user)
-  }
-  if (auth.value?._id !== user._id) {
-    return <></>
-  }
+  const list = listContext.use()
   return (
-    <MenuRobe>
-      <ListLinkMenuItem />
-      <PrivateListItems />
-    </MenuRobe>
+    <deleteListContext.Provider args={{ listId: list._id }}>
+      <ListRowMenuConsumer debug={props.debug} />
+    </deleteListContext.Provider>
   )
 }

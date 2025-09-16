@@ -2,6 +2,7 @@ import { Doc } from '../../convex/_generated/dataModel'
 import { Episode, RelatedImport } from './episodeTypes'
 
 export default function getSortedEpisodes (props: {
+  ascend?: boolean
   choices: Array<Doc<'choices'>>
   imports: RelatedImport[]
 }): Episode[] {
@@ -13,6 +14,9 @@ export default function getSortedEpisodes (props: {
   })
   const episodes = [...choiceEpisodes, ...importEpisodes]
   const sortedEpisodes = episodes.toSorted((a, b) => {
+    if (props.ascend === true) {
+      return a._creationTime - b._creationTime
+    }
     return b._creationTime - a._creationTime
   })
   return sortedEpisodes

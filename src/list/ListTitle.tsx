@@ -7,6 +7,8 @@ import RenameListForm from './RenameListForm'
 import ClinkRobe from 'clink-robes'
 import listContext from './listContext'
 import ListUser from './ListUser'
+import importContext from '../import/importContext'
+import deleteListContext from './deleteListContext'
 
 export default function ListTitle (): JSX.Element {
   const list = listContext.use()
@@ -18,12 +20,17 @@ export default function ListTitle (): JSX.Element {
   return (
     <HStack>
       <ClinkRobe to={listPath}>
-        <Heading size='lg'>
+        <Heading size={{ sm: 'lg', md: 'md' }}>
           <ListLabel />
         </Heading>
       </ClinkRobe>
       <ListUser />
-      <ListTitleMenu />
+
+      <deleteListContext.Provider args={{ listId: list._id }}>
+        <importContext.Provider>
+          <ListTitleMenu />
+        </importContext.Provider>
+      </deleteListContext.Provider>
     </HStack>
   )
 }

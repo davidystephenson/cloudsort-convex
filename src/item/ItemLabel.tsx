@@ -1,12 +1,16 @@
-import { Box } from '@chakra-ui/react'
-import { JSX, ReactNode } from 'react'
+import { Box, HStack } from '@chakra-ui/react'
+import { JSX } from 'react'
+import itemContext from './itemContext'
+import ListItemHidden from './ListItemHidden'
 
-export default function ItemLabel (props: {
-  children: ReactNode
-}): JSX.Element {
+export default function ItemLabel (): JSX.Element {
+  const item = itemContext.use()
   return (
-    <Box wordBreak='break-word'>
-      {props.children}
-    </Box>
+    <HStack>
+      <ListItemHidden />
+      <Box wordBreak='break-word'>
+        {item.label}
+      </Box>
+    </HStack>
   )
 }

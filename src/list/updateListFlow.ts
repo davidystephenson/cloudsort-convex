@@ -3,6 +3,7 @@ import { overAll } from 'overpromise'
 import updateOperationList from '../operation/updateOperationList'
 import { MutationCtx } from '../../convex/_generated/server'
 import { Doc, Id } from '../../convex/_generated/dataModel'
+import deleteOperation from '../operation/deleteOperation'
 
 export default async function (props: {
   ctx: MutationCtx
@@ -62,7 +63,7 @@ export default async function (props: {
     return removed
   })
   await overAll(removedOperations, async (operation) => {
-    await props.ctx.db.delete(operation._id)
+    await deleteOperation({ ctx: props.ctx, id: operation._id, uid: operation.uid })
   })
   const newOperations = operations.filter((operation) => {
     const _new = existingOperations.every(

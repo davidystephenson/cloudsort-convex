@@ -9,7 +9,7 @@ export default function HeaderLoaded (props: {
   return (
     <HStack justifyContent='space-between'>
       <ClinkRobe to='/'>
-        <Heading>Cloudsort</Heading>
+        <Heading size={{ sm: 'xl', md: 'lg' }}>Cloudsort</Heading>
       </ClinkRobe>
       {props.children}
       <HeaderAuth />

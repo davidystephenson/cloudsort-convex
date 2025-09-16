@@ -19,7 +19,9 @@ export default function UserListCells (props: {
             <ListLabel />
           </ClinkRobe>
         </Td>
-        <Td><ListRowMenu /></Td>
+        <Td>
+          <ListRowMenu />
+        </Td>
       </listContext.Provider>
     </userContext.Provider>
   )

@@ -8,6 +8,7 @@ const authHub = convexAuth({
       if (args.existingUserId != null) {
         return args.existingUserId
       }
+      console.log('args.profile', args.profile)
       if (!('name' in args.profile)) {
         throw new Error('createOrUpdateUser: Missing name')
       }
@@ -18,7 +19,7 @@ const authHub = convexAuth({
         throw new Error('createOrUpdateUser: Name cannot be empty')
       }
       const users = await ctx.db.query('users').collect()
-      const existingUser = users.find(user => user.name === name)
+      const existingUser = users.find(user => user.name === args.profile.name)
       if (existingUser != null) {
         throw new Error('Username taken')
       }

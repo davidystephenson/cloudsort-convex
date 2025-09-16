@@ -2,41 +2,55 @@ import { query } from './_generated/server'
 import { v } from 'convex/values'
 import getAuthId from '../src/auth/getAuthId'
 import getRelatedUser from '../src/user/getRelatedUser'
-import getRelatedList from '../src/list/getRelatedList'
-import { AuthList, RelatedList } from '../src/list/listTypes'
-import { RelatedUser } from '../src/user/userTypes'
+import { AuthList } from '../src/list/listTypes'
 import getEpisodes from '../src/episode/getEpisodes'
+import relateList from '../src/list/relateList'
 
-const list = query<any, any, Promise<{
-  auth: RelatedUser | undefined
-  list: AuthList | RelatedList | undefined
-}>>({
+const list = query({
   args: {
     listId: v.string()
   },
   handler: async (ctx, args) => {
     const authId = await getAuthId({ ctx })
     const auth = await getRelatedUser({ ctx, userId: authId, authId })
+    const empty = { auth, list: undefined }
     const listId = ctx.db.normalizeId('lists', args.listId)
     if (listId == null) {
-      return { auth, list: undefined }
+      return empty
     }
-    const list = await getRelatedList({ ctx, listId })
+    const list = await ctx.db.get(listId)
     if (list == null) {
-      return { auth, list: undefined }
+      return empty
     }
-    if (list.userId !== authId) {
-      if (list.public) {
-        return { auth, list }
-      }
-      return { auth, list: undefined }
+    const self = authId === list.userId
+    if (!list.public && !self) {
+      console.log('not public and not self')
+      return empty
+    }
+    const hides = await ctx.db.query('hides').withIndex('userItem',
+      (q) => q.eq('userId', list.userId)
+    ).collect()
+    const relatedList = await relateList({
+      authId,
+      ctx,
+      hides: self ? undefined : hides,
+      list
+    })
+    if (auth == null || !self) {
+      const ranks = [...new Set(relatedList.listItems.map((li) => li.rank))]
+      const collapsedItems = relatedList.listItems.map((listItem) => {
+        const newRank = ranks.indexOf(listItem.rank) + 1
+        return { ...listItem, rank: newRank }
+      })
+      const collapsedList = { ...relatedList, listItems: collapsedItems }
+      return { auth, list: collapsedList }
     }
     const episodes = await getEpisodes({ ctx, listId })
     const authList: AuthList = {
-      ...list,
+      ...relatedList,
       ...episodes
     }
-    const result: { auth: RelatedUser | undefined, list: AuthList } = { auth, list: authList }
+    const result = { auth, list: authList, hides }
     return result
   }
 })
